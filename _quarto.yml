@@ -1,0 +1,24 @@
+project:
+  type: book
+
+book:
+  title: "thesis"
+  author: "Edouard F Bonneville"
+  date: "3-11-2023"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - chapter_01.qmd
+    - chapter_02.qmd
+    - summary.qmd
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+    filters:
+      - section-bibliographies
+    link-citations: true
+
+bibliography: thesis-refs-all.bib
