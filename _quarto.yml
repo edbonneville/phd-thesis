@@ -2,23 +2,36 @@ project:
   type: book
 
 book:
-  title: "thesis"
+  title: "Advances in competing risks and missing data"
+  subtitle: "With applications to allogeneic stem cell transplantation"
   author: "Edouard F Bonneville"
-  date: "3-11-2023"
   chapters:
     - index.qmd
-    - intro.qmd
-    - chapter_01.qmd
-    - chapter_02.qmd
-    - summary.qmd
+    - general-introduction.qmd
+    - haema-review.qmd # add broader sections/parts after, if necessary
+    - cause-specific-MI.qmd
+    - fine-gray-MI.qmd
+    - fine-gray-DGM.qmd
+    - joint-models-DLI.qmd
+    - general-discussion.qmd
+    - summary.qmd # after this: CV, acknowledegments and other tings
 
 format:
   html:
     theme: cosmo
   pdf:
     documentclass: scrreprt
+    link-citations: true
+    citeproc: false # recommended by filters
+    toc-depth: 2
+    lot: true
+    lof: true
+    keep-tex: true
+    include-in-header:
+      - tex/preamble-global.tex # make similar globals for markdown?
     filters:
       - section-bibliographies
-    link-citations: true
 
 bibliography: thesis-refs-all.bib
+csl: journal-of-the-royal-statistical-society.csl
+number-depth: 2
