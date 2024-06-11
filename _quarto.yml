@@ -8,24 +8,26 @@ book:
   chapters:
     - index.qmd
     - general-introduction.qmd
-    - haema-review.qmd # add broader sections/parts after, if necessary
-    - cause-specific-MI.qmd
-    - fine-gray-MI.qmd
-    - fine-gray-DGM.qmd
-    - joint-models-DLI.qmd
+    - chapters/haema-review.qmd # add broader sections/parts after, if necessary
+    - chapters/cause-specific-MI.qmd
+    - chapters/fine-gray-MI.qmd
+    - chapters/fine-gray-DGM.qmd
+    - chapters/joint-models-DLI.qmd
     - general-discussion.qmd
     - summary.qmd # after this: CV, acknowledegments and other tings
 
 format:
   html:
     theme: cosmo
+    fig-height: 10
   pdf:
-    documentclass: scrreprt
+    documentclass: scrreprt #scrbook or book
     link-citations: true
     citeproc: false # recommended by filters
     toc-depth: 2
     lot: true
     lof: true
+    latex-auto-install: true
     keep-tex: true
     include-in-header:
       - tex/preamble-global.tex # make similar globals for markdown?

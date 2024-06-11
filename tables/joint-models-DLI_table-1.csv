@@ -1,0 +1,28 @@
+﻿variable;label;Total cohort (n = 166);Intention for early low-dose DLI (n = 62);No intention for early low-dose DLI (n = 104)
+Age at alloSCT (years);median (range);63 (28-78);64 (31-78);63 (28-73)
+Disease;AML;133 (80%);46 (74%);87 (84%)
+;ALL;  17 (10%);10 (16%);  7 (7%)
+;MDS;  16 (10%);  6 (10%);10 (10%)
+Nonmyeloablative conditioning;Flu/Bu;150 (90%);46 (74%);104 (100%)
+;Flu/Bu/Ara-C/Amsa (FLAMSA);  16 (10%);16 (26%);0
+Donor;RD, 10/10 HLA matched;  57 (34%);20 (32%);37 (36%)
+;UD, 10/10 HLA matched;101 (61%);39 (63%);62 (60%)
+;UD, 9/10 HLA matched;     8 (5%);  3 (5%);  5 (5%)
+Graft source;G-CSF mobilized PBSC;165 (99%);62 (100%);103 (99%)
+;BM;    1 (1%);0;    1 (1%)
+CMV serostatus patient/donor;Patient +/Donor +;79 (48%);32 (52%);47 (45%)
+;Patient +/Donor -;25 (15%);  8 (13%);17 (16%)
+;Patient -/Donor +;11 (7%);  4 (6%);  7 (7%)
+;Patient -/Donor -;51 (31%);18 (29%);33 (32%)
+Main reason for intention for early low-dose DLI;FLAMSA regimen ;-;16 (26%);-
+;MRD+ at time of alloSCT;-;14 (23%);-
+;AML/MDS: EVI1 overexpression ;-;9 (15%);-
+;AML: monosomal karyotype;-;8 (13%);-
+;AML: ASXL mutation, only one ;-;4 (6%);-
+;remission induction course, or ;;;
+;persisting underlying disease;;;
+;"ALL: t(9;22)";-;4 (6%);-
+;ALL: hypodiploidy, no CR1, or;-;4 (6%);-
+;"t(4;11)";;;
+;Therapy-related AML;-;2 (3%);-
+;AML: progression before alloSCT;-;1 (2%);-

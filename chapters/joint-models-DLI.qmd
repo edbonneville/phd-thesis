@@ -2,6 +2,8 @@
 title: "Joint models quantify associations between immune cell kinetics and allo-immunological events after allogeneic stem cell transplantation and subsequent donor lymphocyte infusion"
 abstract: | 
   Alloreactive donor-derived T-cells play a pivotal role in alloimmune responses after allogeneic hematopoietic stem cell transplantation (alloSCT); both in the relapse-preventing Graft-versus-Leukemia (GvL) effect and the potentially lethal complication Graft-versus-Host-Disease (GvHD). The balance between GvL and GvHD can be shifted by removing T-cells via T-cell depletion (TCD) to reduce the risk of GvHD, and by introducing additional donor T-cells (donor lymphocyte infusions [DLI]) to boost the GvL effect. However, the association between T-cell kinetics and the occurrence of allo-immunological events has not been clearly demonstrated yet. Therefore, we investigated the complex associations between the T-cell kinetics and alloimmune responses in a cohort of 166 acute leukemia patients receiving alemtuzumab-based TCD alloSCT. Of these patients, 62 with an anticipated high risk of relapse were scheduled to receive a prophylactic DLI at 3 months after transplant. In this setting, we applied joint modelling which allowed us to better capture the complex interplay between DLI, T-cell kinetics, GvHD and relapse than traditional statistical methods. We demonstrate that DLI can induce detectable T-cell expansion, leading to an increase in total, CD4+ and CD8+ T-cell counts starting at 3 months after alloSCT. CD4+ T-cells showed the strongest association with the development of alloimmune responses: higher CD4 counts increased the risk of GvHD (hazard ratio 2.44, 95% confidence interval 1.45-4.12) and decreased the risk of relapse (hazard ratio 0.65, 95% confidence interval 0.45-0.92). Similar models showed that natural killer cells recovered rapidly after alloSCT and were associated with a lower risk of relapse (HR 0.62, 95%-CI 0.41-0.93). The results of this study advocate the use of joint models to further study immune cell kinetics in different settings.
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## Introduction
@@ -68,6 +70,79 @@ All analyses were performed in R version 4.2.1 using the packages JM [@rizopoulo
 
 166 patients were included in this study. Baseline characteristics are presented in Table 1. All surviving patients had at least 12 months follow-up since alloSCT. OS and RFS at 6 months after alloSCT were 77% (95%-CI 71-83) and 70% (95%-CI 64-77), respectively. A total of 62 patients were considered to have a high risk of relapse and were scheduled for an early low-dose DLI, of whom 42 actually received it after a median interval of 3.1 months (range: 2.7-4.4) without any prior event of interest (Supplementary Figure 1). Twenty patients did not receive an early low-dose DLI: 10 because of early relapse, 9 because of early other failures (death [n=1], graft failure [n=2], start of systemic immunosuppression for a non-GvHD indication [n=4], or administration of a virus-specific T-cell infusion [n=2]), and 1 patient did not receive the early low-dose DLI because of mild skin GvHD requiring topical treatment. All 19 events occurred within 4 months after alloSCT. The patient with mild skin GvHD remained event-free for at least 51 months after alloSCT. None of the 104 non-high risk patients received an early low-dose DLI. At 6 months after alloSCT, the cumulative incidence of clinically significant GvHD was 26% (95%-CI 15-37) and 5% (95%-CI 0-9) for the high risk patients scheduled for early low-dose DLI and the non-high risk patients, respectively (Supplementary Figure 2). All clinically significant GvHD in the high risk patients occurred after administration of the early low-dose DLI (but before standard DLI) of which 88% occurred in patients receiving DLI from an UD after an ATG-containing conditioning regimen. 
 
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| label: tbl-table-one
+#| tbl-cap: "*Baseline characteristics*. Intention for early low-dose DLI is based on the anticipated high risk of relapse after alloSCT. DLI, donor lymphocyte infusion; alloSCT, allogeneic stem cell transplantation; AML, acute myeloid leukemia; ALL, acute lymphoblastic leukemia; MDS, myelodysplastic syndrome; Flu, fludarabine; Bu, busulfan; Ara-C, cytarabine; Amsa, amsacrine; RD, related donor; UD, unrelated donor; GCSF, granulocyte-colony stimulation factor; PBSC, peripheral blood stem cells; BM, bone marrow. *One patient had not received a second consolidation course before transplant and received 2 days cyclophosphamide 750 mg/m2 intravenously additionally to the conditioning regimen."
+
+dat_table_one <- read.csv(
+  file = here::here("tables/joint-models-DLI_table-1.csv"), 
+  sep = ";",
+  header = TRUE
+)
+colnames(dat_table_one) <- c(
+  "",
+  "",
+  "Total cohort (n = 166)",
+  "Intention for early low-dose DLI (n = 62)",
+  "No intention for early low-dose DLI (n = 104)"
+)
+
+library(kableExtra)
+
+if (knitr::is_html_output()) {
+  kbl(dat_table_one[, -1]) |> 
+    pack_rows(
+      index = c(
+        "Age at alloSCT (years)" = 1,
+        "Disease" = 3,
+        "Nonmyeloablative conditioning" = 2,
+        "Donor" = 3,
+        "Graft source" = 2,
+        "CMV serostatus patient/donor" = 4,
+        "Main reason for intention for early low-dose DLI" = 12
+      )
+    )
+} else {
+  dat_table_one[, c(3, 4, 5)] <- lapply(dat_table_one[, c(3, 4, 5)], function(col) {
+    gsub(
+      pattern = "[\\%]",
+      x = col, 
+      replacement = "\\\\%"
+    )
+  })
+  
+  kableExtra::kbl(
+    dat_table_one[, -1],
+    format = "latex",
+    booktabs = "T", 
+    position = "h",
+    linesep = "",
+    escape = F, 
+    digits = 2, 
+    longtable = "T"
+  ) |>  
+    pack_rows(
+      index = c(
+        "Age at alloSCT (years)" = 1,
+        "Disease" = 3,
+        "Nonmyeloablative conditioning" = 2,
+        "Donor" = 3,
+        "Graft source" = 2,
+        "CMV serostatus patient/donor" = 4,
+        "Main reason for intention for early low-dose DLI" = 12
+      )
+    ) |> 
+    kableExtra::kable_styling(font_size = 9) |>  
+    kableExtra::column_spec(1, width = "15em") |> 
+    kableExtra::column_spec(2, width = "8em") |> 
+    kableExtra::column_spec(3, width = "8em") |> 
+    kableExtra::column_spec(4, width = "8em") 
+}
+```
+
 ### T-cell trajectories after alloSCT and DLI 
 
 #### DLI-related increase of T-cell counts after 3 months after alloSCT observed in patients with an unrelated donor
@@ -113,10 +188,6 @@ Further studies are necessary to assess the clinical implications of the finding
 Generally speaking, further characterization of the circulating T-cell subsets, differentiation and metabolic fitness could provide valuable additional insight in future studies on T-cell kinetics [@dekkerReconstitutionCellSubsets2020a;@uhlMetabolicReprogrammingDonor2020].  
 
 In summary, joint modelling allowed us to capture the associations between DLI, T-cell and NK cell counts, GvHD and relapse in a very complex clinical setting, even with modest numbers of patients and events. NK cells recover early after alloSCT and may have a protective effect against relapse. We demonstrate that DLI can induce detectable T-cell expansion and observe that the CD4+ T-cells show the strongest association with the development of alloimmune responses. Higher CD4 counts increase the risk of GvHD and decrease the risk of relapse.
-
-## Acknowledgments {.unnumbered .unlisted}
-
-The authors would like to thank E.J.M. Bogers, S.M. Wallet-Malicka and H.A. Baelde for the data management and technical support. 
 
 ## References {-}
 

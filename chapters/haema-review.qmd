@@ -33,11 +33,18 @@ affiliations:
     name: DKMS Clinical Trials Unit
     city: Dresden
     country: Germany
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- Add DOI badge -->
 
 <!-- This is based on R3 file -->
+
+```{r}
+#| echo: false
+extension <- if (knitr::is_html_output()) ".png" else ".pdf"
+```
 
 ## Introduction
 
@@ -97,6 +104,47 @@ We performed a systematic review to obtain a broad picture of current practices 
 
 The search terms in Ovid format are reported in Table 1. After narrowing down by journals and year of publication, the remaining criteria focused on the malignant disease group, and the type of analysis model used. A wide selection of malignant diseases was included: acute and chronic myeloid leukemia, acute and chronic lymphocytic leukemia, myelodysplastic syndromes (MDS), and non-Hodgkin lymphomas (NHL) . We searched for articles that used a multivariable Cox proportional hazards model as part of their statistical analysis. Models were further classified into standard Cox, Fine-Gray (competing risks), frailty, multi-state and relative survival. The standard Cox category included standard outcomes such as overall or progression-free survival, but also cause-specific Cox models for outcomes such as relapse incidence and non-relapse mortality (since these are applied by treating competing risks as censored). Search terms for both analysis model and malignant disease group were based on detection of relevant strings in either title, abstract or keywords.
 
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| label: tbl-ovid-search
+#| tbl-cap: "Search terms used in Ovid format, as entered into MEDLINE and Embase."
+
+dat_ovid <- cbind.data.frame(
+  "query_num" = paste0(seq_len(10), "."),
+  "query" = c(
+    "(0006-4971 or 2352-3026 or 1756-8722 or 2044-5385 or 0887-6924 or 0390-6078 or 0361-8609 or 2473-9529 or 0007-1048 or 2666-6367 or 0268-3369 or 2040-6207 or 0278-0232 or 0939-5555 or 1545-5009 or 1042-8194).is.",
+    "(cox or HR or aHR or (hazard adj1 ratio) or hazard or (proportional adj1 hazards) or multivaria*).ti,ab,kf.",
+    "((acute adj1 myeloid adj1 leukemia) or (myelodysplastic adj1 syndrome*) or (chronic adj1 lymphocytic adj1 leukemia) or non-Hodgkin* or (chronic adj1 myeloid adj1 leukemia) or (acute adj1 lymphocytic adj1 leukemia) or (multiple adj1 myeloma) or leukem* or leukaem*).ti,ab,kf.",
+    "1 and 2 and 3",
+    "limit 4 to ('conference review' or 'review')",
+    "limit 4 to (article or article in press or journal article)",
+    "6 not 5",
+    "limit 7 to english language",
+    "limit 8 to yr='2021 - 2021'",
+    "remove duplicates from 9"
+  )
+)
+
+library(kableExtra)
+
+if (knitr::is_html_output()) {
+  kbl(dat_ovid, col.names = c("", ""))
+} else {
+  kbl(
+    dat_ovid, 
+    col.names = c("", ""),
+    format = "latex",
+    booktabs = "T", 
+    position = "h",
+    linesep = "",
+    escape = F
+  ) |> 
+    kableExtra::column_spec(2, width = "35em") 
+}
+```
+
 For each included article, the information extraction spanned three main areas: 1) exclusion of patients at ‘population selection’ phase based on missing data, 2) presence and explicit reporting of missing data in baseline covariates used in one or more of the reported analysis models, and 3) explicit reporting of methods used to handle the missing data. The first part of the extraction is based on the findings in [@carrollHowAreMissing2020], namely that the population is occasionally filtered on the basis of information/variable availability, leaving little or no missing data at the analysis phase. Two possible examples of this are, a) retrospective analysis of data from multiple trials, and a particular trial being excluded because information on a covariate of interest was not collected; b) in a retrospective study, including only those with sequencing data at a point in time (thereby implicitly excluding those with unavailable sequencing data). 
 
 We checked whether there was any missing data in any of the covariates making up the multivariable model, whether it be reported in the descriptive ‘Table 1’ (hereafter referred to as the ‘descriptives table’), in a figure or in the main text. If there were multiple multivariable Cox models reported in the article, we recorded whether in at least one of them there was a covariate with missing data. Note that sometimes the missing values are only implicitly reported, as is for example the case when the numbers per level of categorical variables are reported, and these fail to add up to the total.
@@ -123,15 +171,81 @@ From the few articles using MI, three explicitly mention using MICE, with the re
 
 ## Illustrative example
 
-We make use of data published by @scheteligLateTreatmentrelatedMortality2019, describing long-term outcomes of patients with myelodysplastic syndromes (MDS) and secondary acute myeloid leukemia (sAML) following an alloSCT to demonstrate selected options how to deal with missing data. The dataset contained both outcome information (timing of relapse or non-relapse mortality, if either occurred) and variables measured at baseline for 6434 patients registered with the EBMT, transplanted between 2000 and 2012. Several of these recorded baseline predictors presented a substantial amount of missing data: IPSS-R cytogenetic classification (62.2%), HCT-CI comorbidity index (59.9%), donor age (49.5%), KPS (32.8%), and cytomegalovirus (CMV) status in both donor and patient (17.8%). For full description of the variables , we refer to Table 2 (analogous to Table 2 in @bonnevilleMultipleImputationCausespecific2022). In our previous publication, we illustrated several approaches for dealing with these missing values in competing risks analyses [@bonnevilleMultipleImputationCausespecific2022].
+We make use of data published by @scheteligLateTreatmentrelatedMortality2019, describing long-term outcomes of patients with myelodysplastic syndromes (MDS) and secondary acute myeloid leukemia (sAML) following an alloSCT to demonstrate selected options how to deal with missing data. The dataset contained both outcome information (timing of relapse or non-relapse mortality, if either occurred) and variables measured at baseline for 6434 patients registered with the EBMT, transplanted between 2000 and 2012. Several of these recorded baseline predictors presented a substantial amount of missing data: IPSS-R cytogenetic classification (62.2%), HCT-CI comorbidity index (59.9%), donor age (49.5%), KPS (32.8%), and cytomegalovirus (CMV) status in both donor and patient (17.8%). For full description of the variables , we refer to @tbl-data-dictionary (analogous to Table 2 in @bonnevilleMultipleImputationCausespecific2022). In our previous publication, we illustrated several approaches for dealing with these missing values in competing risks analyses [@bonnevilleMultipleImputationCausespecific2022].
 
-In the current work, using this dataset we present a multivariable Cox model for relapse-free survival (RFS), using the same covariates as in the cause-specific Cox models in @bonnevilleMultipleImputationCausespecific2022: the baseline variables with missing values described above, together with the completely observed variables patient age, stage at alloSCT, patient-donor human leukocyte antigen (HLA) match, patient-donor sex match and MDS classification. We compared various methods for dealing with the missing values: CCA, MIM, MICE, SMC-FCS, and fully Bayesian imputation using the ‘JointAI’ R package. The MI analyses were performed using 100 imputed datasets with 15 iterations, and the analysis using ‘JointAI’ used 2000 iterations following 200 adaptation iterations. Hazard ratios obtained using each method are presented in Figure 1 along with their corresponding 95% confidence interval. Full code to reproduce the analysis is available at https://github.com/survival-lumc/ReviewHaemaMissing .
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| label: tbl-data-dictionary
+#| tbl-cap: "Data dictionary with predictor variables and their descriptions, levels and proportion missing data for the illustrative example, adapted from @bonnevilleMultipleImputationCausespecific2022. The ‘Summary’ column reports median and interquartile range for continuous variables, as well as counts and proportion per level of categorical variables. Abbreviations: CMV = cytomegalovirus, CR = complete remission, IPSS-R = International Prognostic Scoring System, V. = very, interm. = intermediate, HLA = Human leukocyte antigen, HCT-CI = Hematopoietic stem cell transplantation-comorbidity index, M = male, F = female, MDS = myelodysplastic syndromes, sAML = secondary acute myeloid leukemia, w/= with, w/o = without."
+
+dat_data_dict <- read.csv(
+  file = here::here("tables/haema-review_data-dictionary.csv"), 
+  sep = ";",
+  header = TRUE
+)
+
+library(kableExtra)
+
+if (knitr::is_html_output()) {
+  colnames(dat_data_dict)[4] <- "% Missing"
+  dat_data_dict$`% Missing` <- ifelse(
+    is.na(dat_data_dict$`% Missing`), "", dat_data_dict$`% Missing`
+  )
+  kbl(dat_data_dict)
+} else {
+  
+  colnames(dat_data_dict)[4] <- "\\% Missing"
+  dat_data_dict$`\\% Missing` <- ifelse(
+    is.na(dat_data_dict$`\\% Missing`), "", dat_data_dict$`\\% Missing`
+  )
+  dat_data_dict$Summary <- gsub(
+    pattern = "[\\%]",
+    x = dat_data_dict$Summary, 
+    replacement = "\\\\%"
+  )
+  dat_data_dict$Levels <- gsub(
+    pattern = "[\\≥](90)",
+    x = dat_data_dict$Levels, 
+    replacement = "$\\\\geq90$"
+)
+  dat_data_dict$Levels <-gsub(
+    pattern = "[\\≤](70)",
+    x = dat_data_dict$Levels, 
+    replacement = "$\\\\leq70$"
+)
+  
+  kableExtra::kbl(
+    dat_data_dict,
+    format = "latex",
+    booktabs = "T", 
+    position = "h",
+    linesep = "",
+    escape = F, 
+    digits = 2
+  ) |>  
+  kableExtra::kable_styling(font_size = 9) |>  
+  #kableExtra::column_spec(1, width = "7em") |> 
+  #kableExtra::column_spec(2, width = "10em") |> 
+  kableExtra::landscape()
+}
+```
+
+In the current work, using this dataset we present a multivariable Cox model for relapse-free survival (RFS), using the same covariates as in the cause-specific Cox models in @bonnevilleMultipleImputationCausespecific2022: the baseline variables with missing values described above, together with the completely observed variables patient age, stage at alloSCT, patient-donor human leukocyte antigen (HLA) match, patient-donor sex match and MDS classification. We compared various methods for dealing with the missing values: CCA, MIM, MICE, SMC-FCS, and fully Bayesian imputation using the ‘JointAI’ R package. The MI analyses were performed using 100 imputed datasets with 15 iterations, and the analysis using ‘JointAI’ used 2000 iterations following 200 adaptation iterations. Hazard ratios obtained using each method are presented in @fig-forest-efs along with their corresponding 95% confidence interval. Full code to reproduce the analysis is available at https://github.com/survival-lumc/ReviewHaemaMissing .
 
 Regarding results, we first note that the loss in efficiency when using a CCA is apparent in this application, with confidence intervals that are considerably larger than in any of the other methods. Indeed, the CCA made use of only 17.5% of the available observations (5309 patients were omitted from the analysis). CCA also presents point estimates that differ considerably compared to the remaining methods, as is the case for example with patient-donor sex match categories, the CMV status in patient and donor, and cytogenetic risk classification. Such differences can raise skepticism as to the validity of the MAR assumption made: assuming the specified model is ‘correct’ and contains all variables explaining the missingness mechanism (covariate dependent missingness), the point estimates obtained with CCA and MI should generally be in alignment. However, note that when missingness depends on the observed outcome (often unlikely in survival data), MI should theoretically outperform CCA, while the reverse holds true in the MNAR case where the missingness depends on the variable itself [@carpenterMissingDataStatistical2021]. Of course in reality, missingness will often be a mixture of MAR and MNAR, and results should therefore be interpreted with care. Moreover, CCA point estimates will be more uncertain compared to their MI based counterparts, and one should therefore not expect to them to be equal [@whiteMissingDataPart2022]. One could indeed make the case that in the present example, given that the point estimates from the imputation methods fall within the confidence intervals of the CCA estimates (that is, within two standard errors), we should not be concerned.
 
 Concerning the imputation methods, SMC-FCS and JointAI were in consistent agreement across all coefficients. The MICE approach differed noticeably from the previous two approaches for both the KPS and cytogenetic risk coefficients, which can perhaps be attributed to its theoretical limitations in the survival context: it does not ensure full compatibility between analysis and imputation model, in contrast to the other two MI approaches. The MIM was also consistently in agreement with estimates obtained with both SMC-FCS and JointAI. Given that the assumptions in @blakeEstimatingTreatmentEffects2020 concern missing data in adjustment variables (i.e. not in the outcome or in the exposure/treatment variable), it is difficult to reason about the validity of the MIM in the current context where the multivariable model is presented as prognostic.
 
-[Figure 1 here]
+```{r}
+#| label: fig-forest-efs
+#| fig-cap: "Point estimates and associated 95% confidence intervals for the Cox model for relapse-free survival, according to missing data handling method. Variables and their descriptions can be found in @tbl-data-dictionary. Per level of factor and for continuous variables, we show the observed counts (n) and the number of events (# Events, which is the sum of relapse and non-relapse mortality events) in the full dataset."
+#| echo: false
+#| out-width: "85%"
+
+knitr::include_graphics(here::here(paste0("figures/haema-review_forest-EFS", extension)))
+```
 
 ## Discussion and recommendations
 
