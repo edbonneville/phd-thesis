@@ -249,7 +249,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, sharp corners, breakable, frame hidden, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, breakable, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, interior hidden, enhanced]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -883,13 +883,13 @@ Variable & Description & Levels & \% Missing & Summary\\
 \midrule
 Age (Donor) & Donor age at alloHCT (decades) &  & 49.49 & 4.21 (3.12, 5.25)\\
 Age (Patient) & Patient age at alloHCT (decades) &  & 0 & 5.6 (4.69, 6.19)\\
-CMV Patient/Donor & CMV status in patient and donor & −/− & 17.8 & 1439 (27\%)\\
- &  & −/+ &  & 544 (10\%)\\
- &  & +/− &  & 1281 (24\%)\\
- &  & +/+ &  & 2024 (38\%)\\
+CMV Patient/Donor & CMV status in patient and donor & Patient -/Donor - & 17.8 & 1439 (27\%)\\
+ &  & Patient -/Donor + &  & 544 (10\%)\\
+ &  & Patient +/Donor - &  & 1281 (24\%)\\
+ &  & Patient +/Donor + &  & 2024 (38\%)\\
 Comorbidity score & HCT-CI score & Low risk (0) & 59.93 & 1322 (51\%)\\
- &  & Interm. risk (1-2) &  & 657 (25\%)\\
- &  & High risk (≥3) &  & 599 (23\%)\\
+ &  & Interm. risk ($1-2$) &  & 657 (25\%)\\
+ &  & High risk ($\geq3$) &  & 599 (23\%)\\
 Cytogenetics & Cytogenetics categories used for IPSS-R & V. good/good/interm. & 62.23 & 1784 (73\%)\\
  &  & Poor &  & 287 (12\%)\\
  &  & V. poor &  & 359 (15\%)\\

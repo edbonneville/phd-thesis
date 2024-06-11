@@ -209,12 +209,22 @@ if (knitr::is_html_output()) {
     pattern = "[\\≥](90)",
     x = dat_data_dict$Levels, 
     replacement = "$\\\\geq90$"
-)
+  )
   dat_data_dict$Levels <-gsub(
     pattern = "[\\≤](70)",
     x = dat_data_dict$Levels, 
     replacement = "$\\\\leq70$"
-)
+  )
+  dat_data_dict$Levels <- gsub(
+    pattern = "[\\≥](3)",
+    x = dat_data_dict$Levels, 
+    replacement = "$\\\\geq3$"
+  )
+  dat_data_dict$Levels <- gsub(
+    pattern = "(1-2)",
+    x = dat_data_dict$Levels, 
+    replacement = "$1-2$"
+  )
   
   kableExtra::kbl(
     dat_data_dict,
