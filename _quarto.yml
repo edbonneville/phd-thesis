@@ -25,7 +25,6 @@ format:
     link-citations: true
     citeproc: false # recommended by filters
     toc-depth: 2
-    output-file: "thesis-main.pdf"
     lot: true
     lof: true
     latex-auto-install: true
