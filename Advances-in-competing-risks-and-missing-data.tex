@@ -249,7 +249,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, breakable, interior hidden, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, sharp corners, frame hidden, interior hidden, borderline west={3pt}{0pt}{shadecolor}, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -259,10 +259,10 @@
 }
 \listoffigures
 \listoftables
-\hypertarget{preface}{}
 \bookmarksetup{startatroot}
 
-\chapter*{Preface}
+\hypertarget{preface}{%
+\chapter*{Preface}\label{preface}}
 \addcontentsline{toc}{chapter}{Preface}
 
 \markboth{Preface}{Preface}
@@ -1129,309 +1129,6 @@ in future studies. Nevertheless, researchers should remain prepared to
 discuss how the missing values in their particular context could affect
 the results of their study, both in terms of bias and statistical power.
 
-\hypertarget{references}{%
-\section*{References}\label{references}}
-\addcontentsline{toc}{section}{References}
-
-\markright{References}
-
-\hypertarget{refs-2}{}
-\begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-antunesDealingMissingInformation2021}{}}%
-Antunes, L., Mendonça, D., Bento, M. J., et al. (2021) Dealing with
-missing information on covariates for excess mortality hazard regression
-models -- {Making} the imputation model compatible with the substantive
-model. \emph{Statistical Methods in Medical Research}, \textbf{30},
-2256--2268. SAGE Publications Ltd STM. DOI:
-\href{https://doi.org/10.1177/09622802211031615}{10.1177/09622802211031615}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-armandDiseaseRiskIndex2012}{}}%
-Armand, P., Gibson, C. J., Cutler, C., et al. (2012) A disease risk
-index for patients undergoing allogeneic stem cell transplantation.
-\emph{Blood}, \textbf{120}, 905--913. DOI:
-\href{https://doi.org/10.1182/blood-2012-03-418202}{10.1182/blood-2012-03-418202}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-armandValidationRefinementDisease2014}{}}%
-Armand, P., Kim, H. T., Logan, B. R., et al. (2014) Validation and
-refinement of the {Disease Risk Index} for allogeneic stem cell
-transplantation. \emph{Blood}, \textbf{123}, 3664--3671. DOI:
-\href{https://doi.org/10.1182/blood-2014-01-552984}{10.1182/blood-2014-01-552984}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bartlettMissingCovariatesCompeting2016}{}}%
-Bartlett, J. W. and Taylor, J. M. G. (2016) Missing covariates in
-competing risks analysis. \emph{Biostatistics}, \textbf{17}, 751--763.
-Oxford Academic. DOI:
-\href{https://doi.org/10.1093/biostatistics/kxw019}{10.1093/biostatistics/kxw019}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bartlettMultipleImputationCovariates2015}{}}%
-Bartlett, J. W., Seaman, S. R., White, I. R., et al. (2015) Multiple
-imputation of covariates by fully conditional specification:
-{Accommodating} the substantive model. \emph{Statistical Methods in
-Medical Research}, \textbf{24}, 462--487. SAGE Publications Ltd STM.
-DOI:
-\href{https://doi.org/10.1177/0962280214521348}{10.1177/0962280214521348}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bartlettSmcfcsMultipleImputation2022}{}}%
-Bartlett, J. W., Keogh, R. H. and Bonneville, E. F. (2022) \emph{Smcfcs:
-{Multiple} Imputation of Covariates by Substantive Model Compatible
-Fully Conditional Specification}. Manual.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bellHandlingMissingData2014}{}}%
-Bell, M. L., Fiero, M., Horton, N. J., et al. (2014) Handling missing
-data in {RCTs}; a review of the top medical journals. \emph{BMC Medical
-Research Methodology}, \textbf{14}, 118. DOI:
-\href{https://doi.org/10.1186/1471-2288-14-118}{10.1186/1471-2288-14-118}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-blakeEstimatingTreatmentEffects2020}{}}%
-Blake, H. A., Leyrat, C., Mansfield, K. E., et al. (2020) Estimating
-treatment effects with partially observed covariates using outcome
-regression with missing indicators. \emph{Biometrical Journal},
-\textbf{62}, 428--443. DOI:
-\href{https://doi.org/10.1002/bimj.201900041}{10.1002/bimj.201900041}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bonnevilleMultipleImputationCausespecific2022}{}}%
-Bonneville, E. F., Resche-Rigon, M., Schetelig, J., et al. (2022)
-Multiple imputation for cause-specific {Cox} models: {Assessing} methods
-for estimation and prediction. \emph{Statistical Methods in Medical
-Research}, \textbf{31}, 1860--1880. SAGE Publications Ltd STM. DOI:
-\href{https://doi.org/10.1177/09622802221102623}{10.1177/09622802221102623}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-burtonMissingCovariateData2004}{}}%
-Burton, A. and Altman, D. G. (2004) Missing covariate data within cancer
-prognostic studies: A review of current reporting and proposed
-guidelines. \emph{British Journal of Cancer}, \textbf{91}, 4--8. Nature
-Publishing Group. DOI:
-\href{https://doi.org/10.1038/sj.bjc.6601907}{10.1038/sj.bjc.6601907}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-buurenMiceMultivariateImputation2011}{}}%
-Buuren, S. van and Groothuis-Oudshoorn, K. (2011) Mice: {Multivariate
-Imputation} by {Chained Equations} in {R}. \emph{Journal of Statistical
-Software}, \textbf{45}, 1--67. DOI:
-\href{https://doi.org/10.18637/jss.v045.i03}{10.18637/jss.v045.i03}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-carpenterMissingDataStatistical2021}{}}%
-Carpenter, J. R. and Smuk, M. (2021) Missing data: {A} statistical
-framework for practice. \emph{Biometrical Journal}, \textbf{63},
-915--947. DOI:
-\href{https://doi.org/10.1002/bimj.202000196}{10.1002/bimj.202000196}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-carrollHowAreMissing2020}{}}%
-Carroll, O. U., Morris, T. P. and Keogh, R. H. (2020) How are missing
-data in covariates handled in observational time-to-event studies in
-oncology? {A} systematic review. \emph{BMC Medical Research
-Methodology}, \textbf{20}, 134. DOI:
-\href{https://doi.org/10.1186/s12874-020-01018-7}{10.1186/s12874-020-01018-7}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-delgadoSurvivalAnalysisHematologic2014}{}}%
-Delgado, J., Pereira, A., Villamor, N., et al. (2014) Survival analysis
-in hematologic malignancies: Recommendations for clinicians.
-\emph{Haematologica}, \textbf{99}, 1410--1420. DOI:
-\href{https://doi.org/10.3324/haematol.2013.100784}{10.3324/haematol.2013.100784}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-dondersReviewGentleIntroduction2006}{}}%
-Donders, A. R. T., van der Heijden, G. J. M. G., Stijnen, T., et al.
-(2006) Review: {A} gentle introduction to imputation of missing values.
-\emph{Journal of Clinical Epidemiology}, \textbf{59}, 1087--1091. DOI:
-\href{https://doi.org/10.1016/j.jclinepi.2006.01.014}{10.1016/j.jclinepi.2006.01.014}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-erlerJointAIJointAnalysis2021}{}}%
-Erler, N. S., Rizopoulos, D. and Lesaffre, E. M. E. H. (2021) {JointAI}:
-{Joint Analysis} and {Imputation} of {Incomplete Data} in {R}.
-\emph{Journal of Statistical Software}, \textbf{100}, 1--56. DOI:
-\href{https://doi.org/10.18637/jss.v100.i20}{10.18637/jss.v100.i20}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-groenwoldMissingCovariateData2012}{}}%
-Groenwold, R. H. H., White, I. R., Donders, A. R. T., et al. (2012)
-Missing covariate data in clinical research: When and when not to use
-the missing-indicator method for analysis. \emph{CMAJ}, \textbf{184},
-1265--1269. CMAJ. DOI:
-\href{https://doi.org/10.1503/cmaj.110977}{10.1503/cmaj.110977}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-hans.y.SecondaryCytogeneticAbnormalities2021}{}}%
-Han S.Y., Mrozek K., Voutsinas J., et al. (2021) Secondary cytogenetic
-abnormalities in core-binding factor {AML} harboring inv(16) vs t(8;21).
-\emph{Blood Advances}, \textbf{5}, 2481--2489. United States: American
-Society of Hematology. DOI:
-\href{https://doi.org/10.1182/BLOODADVANCES.2020003605}{10.1182/BLOODADVANCES.2020003605}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-hansend.k.ELN2017Genetic2021}{}}%
-Hansen D.K., Kim J., Thompson Z., et al. (2021) {ELN} 2017 {Genetic Risk
-Stratification Predicts Survival} of {Acute Myeloid Leukemia Patients
-Receiving Allogeneic Hematopoietic Stem Cell Transplantation}.
-\emph{Transplantation and Cellular Therapy}, \textbf{27},
-256.e1--256.e7. Netherlands: Elsevier B.V. DOI:
-\href{https://doi.org/10.1016/j.jtct.2020.12.021}{10.1016/j.jtct.2020.12.021}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-hayatirezvanRiseMultipleImputation2015}{}}%
-Hayati Rezvan, P., Lee, K. J. and Simpson, J. A. (2015) The rise of
-multiple imputation: A review of the reporting and implementation of the
-method in medical research. \emph{BMC Medical Research Methodology},
-\textbf{15}, 30. DOI:
-\href{https://doi.org/10.1186/s12874-015-0022-1}{10.1186/s12874-015-0022-1}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-hughesAccountingMissingData2019}{}}%
-Hughes, R. A., Heron, J., Sterne, J. A. C., et al. (2019) Accounting for
-missing data in statistical analyses: Multiple imputation is not always
-the answer. \emph{International Journal of Epidemiology}, \textbf{48},
-1294--1304. DOI:
-\href{https://doi.org/10.1093/ije/dyz032}{10.1093/ije/dyz032}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-inouey.ImpactConditioningIntensity2021}{}}%
-Inoue Y., Nakano N., Fuji S., et al. (2021) Impact of conditioning
-intensity and regimen on transplant outcomes in patients with adult
-{T-cell} leukemia-lymphoma. \emph{Bone Marrow Transplantation},
-\textbf{56}, 2964--2974. United Kingdom: Springer Nature. DOI:
-\href{https://doi.org/10.1038/s41409-021-01445-0}{10.1038/s41409-021-01445-0}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-keoghMultipleImputationCox2018}{}}%
-Keogh, R. H. and Morris, T. P. (2018) Multiple imputation in {Cox}
-regression when there are time-varying effects of covariates.
-\emph{Statistics in Medicine}, \textbf{37}, 3661--3678. DOI:
-\href{https://doi.org/10.1002/sim.7842}{10.1002/sim.7842}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-leeFrameworkTreatmentReporting2021}{}}%
-Lee, K. J., Tilling, K. M., Cornish, R. P., et al. (2021) Framework for
-the treatment and reporting of missing data in observational studies:
-{The Treatment And Reporting} of {Missing} data in {Observational
-Studies} framework. \emph{Journal of Clinical Epidemiology},
-\textbf{134}, 79--88. DOI:
-\href{https://doi.org/10.1016/j.jclinepi.2021.01.008}{10.1016/j.jclinepi.2021.01.008}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-littleStatisticalAnalysisMissing2019}{}}%
-Little, R. J. A. and Rubin, D. B. (2019) \emph{Statistical {Analysis}
-with {Missing Data}}. John Wiley \& Sons.
-
-\leavevmode\vadjust pre{\hypertarget{ref-madley-dowdProportionMissingData2019}{}}%
-Madley-Dowd, P., Hughes, R., Tilling, K., et al. (2019) The proportion
-of missing data should not be used to guide decisions on multiple
-imputation. \emph{Journal of Clinical Epidemiology}, \textbf{110},
-63--73. DOI:
-\href{https://doi.org/10.1016/j.jclinepi.2019.02.016}{10.1016/j.jclinepi.2019.02.016}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-mertensConstructionAssessmentPrediction2020}{}}%
-Mertens, B. J. A., Banzato, E. and de Wreede, L. C. (2020) Construction
-and assessment of prediction rules for binary outcome in the presence of
-missing predictor data using multiple imputation and cross-validation:
-{Methodological} approach and data-based evaluation. \emph{Biometrical
-Journal}, \textbf{62}, 724--741. DOI:
-\href{https://doi.org/10.1002/bimj.201800289}{10.1002/bimj.201800289}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-pazd.l.GenomicAnalysisPrimary2021}{}}%
-Paz D.L., Riou J., Verger E., et al. (2021) Genomic analysis of primary
-and secondary myelofibrosis redefines the prognostic impact of {ASXL1}
-mutations: {A FIM} study. \emph{Blood Advances}, \textbf{5}, 1442--1451.
-United States: American Society of Hematology. DOI:
-\href{https://doi.org/10.1182/bloodadvances.2020003444}{10.1182/bloodadvances.2020003444}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-saccardiBenchmarkingSurvivalOutcomes2023}{}}%
-Saccardi, R., Putter, H., Eikema, D.-J., et al. (2023) Benchmarking of
-survival outcomes following {Haematopoietic Stem Cell Transplantation}
-({HSCT}): An update of the ongoing project of the {European Society} for
-{Blood} and {Marrow Transplantation} ({EBMT}) and {Joint Accreditation
-Committee} of {ISCT} and {EBMT} ({JACIE}). \emph{Bone Marrow
-Transplantation}, \textbf{58}, 659--666. Nature Publishing Group. DOI:
-\href{https://doi.org/10.1038/s41409-023-01924-6}{10.1038/s41409-023-01924-6}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-scheteligLateTreatmentrelatedMortality2019}{}}%
-Schetelig, J., Wreede, L. C. de, Gelder, M. van, et al. (2019) Late
-treatment-related mortality versus competing causes of death after
-allogeneic transplantation for myelodysplastic syndromes and secondary
-acute myeloid leukemia. \emph{Leukemia}, \textbf{33}, 686--695. Nature
-Publishing Group. DOI:
-\href{https://doi.org/10.1038/s41375-018-0302-y}{10.1038/s41375-018-0302-y}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-sharmaa.OutcomesPediatricPatients2021}{}}%
-Sharma A., Huang S., Li Y., et al. (2021) Outcomes of pediatric patients
-with therapy-related myeloid neoplasms. \emph{Bone Marrow
-Transplantation}, \textbf{56}, 2997--3007. United Kingdom: Springer
-Nature. DOI:
-\href{https://doi.org/10.1038/s41409-021-01448-x}{10.1038/s41409-021-01448-x}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-snowdenBenchmarkingSurvivalOutcomes2020}{}}%
-Snowden, J. A., Saccardi, R., Orchard, K., et al. (2020) Benchmarking of
-survival outcomes following haematopoietic stem cell transplantation:
-{A} review of existing processes and the introduction of an
-international system from the {European Society} for {Blood} and {Marrow
-Transplantation} ({EBMT}) and the {Joint Accreditation Committee} of
-{ISCT} and {EBMT} ({JACIE}). \emph{Bone Marrow Transplantation},
-\textbf{55}, 681--694. DOI:
-\href{https://doi.org/10.1038/s41409-019-0718-7}{10.1038/s41409-019-0718-7}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-sterneMultipleImputationMissing2009}{}}%
-Sterne, J. A., White, I. R., Carlin, J. B., et al. (2009) Multiple
-imputation for missing data in epidemiological and clinical research:
-Potential and pitfalls. \emph{BMJ}, \textbf{338}, b2393. British Medical
-Journal Publishing Group. DOI:
-\href{https://doi.org/10.1136/bmj.b2393}{10.1136/bmj.b2393}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-sterneROBINSIToolAssessing2016}{}}%
-Sterne, J. A., Hernán, M. A., Reeves, B. C., et al. (2016) {ROBINS-I}: A
-tool for assessing risk of bias in non-randomised studies of
-interventions. \emph{BMJ}, \textbf{355}, i4919. British Medical Journal
-Publishing Group. DOI:
-\href{https://doi.org/10.1136/bmj.i4919}{10.1136/bmj.i4919}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-sullivanTreatmentMissingData2017}{}}%
-Sullivan, T. R., Yelland, L. N., Lee, K. J., et al. (2017) Treatment of
-missing data in follow-up studies of randomised controlled trials: {A}
-systematic review of the literature. \emph{Clinical Trials},
-\textbf{14}, 387--395. SAGE Publications. DOI:
-\href{https://doi.org/10.1177/1740774517703319}{10.1177/1740774517703319}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-sullivanShouldMultipleImputation2018}{}}%
-Sullivan, T. R., White, I. R., Salter, A. B., et al. (2018) Should
-multiple imputation be the method of choice for handling missing data in
-randomized trials? \emph{Statistical Methods in Medical Research},
-\textbf{27}, 2610--2626. SAGE Publications Ltd STM. DOI:
-\href{https://doi.org/10.1177/0962280216683570}{10.1177/0962280216683570}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-buurenFlexibleImputationMissing2018}{}}%
-van Buuren, S. (2018) \emph{Flexible Imputation of Missing Data.
-{Second} Edition}. Boca Raton, FL: Chapman \& Hall/CRC Press.
-
-\leavevmode\vadjust pre{\hypertarget{ref-vanbuurens.FlexibleMultivariateImputation1999}{}}%
-van Buuren, S., Oudshoorn, K. and TNO Preventie en Gezondheid (1999)
-\emph{Flexible {Multivariate Imputation} by {MICE}}. January. TNO.
-
-\leavevmode\vadjust pre{\hypertarget{ref-vandenbrouckeStrengtheningReportingObservational2007}{}}%
-Vandenbroucke, J. P., Elm, E. von, Altman, D. G., et al. (2007)
-Strengthening the {Reporting} of {Observational Studies} in
-{Epidemiology} ({STROBE}): {Explanation} and {Elaboration}. \emph{PLOS
-Medicine}, \textbf{4}, e297. Public Library of Science. DOI:
-\href{https://doi.org/10.1371/journal.pmed.0040297}{10.1371/journal.pmed.0040297}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-vonhippelHowManyImputations2020}{}}%
-von Hippel, P. T. (2020) How {Many Imputations Do You Need}? {A
-Two-stage Calculation Using} a {Quadratic Rule}. \emph{Sociological
-Methods \& Research}, \textbf{49}, 699--718. SAGE Publications Inc. DOI:
-\href{https://doi.org/10.1177/0049124117747303}{10.1177/0049124117747303}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-whiteBiasEfficiencyMultiple2010}{}}%
-White, I. R. and Carlin, J. B. (2010) Bias and efficiency of multiple
-imputation compared with complete-case analysis for missing covariate
-values. \emph{Statistics in Medicine}, \textbf{29}, 2920--2931. DOI:
-\href{https://doi.org/10.1002/sim.3944}{10.1002/sim.3944}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-whiteImputingMissingCovariate2009}{}}%
-White, I. R. and Royston, P. (2009) Imputing missing covariate values
-for the {Cox} model. \emph{Statistics in Medicine}, \textbf{28},
-1982--1998. DOI:
-\href{https://doi.org/10.1002/sim.3618}{10.1002/sim.3618}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-whiteAdjustingPartiallyMissing2005}{}}%
-White, I. R. and Thompson, S. G. (2005) Adjusting for partially missing
-baseline measurements in randomized trials. \emph{Statistics in
-Medicine}, \textbf{24}, 993--1007. DOI:
-\href{https://doi.org/10.1002/sim.1981}{10.1002/sim.1981}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-whiteMissingDataPart2022}{}}%
-White, I. R., Pandis, N. and Pham, T. M. (2022) Missing data, part 7.
-{Pitfalls} in doing multiple imputation. \emph{American Journal of
-Orthodontics and Dentofacial Orthopedics}, \textbf{162}, 975--977. DOI:
-\href{https://doi.org/10.1016/j.ajodo.2022.08.013}{10.1016/j.ajodo.2022.08.013}.
-
-\end{CSLReferences}
-
 \bookmarksetup{startatroot}
 
 \hypertarget{multiple-imputation-for-cause-specific-cox-models-assessing-methods-for-estimation-and-prediction}{%
@@ -1582,7 +1279,7 @@ imputation model for a cause-specific Cox analysis model is shown. The
 simulation study is presented in Section~\ref{sec-simstudy}, followed by
 an illustrative analysis in Section~\ref{sec-illust-analysis}. Findings
 are discussed alongside recommendations for practice in
-Section~\ref{sec-discussion}.
+Section~\ref{sec-cs-MI-discussion}.
 
 \hypertarget{sec-motivating-example}{%
 \section{Motivating example}\label{sec-motivating-example}}
@@ -2489,8 +2186,8 @@ registry
 (\protect\hyperlink{ref-snowdenBenchmarkingSurvivalOutcomes2020}{Snowden
 \emph{et al.}, 2020}).
 
-\hypertarget{sec-discussion}{%
-\section{Discussion}\label{sec-discussion}}
+\hypertarget{sec-cs-MI-discussion}{%
+\section{Discussion}\label{sec-cs-MI-discussion}}
 
 In this paper, we assessed the performance of currently implemented MI
 methods, MICE and SMC-FCS, that deal with missing baseline covariate
@@ -2836,302 +2533,6 @@ as covariates. As explained by White and Royston
 is only valid by ignoring terms in \(\beta^2_k\) and for small
 \(\sigma^2 \sum^K_{k = 1} \beta_k^2 H_{k0}(T)\). We also note that the
 variance of \(X \mid T, D, Z\) is non-constant in time.
-
-\hypertarget{references-1}{%
-\section*{References}\label{references-1}}
-\addcontentsline{toc}{section}{References}
-
-\markright{References}
-
-\hypertarget{refs-3}{}
-\begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-adesMyelodysplasticSyndromes2014}{}}%
-Adès, L., Itzykson, R. and Fenaux, P. (2014) Myelodysplastic syndromes.
-\emph{The Lancet}, \textbf{383}, 2239--2252. DOI:
-\href{https://doi.org/10.1016/S0140-6736(13)61901-7}{10.1016/S0140-6736(13)61901-7}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-andersenCompetingRisksMultistate2002}{}}%
-Andersen, P. K., Abildstrom, S. Z. and Rosthøj, S. (2002) Competing
-risks as a multi-state model. \emph{Statistical Methods in Medical
-Research}, \textbf{11}, 203--215. SAGE Publications Ltd STM. DOI:
-\href{https://doi.org/10.1191/0962280202sm281ra}{10.1191/0962280202sm281ra}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bakoyannisModellingCompetingRisks2010}{}}%
-Bakoyannis, G., Siannis, F. and Touloumi, G. (2010) Modelling competing
-risks data with missing cause of failure. \emph{Statistics in Medicine},
-\textbf{29}, 3172--3185. DOI:
-\href{https://doi.org/10.1002/sim.4133}{10.1002/sim.4133}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bartlettMissingCovariatesCompeting2016}{}}%
-Bartlett, J. W. and Taylor, J. M. G. (2016) Missing covariates in
-competing risks analysis. \emph{Biostatistics}, \textbf{17}, 751--763.
-Oxford Academic. DOI:
-\href{https://doi.org/10.1093/biostatistics/kxw019}{10.1093/biostatistics/kxw019}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bartlettMultipleImputationCovariates2015}{}}%
-Bartlett, J. W., Seaman, S. R., White, I. R., et al. (2015) Multiple
-imputation of covariates by fully conditional specification:
-{Accommodating} the substantive model. \emph{Statistical Methods in
-Medical Research}, \textbf{24}, 462--487. SAGE Publications Ltd STM.
-DOI:
-\href{https://doi.org/10.1177/0962280214521348}{10.1177/0962280214521348}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bartlettSmcfcsMultipleImputation2022}{}}%
-Bartlett, J. W., Keogh, R. H. and Bonneville, E. F. (2022) \emph{Smcfcs:
-{Multiple} Imputation of Covariates by Substantive Model Compatible
-Fully Conditional Specification}. Manual.
-
-\leavevmode\vadjust pre{\hypertarget{ref-beyersmannSimulatingCompetingRisks2009}{}}%
-Beyersmann, J., Latouche, A., Buchholz, A., et al. (2009) Simulating
-competing risks data in survival analysis. \emph{Statistics in
-Medicine}, \textbf{28}, 956--971. DOI:
-\href{https://doi.org/10.1002/sim.3516}{10.1002/sim.3516}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-beyersmannCompetingRisksMultistate2012}{}}%
-Beyersmann, J., Allignol, A. and Schumacher, M. (2012) \emph{Competing
-{Risks} and {Multistate Models} with {R}}. Use {R}! New York:
-Springer-Verlag. DOI:
-\href{https://doi.org/10.1007/978-1-4614-2035-4}{10.1007/978-1-4614-2035-4}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-buurenMiceMultivariateImputation2011}{}}%
-Buuren, S. van and Groothuis-Oudshoorn, K. (2011) Mice: {Multivariate
-Imputation} by {Chained Equations} in {R}. \emph{Journal of Statistical
-Software}, \textbf{45}, 1--67. DOI:
-\href{https://doi.org/10.18637/jss.v045.i03}{10.18637/jss.v045.i03}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-carrollHowAreMissing2020}{}}%
-Carroll, O. U., Morris, T. P. and Keogh, R. H. (2020) How are missing
-data in covariates handled in observational time-to-event studies in
-oncology? {A} systematic review. \emph{BMC Medical Research
-Methodology}, \textbf{20}, 134. DOI:
-\href{https://doi.org/10.1186/s12874-020-01018-7}{10.1186/s12874-020-01018-7}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-coxPartialLikelihood1975}{}}%
-Cox, D. R. (1975) Partial likelihood. \emph{Biometrika}, \textbf{62},
-269--276. Oxford Academic. DOI:
-\href{https://doi.org/10.1093/biomet/62.2.269}{10.1093/biomet/62.2.269}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-dewreedeMstatePackageEstimation2010}{}}%
-de Wreede, L. C., Fiocco, M. and Putter, H. (2010) The mstate package
-for estimation and prediction in non- and semi-parametric multi-state
-and competing risks models. \emph{Computer Methods and Programs in
-Biomedicine}, \textbf{99}, 261--274. DOI:
-\href{https://doi.org/10.1016/j.cmpb.2010.01.001}{10.1016/j.cmpb.2010.01.001}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-dewreedeMstatePackageAnalysis2011}{}}%
-de Wreede, L. C., Fiocco, M. and Putter, H. (2011) Mstate: {An R
-Package} for the {Analysis} of {Competing Risks} and {Multi-State
-Models}. \emph{Journal of Statistical Software}, \textbf{38}, 1--30.
-DOI:
-\href{https://doi.org/10.18637/jss.v038.i07}{10.18637/jss.v038.i07}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-delordMultipleImputationCompeting2016}{}}%
-Delord, M. and Génin, E. (2016) Multiple imputation for competing risks
-regression with interval-censored data. \emph{Journal of Statistical
-Computation and Simulation}, \textbf{86}, 2217--2228. Taylor \& Francis.
-DOI:
-\href{https://doi.org/10.1080/00949655.2015.1106543}{10.1080/00949655.2015.1106543}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-demirtasComputingPointbiserialCorrelation2016}{}}%
-Demirtas, H. and Hedeker, D. (2016) Computing the {Point-biserial
-Correlation} under {Any Underlying Continuous Distribution}.
-\emph{Communications in Statistics - Simulation and Computation},
-\textbf{45}, 2744--2751. Taylor \& Francis. DOI:
-\href{https://doi.org/10.1080/03610918.2014.920883}{10.1080/03610918.2014.920883}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-erlerDealingMissingCovariates2016}{}}%
-Erler, N. S., Rizopoulos, D., Rosmalen, J. van, et al. (2016) Dealing
-with missing covariates in epidemiologic studies: A comparison between
-multiple imputation and a full {Bayesian} approach. \emph{Statistics in
-Medicine}, \textbf{35}, 2955--2974. DOI:
-\href{https://doi.org/10.1002/sim.6944}{10.1002/sim.6944}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-falcaroEstimatingExcessHazard2015}{}}%
-Falcaro, M., Nur, U., Rachet, B., et al. (2015) Estimating {Excess
-Hazard Ratios} and {Net Survival When Covariate Data Are Missing}:
-{Strategies} for {Multiple Imputation}. \emph{Epidemiology},
-\textbf{26}, 421--428. DOI:
-\href{https://doi.org/10.1097/EDE.0000000000000283}{10.1097/EDE.0000000000000283}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-fineProportionalHazardsModel1999}{}}%
-Fine, J. P. and Gray, R. J. (1999) A {Proportional Hazards Model} for
-the {Subdistribution} of a {Competing Risk}. \emph{Journal of the
-American Statistical Association}, \textbf{94}, 496--509. Taylor \&
-Francis. DOI:
-\href{https://doi.org/10.1080/01621459.1999.10474144}{10.1080/01621459.1999.10474144}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-keoghMultipleImputationCox2018}{}}%
-Keogh, R. H. and Morris, T. P. (2018) Multiple imputation in {Cox}
-regression when there are time-varying effects of covariates.
-\emph{Statistics in Medicine}, \textbf{37}, 3661--3678. DOI:
-\href{https://doi.org/10.1002/sim.7842}{10.1002/sim.7842}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-kleinSurvivalAnalysisTechniques2006}{}}%
-Klein, J. P. and Moeschberger, M. L. (2003) \emph{Survival Analysis:
-{Techniques} for Censored and Truncated Data (2nd Edition)}. New York:
-Springer-Verlag.
-
-\leavevmode\vadjust pre{\hypertarget{ref-lauMissingnessSettingCompeting2018}{}}%
-Lau, B. and Lesko, C. (2018) Missingness in the {Setting} of {Competing
-Risks}: From {Missing Values} to {Missing Potential Outcomes}.
-\emph{Current Epidemiology Reports}, \textbf{5}, 153--159. DOI:
-\href{https://doi.org/10.1007/s40471-018-0142-3}{10.1007/s40471-018-0142-3}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-leeMultipleImputationPresence2017}{}}%
-Lee, K. J. and Carlin, J. B. (2017) Multiple imputation in the presence
-of non-normal data. \emph{Statistics in Medicine}, \textbf{36},
-606--617. DOI:
-\href{https://doi.org/10.1002/sim.7173}{10.1002/sim.7173}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-madley-dowdProportionMissingData2019}{}}%
-Madley-Dowd, P., Hughes, R., Tilling, K., et al. (2019) The proportion
-of missing data should not be used to guide decisions on multiple
-imputation. \emph{Journal of Clinical Epidemiology}, \textbf{110},
-63--73. DOI:
-\href{https://doi.org/10.1016/j.jclinepi.2019.02.016}{10.1016/j.jclinepi.2019.02.016}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-marshallComparisonImputationMethods2010}{}}%
-Marshall, A., Altman, D. G. and Holder, R. L. (2010) Comparison of
-imputation methods for handling missing covariate data when fitting a
-{Cox} proportional hazards model: A resampling study. \emph{BMC Medical
-Research Methodology}, \textbf{10}, 112. DOI:
-\href{https://doi.org/10.1186/1471-2288-10-112}{10.1186/1471-2288-10-112}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-mccullagh1989generalized}{}}%
-McCullagh, P. and Nelder, J. A. (1989) \emph{Generalized Linear Models,
-Second Edition}. Chapman and {Hall}/{CRC} monographs on statistics and
-applied probability series. Chapman \& Hall.
-
-\leavevmode\vadjust pre{\hypertarget{ref-mertensConstructionAssessmentPrediction2020}{}}%
-Mertens, B. J. A., Banzato, E. and de Wreede, L. C. (2020) Construction
-and assessment of prediction rules for binary outcome in the presence of
-missing predictor data using multiple imputation and cross-validation:
-{Methodological} approach and data-based evaluation. \emph{Biometrical
-Journal}, \textbf{62}, 724--741. DOI:
-\href{https://doi.org/10.1002/bimj.201800289}{10.1002/bimj.201800289}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-morisotProstateCancerNet2015}{}}%
-Morisot, A., Bessaoud, F., Landais, P., et al. (2015) Prostate cancer:
-Net survival and cause-specific survival rates after multiple
-imputation. \emph{BMC Medical Research Methodology}, \textbf{15}, 54.
-DOI:
-\href{https://doi.org/10.1186/s12874-015-0048-4}{10.1186/s12874-015-0048-4}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-morrisUsingSimulationStudies2019}{}}%
-Morris, T. P., White, I. R. and Crowther, M. J. (2019) Using simulation
-studies to evaluate statistical methods. \emph{Statistics in Medicine},
-\textbf{38}, 2074--2102. DOI:
-\href{https://doi.org/10.1002/sim.8086}{10.1002/sim.8086}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-murrayMultipleImputationReview2018}{}}%
-Murray, J. S. (2018) Multiple {Imputation}: {A Review} of {Practical}
-and {Theoretical Findings}. \emph{Statistical Science}, \textbf{33},
-142--159. DOI:
-\href{https://doi.org/10.1214/18-STS644}{10.1214/18-STS644}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-prenticeAnalysisFailureTimes1978}{}}%
-Prentice, R. L., Kalbfleisch, J. D., Peterson, A. V., et al. (1978) The
-{Analysis} of {Failure Times} in the {Presence} of {Competing Risks}.
-\emph{Biometrics}, \textbf{34}, 541--554. {[}Wiley, International
-Biometric Society{]}. DOI:
-\href{https://doi.org/10.2307/2530374}{10.2307/2530374}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-putterTutorialBiostatisticsCompeting2007}{}}%
-Putter, H., Fiocco, M. and Geskus, R. B. (2007) Tutorial in
-biostatistics: Competing risks and multi-state models. \emph{Statistics
-in Medicine}, \textbf{26}, 2389--2430. DOI:
-\href{https://doi.org/10.1002/sim.2712}{10.1002/sim.2712}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-quartagnoMultipleImputationDiscrete2019}{}}%
-Quartagno, M. and Carpenter, J. R. (2019) Multiple imputation for
-discrete data: {Evaluation} of the joint latent normal model.
-\emph{Biometrical Journal}, \textbf{61}, 1003--1019. DOI:
-\href{https://doi.org/10.1002/bimj.201800222}{10.1002/bimj.201800222}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-rcoreteamLanguageEnvironmentStatistical2020}{}}%
-R Core Team (2020) \emph{R: {A} Language and Environment for Statistical
-Computing}. Manual. Vienna, Austria: R Foundation for Statistical
-Computing.
-
-\leavevmode\vadjust pre{\hypertarget{ref-resche-rigonImputingMissingCovariate2012}{}}%
-Resche-Rigon, M., White, I. and Chevret, S. (2012) Imputing missing
-covariate values in presence of competing risk. In: \emph{International
-{Society} for {Clinical Biostatistics Conference}}, Bergen, Norway,
-19-23 August 2012, P22.10, August 2012.
-
-\leavevmode\vadjust pre{\hypertarget{ref-rubin:1987}{}}%
-Rubin, D. (1987) \emph{Multiple Imputation for Nonresponse in Surveys}.
-New York: John Wiley \& Sons. DOI:
-\href{https://doi.org/10.1002/9780470316696}{10.1002/9780470316696}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-ruckerPresentingSimulationResults2014}{}}%
-Rücker, G. and Schwarzer, G. (2014) Presenting simulation results in a
-nested loop plot. \emph{BMC Medical Research Methodology}, \textbf{14},
-129. DOI:
-\href{https://doi.org/10.1186/1471-2288-14-129}{10.1186/1471-2288-14-129}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-scheteligLateTreatmentrelatedMortality2019}{}}%
-Schetelig, J., Wreede, L. C. de, Gelder, M. van, et al. (2019) Late
-treatment-related mortality versus competing causes of death after
-allogeneic transplantation for myelodysplastic syndromes and secondary
-acute myeloid leukemia. \emph{Leukemia}, \textbf{33}, 686--695. Nature
-Publishing Group. DOI:
-\href{https://doi.org/10.1038/s41375-018-0302-y}{10.1038/s41375-018-0302-y}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-shahComparisonRandomForest2014}{}}%
-Shah, A. D., Bartlett, J. W., Carpenter, J., et al. (2014) Comparison of
-{Random Forest} and {Parametric Imputation Models} for {Imputing Missing
-Data Using MICE}: {A CALIBER Study}. \emph{American Journal of
-Epidemiology}, \textbf{179}, 764--774. DOI:
-\href{https://doi.org/10.1093/aje/kwt312}{10.1093/aje/kwt312}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-snowdenBenchmarkingSurvivalOutcomes2020}{}}%
-Snowden, J. A., Saccardi, R., Orchard, K., et al. (2020) Benchmarking of
-survival outcomes following haematopoietic stem cell transplantation:
-{A} review of existing processes and the introduction of an
-international system from the {European Society} for {Blood} and {Marrow
-Transplantation} ({EBMT}) and the {Joint Accreditation Committee} of
-{ISCT} and {EBMT} ({JACIE}). \emph{Bone Marrow Transplantation},
-\textbf{55}, 681--694. DOI:
-\href{https://doi.org/10.1038/s41409-019-0718-7}{10.1038/s41409-019-0718-7}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-vanbuurens.FlexibleMultivariateImputation1999}{}}%
-van Buuren, S., Oudshoorn, K. and TNO Preventie en Gezondheid (1999)
-\emph{Flexible {Multivariate Imputation} by {MICE}}. January. TNO.
-
-\leavevmode\vadjust pre{\hypertarget{ref-vanbuurenFullyConditionalSpecification2006}{}}%
-van Buuren, S., Brand, J. P. L., Groothuis-Oudshoorn, C. G. M., et al.
-(2006) Fully conditional specification in multivariate imputation.
-\emph{Journal of Statistical Computation and Simulation}, \textbf{76},
-1049--1064. Taylor \& Francis. DOI:
-\href{https://doi.org/10.1080/10629360600810434}{10.1080/10629360600810434}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-vonhippelHowManyImputations2020}{}}%
-von Hippel, P. T. (2020) How {Many Imputations Do You Need}? {A
-Two-stage Calculation Using} a {Quadratic Rule}. \emph{Sociological
-Methods \& Research}, \textbf{49}, 699--718. SAGE Publications Inc. DOI:
-\href{https://doi.org/10.1177/0049124117747303}{10.1177/0049124117747303}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-whiteBiasEfficiencyMultiple2010}{}}%
-White, I. R. and Carlin, J. B. (2010) Bias and efficiency of multiple
-imputation compared with complete-case analysis for missing covariate
-values. \emph{Statistics in Medicine}, \textbf{29}, 2920--2931. DOI:
-\href{https://doi.org/10.1002/sim.3944}{10.1002/sim.3944}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-whiteImputingMissingCovariate2009}{}}%
-White, I. R. and Royston, P. (2009) Imputing missing covariate values
-for the {Cox} model. \emph{Statistics in Medicine}, \textbf{28},
-1982--1998. DOI:
-\href{https://doi.org/10.1002/sim.3618}{10.1002/sim.3618}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-woodEstimationUsePredictions2015}{}}%
-Wood, A. M., Royston, P. and White, I. R. (2015) The estimation and use
-of predictions for the assessment of model performance using large
-samples with multiply imputed data. \emph{Biometrical Journal},
-\textbf{57}, 614--632. DOI:
-\href{https://doi.org/10.1002/bimj.201400004}{10.1002/bimj.201400004}.
-
-\end{CSLReferences}
 
 \bookmarksetup{startatroot}
 
@@ -4555,315 +3956,6 @@ sizes. The \(\hat{\Lambda}_1(t)\) based on the weighted estimator
 on imputed \(V\), as will using the negative log of one minus the
 Aalen-Johansen estimate of the marginal cumulative incidence function.
 
-\hypertarget{references-2}{%
-\section*{References}\label{references-2}}
-\addcontentsline{toc}{section}{References}
-
-\markright{References}
-
-\hypertarget{refs-4}{}
-\begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-allignolSoftwareFittingNonstandard2010}{}}%
-Allignol, A. and Beyersmann, J. (2010) Software for fitting nonstandard
-proportional subdistribution hazards models. \emph{Biostatistics},
-\textbf{11}, 674--675. DOI:
-\href{https://doi.org/10.1093/biostatistics/kxq018}{10.1093/biostatistics/kxq018}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-archerDevelopmentExternalValidation2022}{}}%
-Archer, L., Koshiaris, C., Lay-Flurrie, S., et al. (2022) Development
-and external validation of a risk prediction model for falls in patients
-with an indication for antihypertensive treatment: Retrospective cohort
-study. \emph{BMJ}, \textbf{379}, e070918. British Medical Journal
-Publishing Group. DOI:
-\href{https://doi.org/10.1136/bmj-2022-070918}{10.1136/bmj-2022-070918}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-austinFineGraySubdistributionHazard2021}{}}%
-Austin, P. C., Steyerberg, E. W. and Putter, H. (2021) Fine-{Gray}
-subdistribution hazard models to simultaneously estimate the absolute
-risk of different event types: {Cumulative} total failure probability
-may exceed 1. \emph{Statistics in Medicine}, \textbf{40}, 4200--4212.
-DOI: \href{https://doi.org/10.1002/sim.9023}{10.1002/sim.9023}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bartlettMissingCovariatesCompeting2016}{}}%
-Bartlett, J. W. and Taylor, J. M. G. (2016) Missing covariates in
-competing risks analysis. \emph{Biostatistics}, \textbf{17}, 751--763.
-Oxford Academic. DOI:
-\href{https://doi.org/10.1093/biostatistics/kxw019}{10.1093/biostatistics/kxw019}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bartlettMultipleImputationCovariates2015}{}}%
-Bartlett, J. W., Seaman, S. R., White, I. R., et al. (2015) Multiple
-imputation of covariates by fully conditional specification:
-{Accommodating} the substantive model. \emph{Statistical Methods in
-Medical Research}, \textbf{24}, 462--487. SAGE Publications Ltd STM.
-DOI:
-\href{https://doi.org/10.1177/0962280214521348}{10.1177/0962280214521348}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bartlettSmcfcsMultipleImputation2022}{}}%
-Bartlett, J. W., Keogh, R. H. and Bonneville, E. F. (2022) \emph{Smcfcs:
-{Multiple} Imputation of Covariates by Substantive Model Compatible
-Fully Conditional Specification}. Manual.
-
-\leavevmode\vadjust pre{\hypertarget{ref-beyersmannSimulatingCompetingRisks2009}{}}%
-Beyersmann, J., Latouche, A., Buchholz, A., et al. (2009) Simulating
-competing risks data in survival analysis. \emph{Statistics in
-Medicine}, \textbf{28}, 956--971. DOI:
-\href{https://doi.org/10.1002/sim.3516}{10.1002/sim.3516}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-beyersmannCompetingRisksMultistate2012}{}}%
-Beyersmann, J., Allignol, A. and Schumacher, M. (2012) \emph{Competing
-{Risks} and {Multistate Models} with {R}}. Use {R}! New York:
-Springer-Verlag. DOI:
-\href{https://doi.org/10.1007/978-1-4614-2035-4}{10.1007/978-1-4614-2035-4}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bonnevilleWhyYouShould2024}{}}%
-Bonneville, E. F., de Wreede, L. C. and Putter, H. (2024 (in press)) Why
-you should avoid using multiple {Fine}--{Gray} models: Insights from
-(attempts at) simulating proportional subdistribution hazards data.
-\emph{Journal of the Royal Statistical Society Series A: Statistics in
-Society}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bonnevilleMultipleImputationCausespecific2022}{}}%
-Bonneville, E. F., Resche-Rigon, M., Schetelig, J., et al. (2022)
-Multiple imputation for cause-specific {Cox} models: {Assessing} methods
-for estimation and prediction. \emph{Statistical Methods in Medical
-Research}, \textbf{31}, 1860--1880. SAGE Publications Ltd STM. DOI:
-\href{https://doi.org/10.1177/09622802221102623}{10.1177/09622802221102623}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-buurenMiceMultivariateImputation2011}{}}%
-Buuren, S. van and Groothuis-Oudshoorn, K. (2011) Mice: {Multivariate
-Imputation} by {Chained Equations} in {R}. \emph{Journal of Statistical
-Software}, \textbf{45}, 1--67. DOI:
-\href{https://doi.org/10.18637/jss.v045.i03}{10.18637/jss.v045.i03}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-carpenterMissingDataStatistical2021}{}}%
-Carpenter, J. R. and Smuk, M. (2021) Missing data: {A} statistical
-framework for practice. \emph{Biometrical Journal}, \textbf{63},
-915--947. DOI:
-\href{https://doi.org/10.1002/bimj.202000196}{10.1002/bimj.202000196}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-cliftLivingRiskPrediction2020}{}}%
-Clift, A. K., Coupland, C. A. C., Keogh, R. H., et al. (2020) Living
-risk prediction algorithm ({QCOVID}) for risk of hospital admission and
-mortality from coronavirus 19 in adults: National derivation and
-validation cohort study. \emph{BMJ}, \textbf{371}, m3731. British
-Medical Journal Publishing Group. DOI:
-\href{https://doi.org/10.1136/bmj.m3731}{10.1136/bmj.m3731}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-delordMultipleImputationCompeting2016}{}}%
-Delord, M. and Génin, E. (2016) Multiple imputation for competing risks
-regression with interval-censored data. \emph{Journal of Statistical
-Computation and Simulation}, \textbf{86}, 2217--2228. Taylor \& Francis.
-DOI:
-\href{https://doi.org/10.1080/00949655.2015.1106543}{10.1080/00949655.2015.1106543}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-fineProportionalHazardsModel1999}{}}%
-Fine, J. P. and Gray, R. J. (1999) A {Proportional Hazards Model} for
-the {Subdistribution} of a {Competing Risk}. \emph{Journal of the
-American Statistical Association}, \textbf{94}, 496--509. Taylor \&
-Francis. DOI:
-\href{https://doi.org/10.1080/01621459.1999.10474144}{10.1080/01621459.1999.10474144}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-gaspariniRsimsumSummariseResults2018}{}}%
-Gasparini, A. (2018) Rsimsum: {Summarise} results from {Monte Carlo}
-simulation studies. \emph{Journal of Open Source Software}, \textbf{3},
-739. DOI:
-\href{https://doi.org/10.21105/joss.00739}{10.21105/joss.00739}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-geskusCauseSpecificCumulativeIncidence2011}{}}%
-Geskus, R. B. (2011) Cause-{Specific Cumulative Incidence Estimation}
-and the {Fine} and {Gray Model Under Both Left Truncation} and {Right
-Censoring}. \emph{Biometrics}, \textbf{67}, 39--49. DOI:
-\href{https://doi.org/10.1111/j.1541-0420.2010.01420.x}{10.1111/j.1541-0420.2010.01420.x}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-gorgizadehImputationApproachUsing2022a}{}}%
-Gorgi Zadeh, S., Behning, C. and Schmid, M. (2022) An imputation
-approach using subdistribution weights for deep survival analysis with
-competing events. \emph{Scientific Reports}, \textbf{12}, 3815. Nature
-Publishing Group. DOI:
-\href{https://doi.org/10.1038/s41598-022-07828-7}{10.1038/s41598-022-07828-7}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-grambauerProportionalSubdistributionHazards2010}{}}%
-Grambauer, N., Schumacher, M. and Beyersmann, J. (2010) Proportional
-subdistribution hazards modeling offers a summary analysis, even if
-misspecified. \emph{Statistics in Medicine}, \textbf{29}, 875--884. DOI:
-\href{https://doi.org/10.1002/sim.3786}{10.1002/sim.3786}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-grayClassKSampleTests1988}{}}%
-Gray, R. J. (1988) A {Class} of {K-Sample Tests} for {Comparing} the
-{Cumulative Incidence} of a {Competing Risk}. \emph{The Annals of
-Statistics}, \textbf{16}, 1141--1154. Institute of Mathematical
-Statistics. Available at: \url{https://www.jstor.org/stable/2241622}
-(accessed 11 May 2021).
-
-\leavevmode\vadjust pre{\hypertarget{ref-keoghMultipleImputationCox2018}{}}%
-Keogh, R. H. and Morris, T. P. (2018) Multiple imputation in {Cox}
-regression when there are time-varying effects of covariates.
-\emph{Statistics in Medicine}, \textbf{37}, 3661--3678. DOI:
-\href{https://doi.org/10.1002/sim.7842}{10.1002/sim.7842}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-kleinSurvivalAnalysisTechniques2006}{}}%
-Klein, J. P. and Moeschberger, M. L. (2003) \emph{Survival Analysis:
-{Techniques} for Censored and Truncated Data (2nd Edition)}. New York:
-Springer-Verlag.
-
-\leavevmode\vadjust pre{\hypertarget{ref-krogerIndicationManagementAllogeneic2024}{}}%
-Kröger, N., Bacigalupo, A., Barbui, T., et al. (2024) Indication and
-management of allogeneic haematopoietic stem-cell transplantation in
-myelofibrosis: Updated recommendations by the {EBMT}/{ELN International
-Working Group}. \emph{The Lancet Haematology}, \textbf{11}, e62--e74.
-Elsevier. DOI:
-\href{https://doi.org/10.1016/S2352-3026(23)00305-8}{10.1016/S2352-3026(23)00305-8}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-lambertFlexibleParametricModelling2017}{}}%
-Lambert, P. C., Wilkes, S. R. and Crowther, M. J. (2017) Flexible
-parametric modelling of the cause-specific cumulative incidence
-function. \emph{Statistics in Medicine}, \textbf{36}, 1429--1446. DOI:
-\href{https://doi.org/10.1002/sim.7208}{10.1002/sim.7208}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-latoucheCompetingRisksAnalysis2013}{}}%
-Latouche, A., Allignol, A., Beyersmann, J., et al. (2013) A competing
-risks analysis should report results on all cause-specific hazards and
-cumulative incidence functions. \emph{Journal of Clinical Epidemiology},
-\textbf{66}, 648--653. DOI:
-\href{https://doi.org/10.1016/j.jclinepi.2012.09.017}{10.1016/j.jclinepi.2012.09.017}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-lauMissingnessSettingCompeting2018}{}}%
-Lau, B. and Lesko, C. (2018) Missingness in the {Setting} of {Competing
-Risks}: From {Missing Values} to {Missing Potential Outcomes}.
-\emph{Current Epidemiology Reports}, \textbf{5}, 153--159. DOI:
-\href{https://doi.org/10.1007/s40471-018-0142-3}{10.1007/s40471-018-0142-3}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-maoEfficientEstimationSemiparametric2017}{}}%
-Mao, L. and Lin, D. Y. (2017) Efficient {Estimation} of {Semiparametric
-Transformation Models} for the {Cumulative Incidence} of {Competing
-Risks}. \emph{Journal of the Royal Statistical Society Series B:
-Statistical Methodology}, \textbf{79}, 573--587. DOI:
-\href{https://doi.org/10.1111/rssb.12177}{10.1111/rssb.12177}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-marshallCombiningEstimatesInterest2009}{}}%
-Marshall, A., Altman, D. G., Holder, R. L., et al. (2009) Combining
-estimates of interest in prognostic modelling studies after multiple
-imputation: Current practice and guidelines. \emph{BMC Medical Research
-Methodology}, \textbf{9}, 57. DOI:
-\href{https://doi.org/10.1186/1471-2288-9-57}{10.1186/1471-2288-9-57}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-mertensConstructionAssessmentPrediction2020}{}}%
-Mertens, B. J. A., Banzato, E. and de Wreede, L. C. (2020) Construction
-and assessment of prediction rules for binary outcome in the presence of
-missing predictor data using multiple imputation and cross-validation:
-{Methodological} approach and data-based evaluation. \emph{Biometrical
-Journal}, \textbf{62}, 724--741. DOI:
-\href{https://doi.org/10.1002/bimj.201800289}{10.1002/bimj.201800289}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-molenberghsHandbookMissingData2014}{}}%
-Molenberghs, G., Fitzmaurice, G., Kenward, M. G., et al. (2014)
-\emph{Handbook of {Missing Data Methodology}}. CRC Press.
-
-\leavevmode\vadjust pre{\hypertarget{ref-morisotProstateCancerNet2015}{}}%
-Morisot, A., Bessaoud, F., Landais, P., et al. (2015) Prostate cancer:
-Net survival and cause-specific survival rates after multiple
-imputation. \emph{BMC Medical Research Methodology}, \textbf{15}, 54.
-DOI:
-\href{https://doi.org/10.1186/s12874-015-0048-4}{10.1186/s12874-015-0048-4}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-morrisUsingSimulationStudies2019}{}}%
-Morris, T. P., White, I. R. and Crowther, M. J. (2019) Using simulation
-studies to evaluate statistical methods. \emph{Statistics in Medicine},
-\textbf{38}, 2074--2102. DOI:
-\href{https://doi.org/10.1002/sim.8086}{10.1002/sim.8086}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-RJ-2017-062}{}}%
-Ozenne, B., Sørensen, A. L., Scheike, T., et al. (2017)
-{riskRegression}: {Predicting} the risk of an event using cox regression
-models. \emph{The R Journal}, \textbf{9}, 440--460. DOI:
-\href{https://doi.org/10.32614/RJ-2017-062}{10.32614/RJ-2017-062}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-polverelliImpactComorbiditiesBody2024a}{}}%
-Polverelli, N., Bonneville, E. F., de Wreede, L. C., et al. (2024)
-Impact of comorbidities and body mass index on the outcomes of
-allogeneic hematopoietic cell transplantation in myelofibrosis: {A}
-study on behalf of the {Chronic Malignancies Working Party} of {EBMT}.
-\emph{American journal of hematology}, \textbf{99}, 993---996. DOI:
-\href{https://doi.org/10.1002/ajh.27262}{10.1002/ajh.27262}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-prenticeAnalysisFailureTimes1978}{}}%
-Prentice, R. L., Kalbfleisch, J. D., Peterson, A. V., et al. (1978) The
-{Analysis} of {Failure Times} in the {Presence} of {Competing Risks}.
-\emph{Biometrics}, \textbf{34}, 541--554. {[}Wiley, International
-Biometric Society{]}. DOI:
-\href{https://doi.org/10.2307/2530374}{10.2307/2530374}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-putterRelationCausespecificHazard2020}{}}%
-Putter, H., Schumacher, M. and van Houwelingen, H. C. (2020) On the
-relation between the cause-specific hazard and the subdistribution rate
-for competing risks data: {The Fine}--{Gray} model revisited.
-\emph{Biometrical Journal}, \textbf{62}, 790--807. DOI:
-\href{https://doi.org/10.1002/bimj.201800274}{10.1002/bimj.201800274}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-rcoreteamLanguageEnvironmentStatistical2023}{}}%
-R Core Team (2023) \emph{R: {A} Language and Environment for Statistical
-Computing}. Manual. Vienna, Austria: R Foundation for Statistical
-Computing.
-
-\leavevmode\vadjust pre{\hypertarget{ref-ruanAnalysesCumulativeIncidence2008}{}}%
-Ruan, P. K. and Gray, R. J. (2008) Analyses of cumulative incidence
-functions via non-parametric multiple imputation. \emph{Statistics in
-Medicine}, \textbf{27}, 5709--5724. DOI:
-\href{https://doi.org/10.1002/sim.3402}{10.1002/sim.3402}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-rubin:1987}{}}%
-Rubin, D. (1987) \emph{Multiple Imputation for Nonresponse in Surveys}.
-New York: John Wiley \& Sons. DOI:
-\href{https://doi.org/10.1002/9780470316696}{10.1002/9780470316696}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-sterneMultipleImputationMissing2009}{}}%
-Sterne, J. A., White, I. R., Carlin, J. B., et al. (2009) Multiple
-imputation for missing data in epidemiological and clinical research:
-Potential and pitfalls. \emph{BMJ}, \textbf{338}, b2393. British Medical
-Journal Publishing Group. DOI:
-\href{https://doi.org/10.1136/bmj.b2393}{10.1136/bmj.b2393}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-taylor2002survival}{}}%
-Taylor, J. M. G., Murray, S. and Hsu, C.-H. (2002) Survival estimation
-and testing via multiple imputation. \emph{Statistics \& probability
-letters}, \textbf{58}, 221--232. Elsevier.
-
-\leavevmode\vadjust pre{\hypertarget{ref-survival-package}{}}%
-Therneau, T. M. (2023) \emph{A Package for Survival Analysis in {R}}.
-Manual.
-
-\leavevmode\vadjust pre{\hypertarget{ref-buurenFlexibleImputationMissing2018}{}}%
-van Buuren, S. (2018) \emph{Flexible Imputation of Missing Data.
-{Second} Edition}. Boca Raton, FL: Chapman \& Hall/CRC Press.
-
-\leavevmode\vadjust pre{\hypertarget{ref-vanderpasDifferentCompetingRisks2018}{}}%
-van der Pas, S., Nelissen, R. and Fiocco, M. (2018) Different competing
-risks models for different questions may give similar results in
-arthroplasty registers in the presence of few events. \emph{Acta
-Orthopaedica}, \textbf{89}, 145--151. Taylor \& Francis. DOI:
-\href{https://doi.org/10.1080/17453674.2018.1427314}{10.1080/17453674.2018.1427314}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-vonhippelHowManyImputations2020}{}}%
-von Hippel, P. T. (2020) How {Many Imputations Do You Need}? {A
-Two-stage Calculation Using} a {Quadratic Rule}. \emph{Sociological
-Methods \& Research}, \textbf{49}, 699--718. SAGE Publications Inc. DOI:
-\href{https://doi.org/10.1177/0049124117747303}{10.1177/0049124117747303}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-whiteImputingMissingCovariate2009}{}}%
-White, I. R. and Royston, P. (2009) Imputing missing covariate values
-for the {Cox} model. \emph{Statistics in Medicine}, \textbf{28},
-1982--1998. DOI:
-\href{https://doi.org/10.1002/sim.3618}{10.1002/sim.3618}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-woodEstimationUsePredictions2015}{}}%
-Wood, A. M., Royston, P. and White, I. R. (2015) The estimation and use
-of predictions for the assessment of model performance using large
-samples with multiply imputed data. \emph{Biometrical Journal},
-\textbf{57}, 614--632. DOI:
-\href{https://doi.org/10.1002/bimj.201400004}{10.1002/bimj.201400004}.
-
-\end{CSLReferences}
-
 \bookmarksetup{startatroot}
 
 \hypertarget{why-you-should-avoid-using-multiple-finegray-models-insights-from-attempts-at-simulating-proportional-subdistribution-hazards-data}{%
@@ -5669,211 +4761,6 @@ timepoints, one may also consider to specify models using pseudovalues
 as the outcome variable
 (\protect\hyperlink{ref-kleinRegressionModelingCompeting2005a}{Klein and
 Andersen, 2005}).
-
-\hypertarget{references-3}{%
-\section*{References}\label{references-3}}
-\addcontentsline{toc}{section}{References}
-
-\markright{References}
-
-\hypertarget{refs-5}{}
-\begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-andersenModelsMultiStateSurvival2023}{}}%
-Andersen, P. K. and Ravn, H. (2023) \emph{Models for {Multi-State
-Survival Data}: {Rates}, {Risks}, and {Pseudo-Values}}. CRC Press.
-
-\leavevmode\vadjust pre{\hypertarget{ref-andersenCompetingRisksEpidemiology2012}{}}%
-Andersen, P. K., Geskus, R. B., de Witte, T., et al. (2012) Competing
-risks in epidemiology: Possibilities and pitfalls. \emph{International
-Journal of Epidemiology}, \textbf{41}, 861--870. DOI:
-\href{https://doi.org/10.1093/ije/dyr213}{10.1093/ije/dyr213}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-austinFineGraySubdistributionHazard2021}{}}%
-Austin, P. C., Steyerberg, E. W. and Putter, H. (2021) Fine-{Gray}
-subdistribution hazard models to simultaneously estimate the absolute
-risk of different event types: {Cumulative} total failure probability
-may exceed 1. \emph{Statistics in Medicine}, \textbf{40}, 4200--4212.
-DOI: \href{https://doi.org/10.1002/sim.9023}{10.1002/sim.9023}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bellachWeightedNPMLESubdistribution2019a}{}}%
-Bellach, A., Kosorok, M. R., Rüschendorf, L., et al. (2019) Weighted
-{NPMLE} for the {Subdistribution} of a {Competing Risk}. \emph{Journal
-of the American Statistical Association}, \textbf{114}, 259--270. Taylor
-\& Francis. DOI:
-\href{https://doi.org/10.1080/01621459.2017.1401540}{10.1080/01621459.2017.1401540}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-beyersmannSimulatingCompetingRisks2009}{}}%
-Beyersmann, J., Latouche, A., Buchholz, A., et al. (2009) Simulating
-competing risks data in survival analysis. \emph{Statistics in
-Medicine}, \textbf{28}, 956--971. DOI:
-\href{https://doi.org/10.1002/sim.3516}{10.1002/sim.3516}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-beyersmannCompetingRisksMultistate2012}{}}%
-Beyersmann, J., Allignol, A. and Schumacher, M. (2012) \emph{Competing
-{Risks} and {Multistate Models} with {R}}. Use {R}! New York:
-Springer-Verlag. DOI:
-\href{https://doi.org/10.1007/978-1-4614-2035-4}{10.1007/978-1-4614-2035-4}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-damicoClinicalStatesCirrhosis2018}{}}%
-D'Amico, G., Morabito, A., D'Amico, M., et al. (2018) Clinical states of
-cirrhosis and competing risks. \emph{Journal of Hepatology},
-\textbf{68}, 563--576. DOI:
-\href{https://doi.org/10.1016/j.jhep.2017.10.020}{10.1016/j.jhep.2017.10.020}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-fineProportionalHazardsModel1999}{}}%
-Fine, J. P. and Gray, R. J. (1999) A {Proportional Hazards Model} for
-the {Subdistribution} of a {Competing Risk}. \emph{Journal of the
-American Statistical Association}, \textbf{94}, 496--509. Taylor \&
-Francis. DOI:
-\href{https://doi.org/10.1080/01621459.1999.10474144}{10.1080/01621459.1999.10474144}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-gerdsAbsoluteRiskRegression2012a}{}}%
-Gerds, T. A., Scheike, T. H. and Andersen, P. K. (2012) Absolute risk
-regression for competing risks: Interpretation, link functions, and
-prediction. \emph{Statistics in Medicine}, \textbf{31}, 3921--3930. DOI:
-\href{https://doi.org/10.1002/sim.5459}{10.1002/sim.5459}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-grambauerProportionalSubdistributionHazards2010}{}}%
-Grambauer, N., Schumacher, M. and Beyersmann, J. (2010) Proportional
-subdistribution hazards modeling offers a summary analysis, even if
-misspecified. \emph{Statistics in Medicine}, \textbf{29}, 875--884. DOI:
-\href{https://doi.org/10.1002/sim.3786}{10.1002/sim.3786}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-grayClassKSampleTests1988}{}}%
-Gray, R. J. (1988) A {Class} of {K-Sample Tests} for {Comparing} the
-{Cumulative Incidence} of a {Competing Risk}. \emph{The Annals of
-Statistics}, \textbf{16}, 1141--1154. Institute of Mathematical
-Statistics. Available at: \url{https://www.jstor.org/stable/2241622}
-(accessed 11 May 2021).
-
-\leavevmode\vadjust pre{\hypertarget{ref-hallerFlexibleSimulationCompeting2014}{}}%
-Haller, B. and Ulm, K. (2014) Flexible simulation of competing risks
-data following prespecified subdistribution hazards. \emph{Journal of
-Statistical Computation and Simulation}, \textbf{84}, 2557--2576. Taylor
-\& Francis. DOI:
-\href{https://doi.org/10.1080/00949655.2013.793345}{10.1080/00949655.2013.793345}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-hinchliffeFlexibleParametricModelling2013}{}}%
-Hinchliffe, S. R. and Lambert, P. C. (2013) Flexible parametric
-modelling of cause-specific hazards to estimate cumulative incidence
-functions. \emph{BMC Medical Research Methodology}, \textbf{13}, 13.
-DOI:
-\href{https://doi.org/10.1186/1471-2288-13-13}{10.1186/1471-2288-13-13}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-jeongDirectParametricInference2006}{}}%
-Jeong, J.-H. and Fine, J. (2006) Direct parametric inference for the
-cumulative incidence function. \emph{Journal of the Royal Statistical
-Society: Series C (Applied Statistics)}, \textbf{55}, 187--200. DOI:
-\href{https://doi.org/10.1111/j.1467-9876.2006.00532.x}{10.1111/j.1467-9876.2006.00532.x}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-kantidakisStatisticalModelsMachine2023}{}}%
-Kantidakis, G., Putter, H., Litière, S., et al. (2023) Statistical
-models versus machine learning for competing risks: Development and
-validation of prognostic models. \emph{BMC Medical Research
-Methodology}, \textbf{23}, 51. DOI:
-\href{https://doi.org/10.1186/s12874-023-01866-z}{10.1186/s12874-023-01866-z}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-kipourouEstimationAdjustedCausespecific2019}{}}%
-Kipourou, D.-K., Charvat, H., Rachet, B., et al. (2019) Estimation of
-the adjusted cause-specific cumulative probability using flexible
-regression models for the cause-specific hazards. \emph{Statistics in
-Medicine}, \textbf{38}, 3896--3910. DOI:
-\href{https://doi.org/10.1002/sim.8209}{10.1002/sim.8209}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-kleinRegressionModelingCompeting2005a}{}}%
-Klein, J. P. and Andersen, P. K. (2005) Regression {Modeling} of
-{Competing Risks Data Based} on {Pseudovalues} of the {Cumulative
-Incidence Function}. \emph{Biometrics}, \textbf{61}, 223--229. DOI:
-\href{https://doi.org/10.1111/j.0006-341X.2005.031209.x}{10.1111/j.0006-341X.2005.031209.x}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-lambertFlexibleParametricModelling2017}{}}%
-Lambert, P. C., Wilkes, S. R. and Crowther, M. J. (2017) Flexible
-parametric modelling of the cause-specific cumulative incidence
-function. \emph{Statistics in Medicine}, \textbf{36}, 1429--1446. DOI:
-\href{https://doi.org/10.1002/sim.7208}{10.1002/sim.7208}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-latoucheMisspecifiedRegressionModel2007}{}}%
-Latouche, A., Boisson, V., Chevret, S., et al. (2007) Misspecified
-regression model for the subdistribution hazard of a competing risk.
-\emph{Statistics in Medicine}, \textbf{26}, 965--974. DOI:
-\href{https://doi.org/10.1002/sim.2600}{10.1002/sim.2600}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-latoucheCompetingRisksAnalysis2013}{}}%
-Latouche, A., Allignol, A., Beyersmann, J., et al. (2013) A competing
-risks analysis should report results on all cause-specific hazards and
-cumulative incidence functions. \emph{Journal of Clinical Epidemiology},
-\textbf{66}, 648--653. DOI:
-\href{https://doi.org/10.1016/j.jclinepi.2012.09.017}{10.1016/j.jclinepi.2012.09.017}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-maoEfficientEstimationSemiparametric2017}{}}%
-Mao, L. and Lin, D. Y. (2017) Efficient {Estimation} of {Semiparametric
-Transformation Models} for the {Cumulative Incidence} of {Competing
-Risks}. \emph{Journal of the Royal Statistical Society Series B:
-Statistical Methodology}, \textbf{79}, 573--587. DOI:
-\href{https://doi.org/10.1111/rssb.12177}{10.1111/rssb.12177}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-mozumderDirectLikelihoodInference2018}{}}%
-Mozumder, S. I., Rutherford, M. and Lambert, P. (2018) Direct likelihood
-inference on the cause-specific cumulative incidence function: {A}
-flexible parametric regression modelling approach. \emph{Statistics in
-Medicine}, \textbf{37}, 82--97. DOI:
-\href{https://doi.org/10.1002/sim.7498}{10.1002/sim.7498}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-RJ-2017-062}{}}%
-Ozenne, B., Sørensen, A. L., Scheike, T., et al. (2017)
-{riskRegression}: {Predicting} the risk of an event using cox regression
-models. \emph{The R Journal}, \textbf{9}, 440--460. DOI:
-\href{https://doi.org/10.32614/RJ-2017-062}{10.32614/RJ-2017-062}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-poythressPlanningAnalyzingClinical2020a}{}}%
-Poythress, J. c., Lee, M. Y. and Young, J. (2020) Planning and analyzing
-clinical trials with competing risks: {Recommendations} for choosing
-appropriate statistical methodology. \emph{Pharmaceutical Statistics},
-\textbf{19}, 4--21. DOI:
-\href{https://doi.org/10.1002/pst.1966}{10.1002/pst.1966}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-putterTutorialBiostatisticsCompeting2007}{}}%
-Putter, H., Fiocco, M. and Geskus, R. B. (2007) Tutorial in
-biostatistics: Competing risks and multi-state models. \emph{Statistics
-in Medicine}, \textbf{26}, 2389--2430. DOI:
-\href{https://doi.org/10.1002/sim.2712}{10.1002/sim.2712}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-putterRelationCausespecificHazard2020}{}}%
-Putter, H., Schumacher, M. and van Houwelingen, H. C. (2020) On the
-relation between the cause-specific hazard and the subdistribution rate
-for competing risks data: {The Fine}--{Gray} model revisited.
-\emph{Biometrical Journal}, \textbf{62}, 790--807. DOI:
-\href{https://doi.org/10.1002/bimj.201800274}{10.1002/bimj.201800274}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-saadatiPredictionAccuracyVariable2018}{}}%
-Saadati, M., Beyersmann, J., Kopp-Schneider, A., et al. (2018)
-Prediction accuracy and variable selection for penalized cause-specific
-hazards models. \emph{Biometrical Journal}, \textbf{60}, 288--306. DOI:
-\href{https://doi.org/10.1002/bimj.201600242}{10.1002/bimj.201600242}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-shiConstrainedParametricModel2013}{}}%
-Shi, H., Cheng, Y. and Jeong, J.-H. (2013) Constrained parametric model
-for simultaneous inference of two cumulative incidence functions.
-\emph{Biometrical Journal}, \textbf{55}, 82--96. DOI:
-\href{https://doi.org/10.1002/bimj.201200011}{10.1002/bimj.201200011}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-shimoniLongtermSurvivalLate2016}{}}%
-Shimoni, A., Labopin, M., Savani, B., et al. (2016) Long-term survival
-and late events after allogeneic stem cell transplantation from
-{HLA-matched} siblings for acute myeloid leukemia with myeloablative
-compared to reduced-intensity conditioning: A report on behalf of the
-acute leukemia working party of {European} group for blood and marrow
-transplantation. \emph{Journal of Hematology \& Oncology}, \textbf{9},
-118. DOI:
-\href{https://doi.org/10.1186/s13045-016-0347-1}{10.1186/s13045-016-0347-1}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-wolbersPrognosticModelsCompeting2009}{}}%
-Wolbers, M., Koller, M. T., Witteman, J. C. M., et al. (2009) Prognostic
-{Models With Competing Risks}: {Methods} and {Application} to {Coronary
-Risk Prediction}. \emph{Epidemiology}, \textbf{20}, 555--561. Lippincott
-Williams \& Wilkins.
-
-\end{CSLReferences}
 
 \bookmarksetup{startatroot}
 
@@ -6722,20 +5609,132 @@ T-cell expansion and observe that the CD4+ T-cells show the strongest
 association with the development of alloimmune responses. Higher CD4
 counts increase the risk of GvHD and decrease the risk of relapse.
 
-\hypertarget{references-4}{%
-\section*{References}\label{references-4}}
-\addcontentsline{toc}{section}{References}
+\bookmarksetup{startatroot}
 
-\markright{References}
+\hypertarget{general-discussion}{%
+\chapter{General Discussion}\label{general-discussion}}
 
-\hypertarget{refs-6}{}
+\hypertarget{future-research}{%
+\section{Future research}\label{future-research}}
+
+\ldots{}
+
+\bookmarksetup{startatroot}
+
+\hypertarget{references}{%
+\chapter*{References}\label{references}}
+\addcontentsline{toc}{chapter}{References}
+
+\markboth{References}{References}
+
+\hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-adesMyelodysplasticSyndromes2014}{}}%
+Adès, L., Itzykson, R. and Fenaux, P. (2014) Myelodysplastic syndromes.
+\emph{The Lancet}, \textbf{383}, 2239--2252. DOI:
+\href{https://doi.org/10.1016/S0140-6736(13)61901-7}{10.1016/S0140-6736(13)61901-7}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-allignolSoftwareFittingNonstandard2010}{}}%
+Allignol, A. and Beyersmann, J. (2010) Software for fitting nonstandard
+proportional subdistribution hazards models. \emph{Biostatistics},
+\textbf{11}, 674--675. DOI:
+\href{https://doi.org/10.1093/biostatistics/kxq018}{10.1093/biostatistics/kxq018}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-andersenModelsMultiStateSurvival2023}{}}%
+Andersen, P. K. and Ravn, H. (2023) \emph{Models for {Multi-State
+Survival Data}: {Rates}, {Risks}, and {Pseudo-Values}}. CRC Press.
+
+\leavevmode\vadjust pre{\hypertarget{ref-andersenCompetingRisksMultistate2002}{}}%
+Andersen, P. K., Abildstrom, S. Z. and Rosthøj, S. (2002) Competing
+risks as a multi-state model. \emph{Statistical Methods in Medical
+Research}, \textbf{11}, 203--215. SAGE Publications Ltd STM. DOI:
+\href{https://doi.org/10.1191/0962280202sm281ra}{10.1191/0962280202sm281ra}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-andersenCompetingRisksEpidemiology2012}{}}%
+Andersen, P. K., Geskus, R. B., de Witte, T., et al. (2012) Competing
+risks in epidemiology: Possibilities and pitfalls. \emph{International
+Journal of Epidemiology}, \textbf{41}, 861--870. DOI:
+\href{https://doi.org/10.1093/ije/dyr213}{10.1093/ije/dyr213}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-andrinopoulouDynamicPredictionOutcome2015}{}}%
 Andrinopoulou, E.-R., Rizopoulos, D., Geleijnse, M. L., et al. (2015)
 Dynamic prediction of outcome for patients with severe aortic stenosis:
 Application of joint models for longitudinal and time-to-event data.
 \emph{BMC Cardiovascular Disorders}, \textbf{15}, 28. DOI:
 \href{https://doi.org/10.1186/s12872-015-0035-z}{10.1186/s12872-015-0035-z}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-antunesDealingMissingInformation2021}{}}%
+Antunes, L., Mendonça, D., Bento, M. J., et al. (2021) Dealing with
+missing information on covariates for excess mortality hazard regression
+models -- {Making} the imputation model compatible with the substantive
+model. \emph{Statistical Methods in Medical Research}, \textbf{30},
+2256--2268. SAGE Publications Ltd STM. DOI:
+\href{https://doi.org/10.1177/09622802211031615}{10.1177/09622802211031615}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-archerDevelopmentExternalValidation2022}{}}%
+Archer, L., Koshiaris, C., Lay-Flurrie, S., et al. (2022) Development
+and external validation of a risk prediction model for falls in patients
+with an indication for antihypertensive treatment: Retrospective cohort
+study. \emph{BMJ}, \textbf{379}, e070918. British Medical Journal
+Publishing Group. DOI:
+\href{https://doi.org/10.1136/bmj-2022-070918}{10.1136/bmj-2022-070918}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-armandDiseaseRiskIndex2012}{}}%
+Armand, P., Gibson, C. J., Cutler, C., et al. (2012) A disease risk
+index for patients undergoing allogeneic stem cell transplantation.
+\emph{Blood}, \textbf{120}, 905--913. DOI:
+\href{https://doi.org/10.1182/blood-2012-03-418202}{10.1182/blood-2012-03-418202}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-armandValidationRefinementDisease2014}{}}%
+Armand, P., Kim, H. T., Logan, B. R., et al. (2014) Validation and
+refinement of the {Disease Risk Index} for allogeneic stem cell
+transplantation. \emph{Blood}, \textbf{123}, 3664--3671. DOI:
+\href{https://doi.org/10.1182/blood-2014-01-552984}{10.1182/blood-2014-01-552984}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-austinFineGraySubdistributionHazard2021}{}}%
+Austin, P. C., Steyerberg, E. W. and Putter, H. (2021) Fine-{Gray}
+subdistribution hazard models to simultaneously estimate the absolute
+risk of different event types: {Cumulative} total failure probability
+may exceed 1. \emph{Statistics in Medicine}, \textbf{40}, 4200--4212.
+DOI: \href{https://doi.org/10.1002/sim.9023}{10.1002/sim.9023}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bakoyannisModellingCompetingRisks2010}{}}%
+Bakoyannis, G., Siannis, F. and Touloumi, G. (2010) Modelling competing
+risks data with missing cause of failure. \emph{Statistics in Medicine},
+\textbf{29}, 3172--3185. DOI:
+\href{https://doi.org/10.1002/sim.4133}{10.1002/sim.4133}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bartlettMissingCovariatesCompeting2016}{}}%
+Bartlett, J. W. and Taylor, J. M. G. (2016) Missing covariates in
+competing risks analysis. \emph{Biostatistics}, \textbf{17}, 751--763.
+Oxford Academic. DOI:
+\href{https://doi.org/10.1093/biostatistics/kxw019}{10.1093/biostatistics/kxw019}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bartlettMultipleImputationCovariates2015}{}}%
+Bartlett, J. W., Seaman, S. R., White, I. R., et al. (2015) Multiple
+imputation of covariates by fully conditional specification:
+{Accommodating} the substantive model. \emph{Statistical Methods in
+Medical Research}, \textbf{24}, 462--487. SAGE Publications Ltd STM.
+DOI:
+\href{https://doi.org/10.1177/0962280214521348}{10.1177/0962280214521348}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bartlettSmcfcsMultipleImputation2022}{}}%
+Bartlett, J. W., Keogh, R. H. and Bonneville, E. F. (2022) \emph{Smcfcs:
+{Multiple} Imputation of Covariates by Substantive Model Compatible
+Fully Conditional Specification}. Manual.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bellHandlingMissingData2014}{}}%
+Bell, M. L., Fiero, M., Horton, N. J., et al. (2014) Handling missing
+data in {RCTs}; a review of the top medical journals. \emph{BMC Medical
+Research Methodology}, \textbf{14}, 118. DOI:
+\href{https://doi.org/10.1186/1471-2288-14-118}{10.1186/1471-2288-14-118}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bellachWeightedNPMLESubdistribution2019a}{}}%
+Bellach, A., Kosorok, M. R., Rüschendorf, L., et al. (2019) Weighted
+{NPMLE} for the {Subdistribution} of a {Competing Risk}. \emph{Journal
+of the American Statistical Association}, \textbf{114}, 259--270. Taylor
+\& Francis. DOI:
+\href{https://doi.org/10.1080/01621459.2017.1401540}{10.1080/01621459.2017.1401540}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-bellucciImmunologicEffectsProphylactic2002}{}}%
 Bellucci, R., Alyea, E. P., Weller, E., et al. (2002) Immunologic
@@ -6744,11 +5743,51 @@ marrow transplantation for multiple myeloma. \emph{Blood}, \textbf{99},
 4610--4617. DOI:
 \href{https://doi.org/10.1182/blood.V99.12.4610}{10.1182/blood.V99.12.4610}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-beyersmannSimulatingCompetingRisks2009}{}}%
+Beyersmann, J., Latouche, A., Buchholz, A., et al. (2009) Simulating
+competing risks data in survival analysis. \emph{Statistics in
+Medicine}, \textbf{28}, 956--971. DOI:
+\href{https://doi.org/10.1002/sim.3516}{10.1002/sim.3516}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-beyersmannCompetingRisksMultistate2012}{}}%
+Beyersmann, J., Allignol, A. and Schumacher, M. (2012) \emph{Competing
+{Risks} and {Multistate Models} with {R}}. Use {R}! New York:
+Springer-Verlag. DOI:
+\href{https://doi.org/10.1007/978-1-4614-2035-4}{10.1007/978-1-4614-2035-4}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-blakeEstimatingTreatmentEffects2020}{}}%
+Blake, H. A., Leyrat, C., Mansfield, K. E., et al. (2020) Estimating
+treatment effects with partially observed covariates using outcome
+regression with missing indicators. \emph{Biometrical Journal},
+\textbf{62}, 428--443. DOI:
+\href{https://doi.org/10.1002/bimj.201900041}{10.1002/bimj.201900041}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bonnevilleWhyYouShould2024}{}}%
+Bonneville, E. F., de Wreede, L. C. and Putter, H. (2024 (in press)) Why
+you should avoid using multiple {Fine}--{Gray} models: Insights from
+(attempts at) simulating proportional subdistribution hazards data.
+\emph{Journal of the Royal Statistical Society Series A: Statistics in
+Society}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bonnevilleMultipleImputationCausespecific2022}{}}%
+Bonneville, E. F., Resche-Rigon, M., Schetelig, J., et al. (2022)
+Multiple imputation for cause-specific {Cox} models: {Assessing} methods
+for estimation and prediction. \emph{Statistical Methods in Medical
+Research}, \textbf{31}, 1860--1880. SAGE Publications Ltd STM. DOI:
+\href{https://doi.org/10.1177/09622802221102623}{10.1177/09622802221102623}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-boschImmuneReconstitutionAntithymocyte2012a}{}}%
 Bosch, M., Dhadda, M., Hoegh-Petersen, M., et al. (2012) Immune
 reconstitution after anti-thymocyte globulin-conditioned hematopoietic
 cell transplantation. \emph{Cytotherapy}, \textbf{14}, 1258--1275. DOI:
 \href{https://doi.org/10.3109/14653249.2012.715243}{10.3109/14653249.2012.715243}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-burtonMissingCovariateData2004}{}}%
+Burton, A. and Altman, D. G. (2004) Missing covariate data within cancer
+prognostic studies: A review of current reporting and proposed
+guidelines. \emph{British Journal of Cancer}, \textbf{91}, 4--8. Nature
+Publishing Group. DOI:
+\href{https://doi.org/10.1038/sj.bjc.6601907}{10.1038/sj.bjc.6601907}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-buscaInvivoExvivoCell2017}{}}%
 Busca, A. and Aversa, F. (2017) In-vivo or ex-vivo {T} cell depletion or
@@ -6757,12 +5796,90 @@ transplantation. \emph{Expert Opinion on Biological Therapy},
 \textbf{17}, 1401--1415. Taylor \& Francis. DOI:
 \href{https://doi.org/10.1080/14712598.2017.1369949}{10.1080/14712598.2017.1369949}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-buurenMiceMultivariateImputation2011}{}}%
+Buuren, S. van and Groothuis-Oudshoorn, K. (2011) Mice: {Multivariate
+Imputation} by {Chained Equations} in {R}. \emph{Journal of Statistical
+Software}, \textbf{45}, 1--67. DOI:
+\href{https://doi.org/10.18637/jss.v045.i03}{10.18637/jss.v045.i03}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-carpenterMissingDataStatistical2021}{}}%
+Carpenter, J. R. and Smuk, M. (2021) Missing data: {A} statistical
+framework for practice. \emph{Biometrical Journal}, \textbf{63},
+915--947. DOI:
+\href{https://doi.org/10.1002/bimj.202000196}{10.1002/bimj.202000196}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-carrollHowAreMissing2020}{}}%
+Carroll, O. U., Morris, T. P. and Keogh, R. H. (2020) How are missing
+data in covariates handled in observational time-to-event studies in
+oncology? {A} systematic review. \emph{BMC Medical Research
+Methodology}, \textbf{20}, 134. DOI:
+\href{https://doi.org/10.1186/s12874-020-01018-7}{10.1186/s12874-020-01018-7}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-cliftLivingRiskPrediction2020}{}}%
+Clift, A. K., Coupland, C. A. C., Keogh, R. H., et al. (2020) Living
+risk prediction algorithm ({QCOVID}) for risk of hospital admission and
+mortality from coronavirus 19 in adults: National derivation and
+validation cohort study. \emph{BMJ}, \textbf{371}, m3731. British
+Medical Journal Publishing Group. DOI:
+\href{https://doi.org/10.1136/bmj.m3731}{10.1136/bmj.m3731}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-coxPartialLikelihood1975}{}}%
+Cox, D. R. (1975) Partial likelihood. \emph{Biometrika}, \textbf{62},
+269--276. Oxford Academic. DOI:
+\href{https://doi.org/10.1093/biomet/62.2.269}{10.1093/biomet/62.2.269}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-damicoClinicalStatesCirrhosis2018}{}}%
+D'Amico, G., Morabito, A., D'Amico, M., et al. (2018) Clinical states of
+cirrhosis and competing risks. \emph{Journal of Hepatology},
+\textbf{68}, 563--576. DOI:
+\href{https://doi.org/10.1016/j.jhep.2017.10.020}{10.1016/j.jhep.2017.10.020}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-dewreedeMstatePackageEstimation2010}{}}%
+de Wreede, L. C., Fiocco, M. and Putter, H. (2010) The mstate package
+for estimation and prediction in non- and semi-parametric multi-state
+and competing risks models. \emph{Computer Methods and Programs in
+Biomedicine}, \textbf{99}, 261--274. DOI:
+\href{https://doi.org/10.1016/j.cmpb.2010.01.001}{10.1016/j.cmpb.2010.01.001}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-dewreedeMstatePackageAnalysis2011}{}}%
+de Wreede, L. C., Fiocco, M. and Putter, H. (2011) Mstate: {An R
+Package} for the {Analysis} of {Competing Risks} and {Multi-State
+Models}. \emph{Journal of Statistical Software}, \textbf{38}, 1--30.
+DOI:
+\href{https://doi.org/10.18637/jss.v038.i07}{10.18637/jss.v038.i07}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-dekkerReconstitutionCellSubsets2020a}{}}%
 Dekker, L., de Koning, C., Lindemans, C., et al. (2020) Reconstitution
 of {T Cell Subsets Following Allogeneic Hematopoietic Cell
 Transplantation}. \emph{Cancers}, \textbf{12}, 1974. Multidisciplinary
 Digital Publishing Institute. DOI:
 \href{https://doi.org/10.3390/cancers12071974}{10.3390/cancers12071974}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-delgadoSurvivalAnalysisHematologic2014}{}}%
+Delgado, J., Pereira, A., Villamor, N., et al. (2014) Survival analysis
+in hematologic malignancies: Recommendations for clinicians.
+\emph{Haematologica}, \textbf{99}, 1410--1420. DOI:
+\href{https://doi.org/10.3324/haematol.2013.100784}{10.3324/haematol.2013.100784}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-delordMultipleImputationCompeting2016}{}}%
+Delord, M. and Génin, E. (2016) Multiple imputation for competing risks
+regression with interval-censored data. \emph{Journal of Statistical
+Computation and Simulation}, \textbf{86}, 2217--2228. Taylor \& Francis.
+DOI:
+\href{https://doi.org/10.1080/00949655.2015.1106543}{10.1080/00949655.2015.1106543}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-demirtasComputingPointbiserialCorrelation2016}{}}%
+Demirtas, H. and Hedeker, D. (2016) Computing the {Point-biserial
+Correlation} under {Any Underlying Continuous Distribution}.
+\emph{Communications in Statistics - Simulation and Computation},
+\textbf{45}, 2744--2751. Taylor \& Francis. DOI:
+\href{https://doi.org/10.1080/03610918.2014.920883}{10.1080/03610918.2014.920883}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-dondersReviewGentleIntroduction2006}{}}%
+Donders, A. R. T., van der Heijden, G. J. M. G., Stijnen, T., et al.
+(2006) Review: {A} gentle introduction to imputation of missing values.
+\emph{Journal of Clinical Epidemiology}, \textbf{59}, 1087--1091. DOI:
+\href{https://doi.org/10.1016/j.jclinepi.2006.01.014}{10.1016/j.jclinepi.2006.01.014}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-dunbarRelationshipCirculatingNatural2008}{}}%
 Dunbar, E. M., Buzzeo, M. P., Levine, J. B., et al. (2008) The
@@ -6794,10 +5911,37 @@ cell sources. \emph{Expert Review of Clinical Immunology}, \textbf{15},
 735--751. Taylor \& Francis. DOI:
 \href{https://doi.org/10.1080/1744666X.2019.1612746}{10.1080/1744666X.2019.1612746}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-erlerDealingMissingCovariates2016}{}}%
+Erler, N. S., Rizopoulos, D., Rosmalen, J. van, et al. (2016) Dealing
+with missing covariates in epidemiologic studies: A comparison between
+multiple imputation and a full {Bayesian} approach. \emph{Statistics in
+Medicine}, \textbf{35}, 2955--2974. DOI:
+\href{https://doi.org/10.1002/sim.6944}{10.1002/sim.6944}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-erlerJointAIJointAnalysis2021}{}}%
+Erler, N. S., Rizopoulos, D. and Lesaffre, E. M. E. H. (2021) {JointAI}:
+{Joint Analysis} and {Imputation} of {Incomplete Data} in {R}.
+\emph{Journal of Statistical Software}, \textbf{100}, 1--56. DOI:
+\href{https://doi.org/10.18637/jss.v100.i20}{10.18637/jss.v100.i20}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-falcaroEstimatingExcessHazard2015}{}}%
+Falcaro, M., Nur, U., Rachet, B., et al. (2015) Estimating {Excess
+Hazard Ratios} and {Net Survival When Covariate Data Are Missing}:
+{Strategies} for {Multiple Imputation}. \emph{Epidemiology},
+\textbf{26}, 421--428. DOI:
+\href{https://doi.org/10.1097/EDE.0000000000000283}{10.1097/EDE.0000000000000283}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-falkenburgGraftTumorEffects2017}{}}%
 Falkenburg, J. H. F. and Jedema, I. (2017) Graft versus tumor effects
 and why people relapse. \emph{Hematology}, \textbf{2017}, 693--698. DOI:
 \href{https://doi.org/10.1182/asheducation-2017.1.693}{10.1182/asheducation-2017.1.693}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-fineProportionalHazardsModel1999}{}}%
+Fine, J. P. and Gray, R. J. (1999) A {Proportional Hazards Model} for
+the {Subdistribution} of a {Competing Risk}. \emph{Journal of the
+American Statistical Association}, \textbf{94}, 496--509. Taylor \&
+Francis. DOI:
+\href{https://doi.org/10.1080/01621459.1999.10474144}{10.1080/01621459.1999.10474144}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-fleischhauerEffectTcellepitopeMatching2012}{}}%
 Fleischhauer, K., Shaw, B. E., Gooley, T., et al. (2012) Effect of
@@ -6812,6 +5956,24 @@ transfer of immune cells or the art of donor lymphocyte infusion.
 \emph{The EBMT Handbook: Hematopoietic Stem Cell Transplantation and
 Cellular Therapies}, 443--448. Springer International Publishing.
 
+\leavevmode\vadjust pre{\hypertarget{ref-gaspariniRsimsumSummariseResults2018}{}}%
+Gasparini, A. (2018) Rsimsum: {Summarise} results from {Monte Carlo}
+simulation studies. \emph{Journal of Open Source Software}, \textbf{3},
+739. DOI:
+\href{https://doi.org/10.21105/joss.00739}{10.21105/joss.00739}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-gerdsAbsoluteRiskRegression2012a}{}}%
+Gerds, T. A., Scheike, T. H. and Andersen, P. K. (2012) Absolute risk
+regression for competing risks: Interpretation, link functions, and
+prediction. \emph{Statistics in Medicine}, \textbf{31}, 3921--3930. DOI:
+\href{https://doi.org/10.1002/sim.5459}{10.1002/sim.5459}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-geskusCauseSpecificCumulativeIncidence2011}{}}%
+Geskus, R. B. (2011) Cause-{Specific Cumulative Incidence Estimation}
+and the {Fine} and {Gray Model Under Both Left Truncation} and {Right
+Censoring}. \emph{Biometrics}, \textbf{67}, 39--49. DOI:
+\href{https://doi.org/10.1111/j.1541-0420.2010.01420.x}{10.1111/j.1541-0420.2010.01420.x}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-gooptuEffectSirolimusImmune2019}{}}%
 Gooptu, M., Kim, H. T., Howard, A., et al. (2019) Effect of {Sirolimus}
 on {Immune Reconstitution Following Myeloablative Allogeneic Stem Cell
@@ -6822,6 +5984,33 @@ Trial Comparing Tacrolimus}/{Sirolimus} and {Tacrolimus}/{Methotrexate}
 2143--2151. DOI:
 \href{https://doi.org/10.1016/j.bbmt.2019.06.029}{10.1016/j.bbmt.2019.06.029}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-gorgizadehImputationApproachUsing2022a}{}}%
+Gorgi Zadeh, S., Behning, C. and Schmid, M. (2022) An imputation
+approach using subdistribution weights for deep survival analysis with
+competing events. \emph{Scientific Reports}, \textbf{12}, 3815. Nature
+Publishing Group. DOI:
+\href{https://doi.org/10.1038/s41598-022-07828-7}{10.1038/s41598-022-07828-7}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-grambauerProportionalSubdistributionHazards2010}{}}%
+Grambauer, N., Schumacher, M. and Beyersmann, J. (2010) Proportional
+subdistribution hazards modeling offers a summary analysis, even if
+misspecified. \emph{Statistics in Medicine}, \textbf{29}, 875--884. DOI:
+\href{https://doi.org/10.1002/sim.3786}{10.1002/sim.3786}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-grayClassKSampleTests1988}{}}%
+Gray, R. J. (1988) A {Class} of {K-Sample Tests} for {Comparing} the
+{Cumulative Incidence} of a {Competing Risk}. \emph{The Annals of
+Statistics}, \textbf{16}, 1141--1154. Institute of Mathematical
+Statistics. Available at: \url{https://www.jstor.org/stable/2241622}
+(accessed 11 May 2021).
+
+\leavevmode\vadjust pre{\hypertarget{ref-groenwoldMissingCovariateData2012}{}}%
+Groenwold, R. H. H., White, I. R., Donders, A. R. T., et al. (2012)
+Missing covariate data in clinical research: When and when not to use
+the missing-indicator method for analysis. \emph{CMAJ}, \textbf{184},
+1265--1269. CMAJ. DOI:
+\href{https://doi.org/10.1503/cmaj.110977}{10.1503/cmaj.110977}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-guillaumeEscalatedLymphodepletionFollowed2012}{}}%
 Guillaume, T., Gaugler, B., Chevallier, P., et al. (2012) Escalated
 lymphodepletion followed by donor lymphocyte infusion can induce a
@@ -6830,10 +6019,46 @@ Marrow Transplantation}, \textbf{47}, 1112--1117. Nature Publishing
 Group. DOI:
 \href{https://doi.org/10.1038/bmt.2011.231}{10.1038/bmt.2011.231}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-hallerFlexibleSimulationCompeting2014}{}}%
+Haller, B. and Ulm, K. (2014) Flexible simulation of competing risks
+data following prespecified subdistribution hazards. \emph{Journal of
+Statistical Computation and Simulation}, \textbf{84}, 2557--2576. Taylor
+\& Francis. DOI:
+\href{https://doi.org/10.1080/00949655.2013.793345}{10.1080/00949655.2013.793345}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hans.y.SecondaryCytogeneticAbnormalities2021}{}}%
+Han S.Y., Mrozek K., Voutsinas J., et al. (2021) Secondary cytogenetic
+abnormalities in core-binding factor {AML} harboring inv(16) vs t(8;21).
+\emph{Blood Advances}, \textbf{5}, 2481--2489. United States: American
+Society of Hematology. DOI:
+\href{https://doi.org/10.1182/BLOODADVANCES.2020003605}{10.1182/BLOODADVANCES.2020003605}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hansend.k.ELN2017Genetic2021}{}}%
+Hansen D.K., Kim J., Thompson Z., et al. (2021) {ELN} 2017 {Genetic Risk
+Stratification Predicts Survival} of {Acute Myeloid Leukemia Patients
+Receiving Allogeneic Hematopoietic Stem Cell Transplantation}.
+\emph{Transplantation and Cellular Therapy}, \textbf{27},
+256.e1--256.e7. Netherlands: Elsevier B.V. DOI:
+\href{https://doi.org/10.1016/j.jtct.2020.12.021}{10.1016/j.jtct.2020.12.021}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-hassanCMVReactivationInitiates2022}{}}%
 Hassan, N., Eldershaw, S., Stephens, C., et al. (2022) {CMV}
 reactivation initiates long-term expansion and differentiation of the
 {NK} cell repertoire. \emph{Frontiers in Immunology}, \textbf{13}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hayatirezvanRiseMultipleImputation2015}{}}%
+Hayati Rezvan, P., Lee, K. J. and Simpson, J. A. (2015) The rise of
+multiple imputation: A review of the reporting and implementation of the
+method in medical research. \emph{BMC Medical Research Methodology},
+\textbf{15}, 30. DOI:
+\href{https://doi.org/10.1186/s12874-015-0022-1}{10.1186/s12874-015-0022-1}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hinchliffeFlexibleParametricModelling2013}{}}%
+Hinchliffe, S. R. and Lambert, P. C. (2013) Flexible parametric
+modelling of cause-specific hazards to estimate cumulative incidence
+functions. \emph{BMC Medical Research Methodology}, \textbf{13}, 13.
+DOI:
+\href{https://doi.org/10.1186/1471-2288-13-13}{10.1186/1471-2288-13-13}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-horowitzGraftversusleukemiaReactionsBone1990}{}}%
 Horowitz, M., Gale, R., Sondel, P., et al. (1990) Graft-versus-leukemia
@@ -6841,12 +6066,63 @@ reactions after bone marrow transplantation. \emph{Blood}, \textbf{75},
 555--562. DOI:
 \href{https://doi.org/10.1182/blood.V75.3.555.555}{10.1182/blood.V75.3.555.555}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-hughesAccountingMissingData2019}{}}%
+Hughes, R. A., Heron, J., Sterne, J. A. C., et al. (2019) Accounting for
+missing data in statistical analyses: Multiple imputation is not always
+the answer. \emph{International Journal of Epidemiology}, \textbf{48},
+1294--1304. DOI:
+\href{https://doi.org/10.1093/ije/dyz032}{10.1093/ije/dyz032}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-inouey.ImpactConditioningIntensity2021}{}}%
+Inoue Y., Nakano N., Fuji S., et al. (2021) Impact of conditioning
+intensity and regimen on transplant outcomes in patients with adult
+{T-cell} leukemia-lymphoma. \emph{Bone Marrow Transplantation},
+\textbf{56}, 2964--2974. United Kingdom: Springer Nature. DOI:
+\href{https://doi.org/10.1038/s41409-021-01445-0}{10.1038/s41409-021-01445-0}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-itoImpactLowdoseAntithymocyte2020}{}}%
 Ito, A., Kitano, S., Tajima, K., et al. (2020) Impact of low-dose
 anti-thymocyte globulin on immune reconstitution after allogeneic
 hematopoietic cell transplantation. \emph{International Journal of
 Hematology}, \textbf{111}, 120--130. DOI:
 \href{https://doi.org/10.1007/s12185-019-02756-1}{10.1007/s12185-019-02756-1}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-jeongDirectParametricInference2006}{}}%
+Jeong, J.-H. and Fine, J. (2006) Direct parametric inference for the
+cumulative incidence function. \emph{Journal of the Royal Statistical
+Society: Series C (Applied Statistics)}, \textbf{55}, 187--200. DOI:
+\href{https://doi.org/10.1111/j.1467-9876.2006.00532.x}{10.1111/j.1467-9876.2006.00532.x}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kantidakisStatisticalModelsMachine2023}{}}%
+Kantidakis, G., Putter, H., Litière, S., et al. (2023) Statistical
+models versus machine learning for competing risks: Development and
+validation of prognostic models. \emph{BMC Medical Research
+Methodology}, \textbf{23}, 51. DOI:
+\href{https://doi.org/10.1186/s12874-023-01866-z}{10.1186/s12874-023-01866-z}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-keoghMultipleImputationCox2018}{}}%
+Keogh, R. H. and Morris, T. P. (2018) Multiple imputation in {Cox}
+regression when there are time-varying effects of covariates.
+\emph{Statistics in Medicine}, \textbf{37}, 3661--3678. DOI:
+\href{https://doi.org/10.1002/sim.7842}{10.1002/sim.7842}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kipourouEstimationAdjustedCausespecific2019}{}}%
+Kipourou, D.-K., Charvat, H., Rachet, B., et al. (2019) Estimation of
+the adjusted cause-specific cumulative probability using flexible
+regression models for the cause-specific hazards. \emph{Statistics in
+Medicine}, \textbf{38}, 3896--3910. DOI:
+\href{https://doi.org/10.1002/sim.8209}{10.1002/sim.8209}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kleinRegressionModelingCompeting2005a}{}}%
+Klein, J. P. and Andersen, P. K. (2005) Regression {Modeling} of
+{Competing Risks Data Based} on {Pseudovalues} of the {Cumulative
+Incidence Function}. \emph{Biometrics}, \textbf{61}, 223--229. DOI:
+\href{https://doi.org/10.1111/j.0006-341X.2005.031209.x}{10.1111/j.0006-341X.2005.031209.x}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kleinSurvivalAnalysisTechniques2006}{}}%
+Klein, J. P. and Moeschberger, M. L. (2003) \emph{Survival Analysis:
+{Techniques} for Censored and Truncated Data (2nd Edition)}. New York:
+Springer-Verlag.
 
 \leavevmode\vadjust pre{\hypertarget{ref-kosterCompetitiveRepopulationAlloImmunologic2023}{}}%
 Koster, E. A. S., von dem Borne, P. A., van Balen, P., et al. (2023)
@@ -6864,11 +6140,76 @@ Leukemia}~and~{Myelodysplastic Syndromes}. \emph{Biology of Blood and
 Marrow Transplantation}, \textbf{19}, 562--568. DOI:
 \href{https://doi.org/10.1016/j.bbmt.2012.12.013}{10.1016/j.bbmt.2012.12.013}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-krogerIndicationManagementAllogeneic2024}{}}%
+Kröger, N., Bacigalupo, A., Barbui, T., et al. (2024) Indication and
+management of allogeneic haematopoietic stem-cell transplantation in
+myelofibrosis: Updated recommendations by the {EBMT}/{ELN International
+Working Group}. \emph{The Lancet Haematology}, \textbf{11}, e62--e74.
+Elsevier. DOI:
+\href{https://doi.org/10.1016/S2352-3026(23)00305-8}{10.1016/S2352-3026(23)00305-8}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lambertFlexibleParametricModelling2017}{}}%
+Lambert, P. C., Wilkes, S. R. and Crowther, M. J. (2017) Flexible
+parametric modelling of the cause-specific cumulative incidence
+function. \emph{Statistics in Medicine}, \textbf{36}, 1429--1446. DOI:
+\href{https://doi.org/10.1002/sim.7208}{10.1002/sim.7208}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-landauTargetsPackageDynamic2021}{}}%
 Landau, W. M. (2021) The targets {R} package: A dynamic {Make-like}
 function-oriented pipeline toolkit for reproducibility and
 high-performance computing. \emph{Journal of Open Source Software},
 \textbf{6}, 2959.
+
+\leavevmode\vadjust pre{\hypertarget{ref-latoucheMisspecifiedRegressionModel2007}{}}%
+Latouche, A., Boisson, V., Chevret, S., et al. (2007) Misspecified
+regression model for the subdistribution hazard of a competing risk.
+\emph{Statistics in Medicine}, \textbf{26}, 965--974. DOI:
+\href{https://doi.org/10.1002/sim.2600}{10.1002/sim.2600}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-latoucheCompetingRisksAnalysis2013}{}}%
+Latouche, A., Allignol, A., Beyersmann, J., et al. (2013) A competing
+risks analysis should report results on all cause-specific hazards and
+cumulative incidence functions. \emph{Journal of Clinical Epidemiology},
+\textbf{66}, 648--653. DOI:
+\href{https://doi.org/10.1016/j.jclinepi.2012.09.017}{10.1016/j.jclinepi.2012.09.017}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lauMissingnessSettingCompeting2018}{}}%
+Lau, B. and Lesko, C. (2018) Missingness in the {Setting} of {Competing
+Risks}: From {Missing Values} to {Missing Potential Outcomes}.
+\emph{Current Epidemiology Reports}, \textbf{5}, 153--159. DOI:
+\href{https://doi.org/10.1007/s40471-018-0142-3}{10.1007/s40471-018-0142-3}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-leeMultipleImputationPresence2017}{}}%
+Lee, K. J. and Carlin, J. B. (2017) Multiple imputation in the presence
+of non-normal data. \emph{Statistics in Medicine}, \textbf{36},
+606--617. DOI:
+\href{https://doi.org/10.1002/sim.7173}{10.1002/sim.7173}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-leeFrameworkTreatmentReporting2021}{}}%
+Lee, K. J., Tilling, K. M., Cornish, R. P., et al. (2021) Framework for
+the treatment and reporting of missing data in observational studies:
+{The Treatment And Reporting} of {Missing} data in {Observational
+Studies} framework. \emph{Journal of Clinical Epidemiology},
+\textbf{134}, 79--88. DOI:
+\href{https://doi.org/10.1016/j.jclinepi.2021.01.008}{10.1016/j.jclinepi.2021.01.008}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-littleStatisticalAnalysisMissing2019}{}}%
+Little, R. J. A. and Rubin, D. B. (2019) \emph{Statistical {Analysis}
+with {Missing Data}}. John Wiley \& Sons.
+
+\leavevmode\vadjust pre{\hypertarget{ref-madley-dowdProportionMissingData2019}{}}%
+Madley-Dowd, P., Hughes, R., Tilling, K., et al. (2019) The proportion
+of missing data should not be used to guide decisions on multiple
+imputation. \emph{Journal of Clinical Epidemiology}, \textbf{110},
+63--73. DOI:
+\href{https://doi.org/10.1016/j.jclinepi.2019.02.016}{10.1016/j.jclinepi.2019.02.016}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-maoEfficientEstimationSemiparametric2017}{}}%
+Mao, L. and Lin, D. Y. (2017) Efficient {Estimation} of {Semiparametric
+Transformation Models} for the {Cumulative Incidence} of {Competing
+Risks}. \emph{Journal of the Royal Statistical Society Series B:
+Statistical Methodology}, \textbf{79}, 573--587. DOI:
+\href{https://doi.org/10.1111/rssb.12177}{10.1111/rssb.12177}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-marianoAssessmentExtendedCoverageNextGeneration2019}{}}%
 Mariano, L., Zhang, B. M., Osoegawa, K., et al. (2019) Assessment by
@@ -6878,12 +6219,39 @@ Mariano, L., Zhang, B. M., Osoegawa, K., et al. (2019) Assessment by
 Transplantation}, \textbf{25}, 2507--2509. DOI:
 \href{https://doi.org/10.1016/j.bbmt.2019.07.033}{10.1016/j.bbmt.2019.07.033}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-marshallCombiningEstimatesInterest2009}{}}%
+Marshall, A., Altman, D. G., Holder, R. L., et al. (2009) Combining
+estimates of interest in prognostic modelling studies after multiple
+imputation: Current practice and guidelines. \emph{BMC Medical Research
+Methodology}, \textbf{9}, 57. DOI:
+\href{https://doi.org/10.1186/1471-2288-9-57}{10.1186/1471-2288-9-57}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-marshallComparisonImputationMethods2010}{}}%
+Marshall, A., Altman, D. G. and Holder, R. L. (2010) Comparison of
+imputation methods for handling missing covariate data when fitting a
+{Cox} proportional hazards model: A resampling study. \emph{BMC Medical
+Research Methodology}, \textbf{10}, 112. DOI:
+\href{https://doi.org/10.1186/1471-2288-10-112}{10.1186/1471-2288-10-112}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-mccullagh1989generalized}{}}%
+McCullagh, P. and Nelder, J. A. (1989) \emph{Generalized Linear Models,
+Second Edition}. Chapman and {Hall}/{CRC} monographs on statistics and
+applied probability series. Chapman \& Hall.
+
 \leavevmode\vadjust pre{\hypertarget{ref-mccurdySignaturesGVHDRelapse2022}{}}%
 McCurdy, S. R., Radojcic, V., Tsai, H.-L., et al. (2022) Signatures of
 {GVHD} and relapse after posttransplant cyclophosphamide revealed by
 immune profiling and machine learning. \emph{Blood}, \textbf{139},
 608--623. DOI:
 \href{https://doi.org/10.1182/blood.2021013054}{10.1182/blood.2021013054}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-mertensConstructionAssessmentPrediction2020}{}}%
+Mertens, B. J. A., Banzato, E. and de Wreede, L. C. (2020) Construction
+and assessment of prediction rules for binary outcome in the presence of
+missing predictor data using multiple imputation and cross-validation:
+{Methodological} approach and data-based evaluation. \emph{Biometrical
+Journal}, \textbf{62}, 724--741. DOI:
+\href{https://doi.org/10.1002/bimj.201800289}{10.1002/bimj.201800289}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-minculescuEarlyNaturalKiller2016}{}}%
 Minculescu, L., Marquart, H. V., Friis, L. S., et al. (2016) Early
@@ -6893,12 +6261,55 @@ Cell}--{Replete Allogeneic Hematopoietic Stem Cell Transplantation}.
 2187--2193. DOI:
 \href{https://doi.org/10.1016/j.bbmt.2016.09.006}{10.1016/j.bbmt.2016.09.006}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-molenberghsHandbookMissingData2014}{}}%
+Molenberghs, G., Fitzmaurice, G., Kenward, M. G., et al. (2014)
+\emph{Handbook of {Missing Data Methodology}}. CRC Press.
+
+\leavevmode\vadjust pre{\hypertarget{ref-morisotProstateCancerNet2015}{}}%
+Morisot, A., Bessaoud, F., Landais, P., et al. (2015) Prostate cancer:
+Net survival and cause-specific survival rates after multiple
+imputation. \emph{BMC Medical Research Methodology}, \textbf{15}, 54.
+DOI:
+\href{https://doi.org/10.1186/s12874-015-0048-4}{10.1186/s12874-015-0048-4}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-morrisUsingSimulationStudies2019}{}}%
+Morris, T. P., White, I. R. and Crowther, M. J. (2019) Using simulation
+studies to evaluate statistical methods. \emph{Statistics in Medicine},
+\textbf{38}, 2074--2102. DOI:
+\href{https://doi.org/10.1002/sim.8086}{10.1002/sim.8086}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-mozumderDirectLikelihoodInference2018}{}}%
+Mozumder, S. I., Rutherford, M. and Lambert, P. (2018) Direct likelihood
+inference on the cause-specific cumulative incidence function: {A}
+flexible parametric regression modelling approach. \emph{Statistics in
+Medicine}, \textbf{37}, 82--97. DOI:
+\href{https://doi.org/10.1002/sim.7498}{10.1002/sim.7498}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-murrayMultipleImputationReview2018}{}}%
+Murray, J. S. (2018) Multiple {Imputation}: {A Review} of {Practical}
+and {Theoretical Findings}. \emph{Statistical Science}, \textbf{33},
+142--159. DOI:
+\href{https://doi.org/10.1214/18-STS644}{10.1214/18-STS644}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-nikiforowPhaseStudyCD252016}{}}%
 Nikiforow, S., Kim, H. T., Daley, H., et al. (2016) A phase {I} study of
 {CD25}/regulatory {T-cell-depleted} donor lymphocyte infusion for
 relapse after allogeneic stem cell transplantation.
 \emph{Haematologica}, \textbf{101}, 1251--1259. DOI:
 \href{https://doi.org/10.3324/haematol.2015.141176}{10.3324/haematol.2015.141176}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-RJ-2017-062}{}}%
+Ozenne, B., Sørensen, A. L., Scheike, T., et al. (2017)
+{riskRegression}: {Predicting} the risk of an event using cox regression
+models. \emph{The R Journal}, \textbf{9}, 440--460. DOI:
+\href{https://doi.org/10.32614/RJ-2017-062}{10.32614/RJ-2017-062}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-pazd.l.GenomicAnalysisPrimary2021}{}}%
+Paz D.L., Riou J., Verger E., et al. (2021) Genomic analysis of primary
+and secondary myelofibrosis redefines the prognostic impact of {ASXL1}
+mutations: {A FIM} study. \emph{Blood Advances}, \textbf{5}, 1442--1451.
+United States: American Society of Hematology. DOI:
+\href{https://doi.org/10.1182/bloodadvances.2020003444}{10.1182/bloodadvances.2020003444}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-penackSerotherapyThymoglobulinAlemtuzumab2008}{}}%
 Penack, O., Fischer, L., Stroux, A., et al. (2008) Serotherapy with
@@ -6912,6 +6323,63 @@ transplantation. \emph{Bone Marrow Transplantation}, \textbf{41},
 Pinheiro, J., Bates, D. and R Core Team (2023) \emph{Nlme: {Linear} and
 Nonlinear Mixed Effects Models}. Manual.
 
+\leavevmode\vadjust pre{\hypertarget{ref-polverelliImpactComorbiditiesBody2024a}{}}%
+Polverelli, N., Bonneville, E. F., de Wreede, L. C., et al. (2024)
+Impact of comorbidities and body mass index on the outcomes of
+allogeneic hematopoietic cell transplantation in myelofibrosis: {A}
+study on behalf of the {Chronic Malignancies Working Party} of {EBMT}.
+\emph{American journal of hematology}, \textbf{99}, 993---996. DOI:
+\href{https://doi.org/10.1002/ajh.27262}{10.1002/ajh.27262}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-poythressPlanningAnalyzingClinical2020a}{}}%
+Poythress, J. c., Lee, M. Y. and Young, J. (2020) Planning and analyzing
+clinical trials with competing risks: {Recommendations} for choosing
+appropriate statistical methodology. \emph{Pharmaceutical Statistics},
+\textbf{19}, 4--21. DOI:
+\href{https://doi.org/10.1002/pst.1966}{10.1002/pst.1966}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-prenticeAnalysisFailureTimes1978}{}}%
+Prentice, R. L., Kalbfleisch, J. D., Peterson, A. V., et al. (1978) The
+{Analysis} of {Failure Times} in the {Presence} of {Competing Risks}.
+\emph{Biometrics}, \textbf{34}, 541--554. {[}Wiley, International
+Biometric Society{]}. DOI:
+\href{https://doi.org/10.2307/2530374}{10.2307/2530374}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-putterTutorialBiostatisticsCompeting2007}{}}%
+Putter, H., Fiocco, M. and Geskus, R. B. (2007) Tutorial in
+biostatistics: Competing risks and multi-state models. \emph{Statistics
+in Medicine}, \textbf{26}, 2389--2430. DOI:
+\href{https://doi.org/10.1002/sim.2712}{10.1002/sim.2712}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-putterRelationCausespecificHazard2020}{}}%
+Putter, H., Schumacher, M. and van Houwelingen, H. C. (2020) On the
+relation between the cause-specific hazard and the subdistribution rate
+for competing risks data: {The Fine}--{Gray} model revisited.
+\emph{Biometrical Journal}, \textbf{62}, 790--807. DOI:
+\href{https://doi.org/10.1002/bimj.201800274}{10.1002/bimj.201800274}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-quartagnoMultipleImputationDiscrete2019}{}}%
+Quartagno, M. and Carpenter, J. R. (2019) Multiple imputation for
+discrete data: {Evaluation} of the joint latent normal model.
+\emph{Biometrical Journal}, \textbf{61}, 1003--1019. DOI:
+\href{https://doi.org/10.1002/bimj.201800222}{10.1002/bimj.201800222}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rcoreteamLanguageEnvironmentStatistical2020}{}}%
+R Core Team (2020) \emph{R: {A} Language and Environment for Statistical
+Computing}. Manual. Vienna, Austria: R Foundation for Statistical
+Computing.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rcoreteamLanguageEnvironmentStatistical2023}{}}%
+R Core Team (2023) \emph{R: {A} Language and Environment for Statistical
+Computing}. Manual. Vienna, Austria: R Foundation for Statistical
+Computing.
+
+\leavevmode\vadjust pre{\hypertarget{ref-resche-rigonImputingMissingCovariate2012}{}}%
+Resche-Rigon, M., White, I. and Chevret, S. (2012) Imputing missing
+covariate values in presence of competing risk. In: \emph{International
+{Society} for {Clinical Biostatistics Conference}}, Bergen, Norway,
+19-23 August 2012, P22.10, August 2012.
+
 \leavevmode\vadjust pre{\hypertarget{ref-rizopoulosJMPackageJoint2010}{}}%
 Rizopoulos, D. (2010) {JM}: {An R} package for the joint modelling of
 longitudinal and time-to-event data. \emph{Journal of Statistical
@@ -6921,12 +6389,52 @@ Software}, \textbf{35}, 1--33.
 Rizopoulos, D. (2012) \emph{Joint {Models} for {Longitudinal} and
 {Time-to-Event Data}}. 1st edition. Boca Raton: Routledge.
 
+\leavevmode\vadjust pre{\hypertarget{ref-ruanAnalysesCumulativeIncidence2008}{}}%
+Ruan, P. K. and Gray, R. J. (2008) Analyses of cumulative incidence
+functions via non-parametric multiple imputation. \emph{Statistics in
+Medicine}, \textbf{27}, 5709--5724. DOI:
+\href{https://doi.org/10.1002/sim.3402}{10.1002/sim.3402}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rubin:1987}{}}%
+Rubin, D. (1987) \emph{Multiple Imputation for Nonresponse in Surveys}.
+New York: John Wiley \& Sons. DOI:
+\href{https://doi.org/10.1002/9780470316696}{10.1002/9780470316696}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ruckerPresentingSimulationResults2014}{}}%
+Rücker, G. and Schwarzer, G. (2014) Presenting simulation results in a
+nested loop plot. \emph{BMC Medical Research Methodology}, \textbf{14},
+129. DOI:
+\href{https://doi.org/10.1186/1471-2288-14-129}{10.1186/1471-2288-14-129}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-saadatiPredictionAccuracyVariable2018}{}}%
+Saadati, M., Beyersmann, J., Kopp-Schneider, A., et al. (2018)
+Prediction accuracy and variable selection for penalized cause-specific
+hazards models. \emph{Biometrical Journal}, \textbf{60}, 288--306. DOI:
+\href{https://doi.org/10.1002/bimj.201600242}{10.1002/bimj.201600242}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-saccardiBenchmarkingSurvivalOutcomes2023}{}}%
+Saccardi, R., Putter, H., Eikema, D.-J., et al. (2023) Benchmarking of
+survival outcomes following {Haematopoietic Stem Cell Transplantation}
+({HSCT}): An update of the ongoing project of the {European Society} for
+{Blood} and {Marrow Transplantation} ({EBMT}) and {Joint Accreditation
+Committee} of {ISCT} and {EBMT} ({JACIE}). \emph{Bone Marrow
+Transplantation}, \textbf{58}, 659--666. Nature Publishing Group. DOI:
+\href{https://doi.org/10.1038/s41409-023-01924-6}{10.1038/s41409-023-01924-6}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-salzmann-manriqueJointModelingImmune2018a}{}}%
 Salzmann-Manrique, E., Bremm, M., Huenecke, S., et al. (2018) Joint
 {Modeling} of {Immune Reconstitution Post Haploidentical Stem Cell
 Transplantation} in {Pediatric Patients With Acute Leukemia Comparing
 CD34}+-{Selected} to {CD3}/{CD19-Depleted Grafts} in a {Retrospective
 Multicenter Study}. \emph{Frontiers in Immunology}, \textbf{9}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-scheteligLateTreatmentrelatedMortality2019}{}}%
+Schetelig, J., Wreede, L. C. de, Gelder, M. van, et al. (2019) Late
+treatment-related mortality versus competing causes of death after
+allogeneic transplantation for myelodysplastic syndromes and secondary
+acute myeloid leukemia. \emph{Leukemia}, \textbf{33}, 686--695. Nature
+Publishing Group. DOI:
+\href{https://doi.org/10.1038/s41375-018-0302-y}{10.1038/s41375-018-0302-y}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-schmaelterAlterationsPeripheralBlood2021}{}}%
 Schmaelter, A.-K., Waidhauser, J., Kaiser, D., et al. (2021) Alterations
@@ -6943,16 +6451,56 @@ and precedes durable remission following {DLI}. \emph{Blood Advances},
 \textbf{5}, 4485--4499. DOI:
 \href{https://doi.org/10.1182/bloodadvances.2020004073}{10.1182/bloodadvances.2020004073}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-shahComparisonRandomForest2014}{}}%
+Shah, A. D., Bartlett, J. W., Carpenter, J., et al. (2014) Comparison of
+{Random Forest} and {Parametric Imputation Models} for {Imputing Missing
+Data Using MICE}: {A CALIBER Study}. \emph{American Journal of
+Epidemiology}, \textbf{179}, 764--774. DOI:
+\href{https://doi.org/10.1093/aje/kwt312}{10.1093/aje/kwt312}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sharmaa.OutcomesPediatricPatients2021}{}}%
+Sharma A., Huang S., Li Y., et al. (2021) Outcomes of pediatric patients
+with therapy-related myeloid neoplasms. \emph{Bone Marrow
+Transplantation}, \textbf{56}, 2997--3007. United Kingdom: Springer
+Nature. DOI:
+\href{https://doi.org/10.1038/s41409-021-01448-x}{10.1038/s41409-021-01448-x}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-shawImportanceHLADPB1Unrelated2007}{}}%
 Shaw, B. E., Gooley, T. A., Malkki, M., et al. (2007) The importance of
 {HLA-DPB1} in unrelated donor hematopoietic cell transplantation.
 \emph{Blood}, \textbf{110}, 4560--4566. DOI:
 \href{https://doi.org/10.1182/blood-2007-06-095265}{10.1182/blood-2007-06-095265}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-shiConstrainedParametricModel2013}{}}%
+Shi, H., Cheng, Y. and Jeong, J.-H. (2013) Constrained parametric model
+for simultaneous inference of two cumulative incidence functions.
+\emph{Biometrical Journal}, \textbf{55}, 82--96. DOI:
+\href{https://doi.org/10.1002/bimj.201200011}{10.1002/bimj.201200011}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-shimoniLongtermSurvivalLate2016}{}}%
+Shimoni, A., Labopin, M., Savani, B., et al. (2016) Long-term survival
+and late events after allogeneic stem cell transplantation from
+{HLA-matched} siblings for acute myeloid leukemia with myeloablative
+compared to reduced-intensity conditioning: A report on behalf of the
+acute leukemia working party of {European} group for blood and marrow
+transplantation. \emph{Journal of Hematology \& Oncology}, \textbf{9},
+118. DOI:
+\href{https://doi.org/10.1186/s13045-016-0347-1}{10.1186/s13045-016-0347-1}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-simonettaNaturalKillerCells2017}{}}%
 Simonetta, F., Alvarez, M. and Negrin, R. S. (2017) Natural {Killer
 Cells} in {Graft-versus-Host-Disease} after {Allogeneic Hematopoietic
 Cell Transplantation}. \emph{Frontiers in Immunology}, \textbf{8}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-snowdenBenchmarkingSurvivalOutcomes2020}{}}%
+Snowden, J. A., Saccardi, R., Orchard, K., et al. (2020) Benchmarking of
+survival outcomes following haematopoietic stem cell transplantation:
+{A} review of existing processes and the introduction of an
+international system from the {European Society} for {Blood} and {Marrow
+Transplantation} ({EBMT}) and the {Joint Accreditation Committee} of
+{ISCT} and {EBMT} ({JACIE}). \emph{Bone Marrow Transplantation},
+\textbf{55}, 681--694. DOI:
+\href{https://doi.org/10.1038/s41409-019-0718-7}{10.1038/s41409-019-0718-7}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-sternImmunoprofilingRevealsCell2022}{}}%
 Stern, L., McGuire, H. M., Avdic, S., et al. (2022) Immunoprofiling
@@ -6960,6 +6508,39 @@ reveals cell subsets associated with the trajectory of cytomegalovirus
 reactivation post stem cell transplantation. \emph{Nature
 Communications}, \textbf{13}, 2603. Nature Publishing Group. DOI:
 \href{https://doi.org/10.1038/s41467-022-29943-9}{10.1038/s41467-022-29943-9}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sterneMultipleImputationMissing2009}{}}%
+Sterne, J. A., White, I. R., Carlin, J. B., et al. (2009) Multiple
+imputation for missing data in epidemiological and clinical research:
+Potential and pitfalls. \emph{BMJ}, \textbf{338}, b2393. British Medical
+Journal Publishing Group. DOI:
+\href{https://doi.org/10.1136/bmj.b2393}{10.1136/bmj.b2393}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sterneROBINSIToolAssessing2016}{}}%
+Sterne, J. A., Hernán, M. A., Reeves, B. C., et al. (2016) {ROBINS-I}: A
+tool for assessing risk of bias in non-randomised studies of
+interventions. \emph{BMJ}, \textbf{355}, i4919. British Medical Journal
+Publishing Group. DOI:
+\href{https://doi.org/10.1136/bmj.i4919}{10.1136/bmj.i4919}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sullivanTreatmentMissingData2017}{}}%
+Sullivan, T. R., Yelland, L. N., Lee, K. J., et al. (2017) Treatment of
+missing data in follow-up studies of randomised controlled trials: {A}
+systematic review of the literature. \emph{Clinical Trials},
+\textbf{14}, 387--395. SAGE Publications. DOI:
+\href{https://doi.org/10.1177/1740774517703319}{10.1177/1740774517703319}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sullivanShouldMultipleImputation2018}{}}%
+Sullivan, T. R., White, I. R., Salter, A. B., et al. (2018) Should
+multiple imputation be the method of choice for handling missing data in
+randomized trials? \emph{Statistical Methods in Medical Research},
+\textbf{27}, 2610--2626. SAGE Publications Ltd STM. DOI:
+\href{https://doi.org/10.1177/0962280216683570}{10.1177/0962280216683570}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-taylor2002survival}{}}%
+Taylor, J. M. G., Murray, S. and Hsu, C.-H. (2002) Survival estimation
+and testing via multiple imputation. \emph{Statistics \& probability
+letters}, \textbf{58}, 221--232. Elsevier.
 
 \leavevmode\vadjust pre{\hypertarget{ref-survival-package}{}}%
 Therneau, T. M. (2023) \emph{A Package for Survival Analysis in {R}}.
@@ -6980,6 +6561,35 @@ in mice and humans. \emph{Science Translational Medicine}, \textbf{12},
 eabb8969. American Association for the Advancement of Science. DOI:
 \href{https://doi.org/10.1126/scitranslmed.abb8969}{10.1126/scitranslmed.abb8969}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-buurenFlexibleImputationMissing2018}{}}%
+van Buuren, S. (2018) \emph{Flexible Imputation of Missing Data.
+{Second} Edition}. Boca Raton, FL: Chapman \& Hall/CRC Press.
+
+\leavevmode\vadjust pre{\hypertarget{ref-vanbuurens.FlexibleMultivariateImputation1999}{}}%
+van Buuren, S., Oudshoorn, K. and TNO Preventie en Gezondheid (1999)
+\emph{Flexible {Multivariate Imputation} by {MICE}}. January. TNO.
+
+\leavevmode\vadjust pre{\hypertarget{ref-vanbuurenFullyConditionalSpecification2006}{}}%
+van Buuren, S., Brand, J. P. L., Groothuis-Oudshoorn, C. G. M., et al.
+(2006) Fully conditional specification in multivariate imputation.
+\emph{Journal of Statistical Computation and Simulation}, \textbf{76},
+1049--1064. Taylor \& Francis. DOI:
+\href{https://doi.org/10.1080/10629360600810434}{10.1080/10629360600810434}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-vanderpasDifferentCompetingRisks2018}{}}%
+van der Pas, S., Nelissen, R. and Fiocco, M. (2018) Different competing
+risks models for different questions may give similar results in
+arthroplasty registers in the presence of few events. \emph{Acta
+Orthopaedica}, \textbf{89}, 145--151. Taylor \& Francis. DOI:
+\href{https://doi.org/10.1080/17453674.2018.1427314}{10.1080/17453674.2018.1427314}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-vandenbrouckeStrengtheningReportingObservational2007}{}}%
+Vandenbroucke, J. P., Elm, E. von, Altman, D. G., et al. (2007)
+Strengthening the {Reporting} of {Observational Studies} in
+{Epidemiology} ({STROBE}): {Explanation} and {Elaboration}. \emph{PLOS
+Medicine}, \textbf{4}, e297. Public Library of Science. DOI:
+\href{https://doi.org/10.1371/journal.pmed.0040297}{10.1371/journal.pmed.0040297}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-vondemborneReducedintensityConditioningAllogeneic2009a}{}}%
 von dem Borne, P. A., Starrenburg, C. W. J. I., Halkes, S. J. M., et al.
 (2009) Reduced-intensity conditioning allogeneic stem cell
@@ -6987,6 +6597,49 @@ transplantation with donor {T-cell} depletion using alemtuzumab added to
 the graft ('{Campath} in the bag'). \emph{Current Opinion in Oncology},
 \textbf{21 Suppl 1}, S27--29. DOI:
 \href{https://doi.org/10.1097/01.cco.0000357472.76337.0e}{10.1097/01.cco.0000357472.76337.0e}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-vonhippelHowManyImputations2020}{}}%
+von Hippel, P. T. (2020) How {Many Imputations Do You Need}? {A
+Two-stage Calculation Using} a {Quadratic Rule}. \emph{Sociological
+Methods \& Research}, \textbf{49}, 699--718. SAGE Publications Inc. DOI:
+\href{https://doi.org/10.1177/0049124117747303}{10.1177/0049124117747303}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-whiteBiasEfficiencyMultiple2010}{}}%
+White, I. R. and Carlin, J. B. (2010) Bias and efficiency of multiple
+imputation compared with complete-case analysis for missing covariate
+values. \emph{Statistics in Medicine}, \textbf{29}, 2920--2931. DOI:
+\href{https://doi.org/10.1002/sim.3944}{10.1002/sim.3944}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-whiteImputingMissingCovariate2009}{}}%
+White, I. R. and Royston, P. (2009) Imputing missing covariate values
+for the {Cox} model. \emph{Statistics in Medicine}, \textbf{28},
+1982--1998. DOI:
+\href{https://doi.org/10.1002/sim.3618}{10.1002/sim.3618}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-whiteAdjustingPartiallyMissing2005}{}}%
+White, I. R. and Thompson, S. G. (2005) Adjusting for partially missing
+baseline measurements in randomized trials. \emph{Statistics in
+Medicine}, \textbf{24}, 993--1007. DOI:
+\href{https://doi.org/10.1002/sim.1981}{10.1002/sim.1981}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-whiteMissingDataPart2022}{}}%
+White, I. R., Pandis, N. and Pham, T. M. (2022) Missing data, part 7.
+{Pitfalls} in doing multiple imputation. \emph{American Journal of
+Orthodontics and Dentofacial Orthopedics}, \textbf{162}, 975--977. DOI:
+\href{https://doi.org/10.1016/j.ajodo.2022.08.013}{10.1016/j.ajodo.2022.08.013}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wolbersPrognosticModelsCompeting2009}{}}%
+Wolbers, M., Koller, M. T., Witteman, J. C. M., et al. (2009) Prognostic
+{Models With Competing Risks}: {Methods} and {Application} to {Coronary
+Risk Prediction}. \emph{Epidemiology}, \textbf{20}, 555--561. Lippincott
+Williams \& Wilkins.
+
+\leavevmode\vadjust pre{\hypertarget{ref-woodEstimationUsePredictions2015}{}}%
+Wood, A. M., Royston, P. and White, I. R. (2015) The estimation and use
+of predictions for the assessment of model performance using large
+samples with multiply imputed data. \emph{Biometrical Journal},
+\textbf{57}, 614--632. DOI:
+\href{https://doi.org/10.1002/bimj.201400004}{10.1002/bimj.201400004}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-yanirImmuneReconstitutionAllogeneic2022}{}}%
 Yanir, A., Schulz, A., Lawitschka, A., et al. (2022) Immune
@@ -7004,18 +6657,8 @@ Transplantation}, \textbf{19}, 507--508. Elsevier. DOI:
 
 \bookmarksetup{startatroot}
 
-\hypertarget{general-discussion}{%
-\chapter{General Discussion}\label{general-discussion}}
-
-\hypertarget{future-research}{%
-\section{Future research}\label{future-research}}
-
-\ldots{}
-
-\hypertarget{summary-samenvatting}{}
-\bookmarksetup{startatroot}
-
-\chapter*{Summary / samenvatting}
+\hypertarget{summary-samenvatting}{%
+\chapter*{Summary / samenvatting}\label{summary-samenvatting}}
 \addcontentsline{toc}{chapter}{Summary / samenvatting}
 
 \markboth{Summary / samenvatting}{Summary / samenvatting}

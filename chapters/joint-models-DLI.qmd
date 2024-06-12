@@ -188,6 +188,3 @@ Further studies are necessary to assess the clinical implications of the finding
 Generally speaking, further characterization of the circulating T-cell subsets, differentiation and metabolic fitness could provide valuable additional insight in future studies on T-cell kinetics [@dekkerReconstitutionCellSubsets2020a;@uhlMetabolicReprogrammingDonor2020].  
 
 In summary, joint modelling allowed us to capture the associations between DLI, T-cell and NK cell counts, GvHD and relapse in a very complex clinical setting, even with modest numbers of patients and events. NK cells recover early after alloSCT and may have a protective effect against relapse. We demonstrate that DLI can induce detectable T-cell expansion and observe that the CD4+ T-cells show the strongest association with the development of alloimmune responses. Higher CD4 counts increase the risk of GvHD and decrease the risk of relapse.
-
-## References {-}
-

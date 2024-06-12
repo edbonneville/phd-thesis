@@ -14,6 +14,7 @@ book:
     - chapters/fine-gray-DGM.qmd
     - chapters/joint-models-DLI.qmd
     - general-discussion.qmd
+    - references.qmd
     - summary.qmd # after this: CV, acknowledegments and other tings
 
 format:
@@ -23,16 +24,14 @@ format:
   pdf:
     documentclass: scrreprt #scrbook or book
     link-citations: true
-    citeproc: false # recommended by filters
+    #citeproc: false # recommended by filters
     toc-depth: 2
     lot: true
     lof: true
     latex-auto-install: true
-    keep-tex: true
     include-in-header:
       - tex/preamble-global.tex # make similar globals for markdown?
-    filters:
-      - section-bibliographies
+    keep-tex: true
 
 bibliography: thesis-refs-all.bib
 csl: journal-of-the-royal-statistical-society.csl

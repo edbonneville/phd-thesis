@@ -80,7 +80,7 @@ Importantly, we remark that the algebraic motivation behind the approximate MICE
 
 The aim of the present research is thus threefold. First, we aim to formally extend the work of White and Royston for cause-specific Cox models. Specifically, we will derive the approximately compatible imputation models for continuous, binary and multi-level categorical missing covariates. This extension was originally initiated by one of the authors of the current manuscript and shared as part of an oral presentation [@resche-rigonImputingMissingCovariate2012]. Second, we aim to replicate and extend the simulations of Bartlett and Taylor; additionally manipulating the shape of the competing baseline hazards and the strength of missingness mechanisms, among other extensions. Third, we will explore how biases in cause-specific Cox models affect predicted cumulative incidence functions for patterns of reference covariate values. Simulation results will be interpreted alongside an illustrative analysis using a dataset from the field of allogeneic hematopoietic stem cell transplantation (alloHCT).
 
-In @sec-motivating-example, we present the motivating dataset, and in @sec-comprisks we introduce notation for cause-specific competing risks analysis. In @sec-imp-models, the algebraic motivation behind the imputation model for a cause-specific Cox analysis model is shown. The simulation study is presented in @sec-simstudy, followed by an illustrative analysis in @sec-illust-analysis. Findings are discussed alongside recommendations for practice in @sec-discussion.
+In @sec-motivating-example, we present the motivating dataset, and in @sec-comprisks we introduce notation for cause-specific competing risks analysis. In @sec-imp-models, the algebraic motivation behind the imputation model for a cause-specific Cox analysis model is shown. The simulation study is presented in @sec-simstudy, followed by an illustrative analysis in @sec-illust-analysis. Findings are discussed alongside recommendations for practice in @sec-cs-MI-discussion.
 
 ## Motivating example {#sec-motivating-example}
 
@@ -392,7 +392,7 @@ if (knitr::is_html_output()) {
 
 Such differences between the MI methods and $CC$ do question the validity of the M(C)AR assumption made. In the EBMT registry, many missing values can be considered MCAR, for reasons relating to data management. Variables such as comorbidity score, cytogenetic classification and donor age became more frequently collected over time as their clinical relevance grew clearer. Missingness may also be related to the transplant center, i.e. particular measurements not being recorded in certain clinics. In the current analysis, both calendar date and transplant center (categorical, large number of levels) were not included in the imputation model for simplicity. An option would have been to include them as auxiliary variables (added as predictor to $X \mid Z$, but not to substantive model), however the use of auxiliary variables was not a focus of this manuscript, and both MICE and SMC-FCS make different assumptions with respect to inclusion of these variables in the imputation model. Specifically, SMC-FCS would assume independence of center and outcome given the covariates in the substantive model - an assumption which likely does not hold in the registry [@snowdenBenchmarkingSurvivalOutcomes2020].
 
-## Discussion {#sec-discussion}
+## Discussion {#sec-cs-MI-discussion}
 
 In this paper, we assessed the performance of currently implemented MI methods, MICE and SMC-FCS, that deal with missing baseline covariate data when the analysis model of interest is a cause-specific Cox proportional hazards model. For the MICE approach, we provided  motivation for the imputation models to be used for continuous, binary, multi-level nominal and ordered categorical covariates with missing values. This is an extension to the work of @whiteImputingMissingCovariate2009 on Cox proportional hazards models for standard survival outcomes.
 
@@ -536,5 +536,3 @@ and variance
 	\frac{\sigma^2}{1 + \sigma^2 \sum^K_{k = 1} \beta_k^2  H_{k0}(T)}.
 \end{equation*}
 Based on a quadratic approximation for $\exp(\beta_k X + \gamma_k Z)$, the suggested imputation model for missing $X$ is a linear regression containing $Z$, $D$ (as a factor variable), all $H_{k0}(T)$ and all $H_{k0}(T)Z$ interactions as covariates. As explained by @whiteImputingMissingCovariate2009, this is only valid by ignoring terms in $\beta^2_k$ and for small $\sigma^2 \sum^K_{k = 1} \beta_k^2  H_{k0}(T)$. We also note that the variance of $X \mid T, D, Z$ is non-constant in time.
-
-## References {-}
