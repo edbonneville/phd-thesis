@@ -1,6 +1,6 @@
 ﻿Variable;Description;Levels;% Missing;Summary
-Age (Donor);Donor age at alloHCT (decades);;49.49;4.21 (3.12, 5.25)
-Age (Patient);Patient age at alloHCT (decades);;0;5.6 (4.69, 6.19)
+Age (Donor);Donor age at alloHCT (years);;49.49;42.1 (31.2, 52.5)
+Age (Patient);Patient age at alloHCT (years);;0;56 (46.9, 61.9)
 CMV Patient/Donor;CMV status in patient and donor;Patient -/Donor -;17.8;1439 (27%)
 ;;Patient -/Donor +;;544 (10%) 
 ;;Patient +/Donor -;;1281 (24%)

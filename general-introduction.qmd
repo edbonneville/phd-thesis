@@ -1,5 +1,198 @@
-# General Introduction
+---
+title: "General introduction"
+number-depth: 3
+---
 
-## Outline of this thesis
+::: {.content-hidden unless-format="html"}
+$$
+\newcommand\diff{\mathop{}\!\mathrm{d}}
+\newcommand\Diff[1]{\mathop{}\!\mathrm{d^#1}}
+\newcommand\given{\,|\,}
+\DeclareMathOperator{\logit}{logit}
+\newcommand{\indep}{\perp\!\!\!\!\perp}
+$$
+:::
+
+<!-- Ask Eva for more general alloSCT references -->
+
+A variety of biomedical applications involve studying the time between a relevant starting point and the occurrence of particular event. For instance, time until death is regularly of interest to applied researchers, be it from birth, diagnosis of a given disease, or the start of a treatment for that disease [@vanhouwelingenDynamicPredictionClinical2012]. One context in which time to death is particularly relevant is that of allogeneic haematopoietic stem cell transplantation (alloSCT), which is a type of treatment given to patients with haematological malignancies such as acute myeloid leukaemia (AML) [@horowitzGraftversusleukemiaReactionsBone1990]. Specifically, we may be interested in both how long patients diagnosed with AML survive on average after an alloSCT, and how individual patient characteristics, such as age or the presence of specific genetic mutations, influence the rate of death over time. The latter question in particular can be sharpened in order to investigate the rate of death due to different causes (e.g. mortality related to treatment, or due to an infection post-alloSCT), or the rate of events occurring prior to death, such as disease relapse. 
+
+In order to research these types of questions, clinical data needs to be gathered from patients who have undergone alloSCT. This is typically done via clinical registries, which coordinate the collection of both baseline (i.e. patient- and treatment-related characteristics at time of alloSCT) and "follow-up" information (e.g. the occurrence and timing of relevant clinical events post-alloSCT) for individual patients in transplantation centres, possibly across different countries and over extended periods of time [@horowitzRoleRegistriesFacilitating2008]. These data management complexities mean that *missing* or *incomplete* data are an unavoidable feature of registry data.
+
+Different kinds of incomplete data can emerge when collecting data for single patient who has undergone an alloSCT. The first, which is a defining characteristic of *survival* or *event history* data, is that of *censoring* [@Aalen2008]. For an example study interested in time to disease relapse from alloSCT, some patients may still be alive and relapse-free by the end of study, or may have dropped out of the study at an earlier point in time without having relapsed. In both cases, the individuals are said to be *right-censored*. That is, we only know that they were alive and relapse-free until they dropped out or the study ended, but not whether or when they would have relapsed had the study period been longer or if they remained under follow-up. Furthermore, patients  may die prior to having relapsed, for example due to treatment-related toxicity. Since death precludes the occurrence of relapse (or any other event), death here is considered a *competing risk*. These and related points were concisely summarised over 60 years ago by @chiangStochasticStudyLife1961:
+
+> When the period of observation is ended, there will usually remain a number of individuals on whom the mortality data in a typical study will be incomplete. Of first importance among these are the persons still alive at the close of the study. Secondly, if the investigation is concerned with mortality from a specific cause, the necessary information is incomplete and unavailable for patients who died from other causes. In addition, there will usually be a third group of patients who were "lost" to the study because of follow-up failure. These three groups present a number of statistical problems in the estimation of the expectation of life and survival rates.
+
+Another kind of incomplete data is *missing covariate data*, where relevant baseline information is only partially observed. For example, some variables may be collected more systematically later in time after their clinical importance has been established (e.g. age of the stem cell donor), or some measurements may be expensive and/or time-consuming to collect (e.g. high-resolution genetic typing). Furthermore, for more complex research questions, one may also choose to collect *longitudinal* or repeated measurements data, such as immune cell counts at regular visit times. These measurements may be missing intermittently (e.g. patients not attending some scheduled visits), or missing permanently from the moment a patient dies or drops out from a study prematurely.
+
+The present thesis is about statistical methodology for dealing with incomplete data in alloSCT studies with competing risks outcomes. Primarily, the focus is on the use of *multiple imputation* for handling missing covariate data in the context of major competing risks regression models. The use of *shared-parameter joint models* for dealing with informative drop-out in alloSCT studies is also addressed.
+
+<!-- Thesis aims here? -->
+
+The remainder of the introduction is structured as follows. In @sec-intro-comp-risks, we introduce basic notation for competing risks data and prominent regression models. In @sec-intro-MI, we introduce basic concepts for missing covariate data and multiple imputation. In @sec-intro-jms, we briefly introduce shared-parameter joint models. Finally, the outline of the thesis is given in @sec-intro-outline.
+
+<!-- Basic primer alloSCT? -->
+
+## Competing risks {#sec-intro-comp-risks}
+
+In competing risks settings, individuals experience only one of $K$ mutually exclusive events. We let $\tilde{D} \in \{1,...,K\}$ be the variable indicating which of these events occurred at time $\tilde{T}$. In practice, $\tilde{T}$  is subject to right-censoring, and is therefore only partially observed. Denoting that right-censoring time as $C$, the observable data are realisations $(t_i, d_i)$ for individual $i$ of $T = \min(C,\tilde{T})$ and $D = I(\tilde{T} \leq C)\tilde{D}$, where $I(\cdot)$ is the indicator function and $D = 0$ indicates a right-censored observation. 
+
+Suppose interest initially lies in studying the time until any of these $K$ events. For example, we may seek to estimate (for a given population) the cumulative probability $P(\tilde{T} \leq t)$ of dying from any cause by a certain timepoint $t$, or its complement: the overall or event-free *survival* probability $S(t) = P(\tilde{T} > t)$. Without any right-censoring, the latter quantity can be estimated simply by the empirical proportion of individuals still alive by $t$.
+
+In the presence of right-censoring, it is more convenient to work with the so-called all-cause *hazard function*, given by 
+$$
+	h(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t\given \tilde{T} \geq t)}{\Delta t},
+$$
+assuming the distribution of $\tilde{T}$ is continuous. It is the instantaneous *rate* at which individuals move from an initial event-free state to a second state representing failure from any cause. Importantly, the hazard function has a one-to-one correspondence with the overall survival function, given by
+$$
+  S(t) = \exp \left\{ - \int_{0}^{t} h(u)\diff u \right\}.
+$$
+Therefore, by modelling the all-cause hazard we can also estimate the overall survival function. This is useful because under the independent censoring assumption, which states that $\tilde{T}$ and $C$ are independent, the hazard function remains "undisturbed" by any right-censoring [@beyersmannCompetingRisksMultistate2012].
+
+```{r}
+#| label: fig-intro-haz
+#| fig-cap: "(Use workshop materials here?)"
+#| echo: false
+#| out-width: "85%"
+
+knitr::include_graphics(here::here("figures/haz_surv_panels.png"))
+```
+
+The most well-known estimator of the overall survival function is the *Kaplan--Meier* or *product-limit* estimator [@kaplanNonparametricEstimationIncomplete1958]. For a set of $N$ ordered event times $0 < t_1 < t_2 < \dots < t_N$, the estimator is given by
+$$
+\hat{S}(t) = \prod_{j:\ t_j \leq t} \bigg\{1 - \frac{d_j}{n_j}\bigg\},
+$$
+where $d_j$ and $n_j$ respectively denote the number of events and number of individual's at-risk at time $t_j$ [@putterTutorialBiostatisticsCompeting2007].
+
+In order to investigate the properties of *specific* events occurring in a competing risks setting, we need to make use of the *cause-specific hazards*, defined for $k^{\text{th}}$ event as  
+$$
+	h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
+$$
+These hazards sum to the all-cause hazard function, and therefore fully define the overall survival function defined earlier,
+$$
+S(t) = \exp \left\{ - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u)\diff u \right\} = \exp \left\{ - \sum_{k = 1}^{K} H_k(t) \right\},
+$$
+where $H_k(t)$ is known as cause-specific cumulative hazard function for the $k^{\text{th}}$ event. The cumulative probability of the $k^{\text{th}}$ event occuring, known as  cause-specific *cumulative incidence function* is defined as
+$$
+	F_k(t) = P(\tilde{T} \leq t, \tilde{D} = k) = \int_{0}^{t}h_k(u)S(u-)\diff u,
+$$
+where $S(u-)$ is the event-free survival probability just prior to $u$. The general 
+
+[@aalenEmpiricalTransitionMatrix1978]
+
+<!-- Use tilde T for true event time throughout the thesis -->
+
+```{r, engine='tikz'}
+#| echo: false
+#| eval: false
+#| fig-width: 6
+#| fig-height: 3
+#| fig-align: center
+
+
+\usetikzlibrary{automata, positioning, arrows, shapes.geometric}
+\tikzset{square/.style={draw, regular polygon, regular polygon sides=4, minimum size=2cm}}
+
+\begin{tikzpicture}
+  \node[square] at (0,0)  (0) {$0$};
+  \node[square] at (5,2.5)  (1) {$1$};
+  \node[square] at (5,0.5)  (2) {$2$};
+  \node[minimum size=1cm] at (5,-1)  (3) {$\vdots$};
+  \node[square] at (5,-2.5) (4) {$K$};
+  \draw[->, line width=1pt, >= triangle 45, auto]
+  (0) edge node[anchor=center, auto] {} (1)
+  (0) edge node[anchor=center, auto] {} (2)
+  %(0) edge node[anchor=center, auto] {} (3)
+  (0) edge node[anchor=center, below left] {} (4);
+\end{tikzpicture}
+
+% https://stackoverflow.com/questions/76277744/adding-tikz-image-to-quarto-with-cross-reference
+% And use ChatGPT for other diagrams
+```
+
+### Cause-specific Cox model
+
+```{r, engine='tikz'}
+#| echo: false
+#| fig-width: 6
+#| fig-height: 3
+#| fig-align: center
+#| fig-cap: "Adapted from Figure 2.1 in Geskus"
+
+
+\usetikzlibrary{arrows.meta, positioning, decorations.pathreplacing}
+
+\begin{tikzpicture}
+    % Axes
+    \draw (0,0) -- (2,0);
+    
+    % Horizontal lines
+    \draw[dashed, gray] (2,0) -- (6,0) node[right, black] {};
+    \draw[dashed, gray, ->] (2,0) -- (4,-1) node[right, black] {other types};
+    
+    % Probability brace
+    \draw[decorate,decoration={brace,amplitude=10pt,mirror}] (0,-0.5) -- (2,-0.5) node[midway,yshift=-0.7cm] {$P(\tilde T > t)$};
+    
+    % Node and arrow for type k
+    \draw[->] (2,0) -- (4,1) node[right] {type $k$};
+    \node[rotate=35] at (3,0.8) {$h_k(t)$};
+    
+    % Labels and nodes
+    \node at (2,-0.2) {$t$};
+    \node at (0,-0.2) {$0$};
+\end{tikzpicture}
+```
+
+### Fine--Gray model
+
+## Multiple imputation and missing covariate data {#sec-intro-MI}
+
+## Joint models and informative drop-out {#sec-intro-jms}
+
+with random effects vector $b_{i} \sim \mathcal{N}(0, D)$. The observations for the $i^{\text{th}}$ patient at timepoints $t_{ij} \ (j = 1,\ldots,n_i)$ are given by
+$$
+y_{ij} = m_i(t_{ij}) + \epsilon_{ij},
+$$
+where $\epsilon_{ij} \sim \mathcal{N}(0, \sigma^2)$ are independent random error terms.
+
+@hickeyComparisonJointModels2018a
+
+Good references in here too: https://mc-stan.org/rstanarm/articles/jm.html , the Henderson one is nicest notation?
+
+## Outline of this thesis {#sec-intro-outline}
 
 In chapter bla we will bla. That's about it really. And some more.
+
+- Say that DGM chapter related to FG imputation
+
+Change (small change) notation of moet je niet willen for the tilde.
+
+## Ideas {.unnumbered}
+
+Ideas/quotes:
+
+- Definition 1.1 from @littleStatisticalAnalysisMissing2019: "Missing data are unobserved values that would be meaningful for analysis if observed; in other words, a missing value hides a meaningful value."
+
+- From @orchard1972missing: "The problem that a relatively simple analysis is changed into a complex one just because some of the information is missing, is one which faces most practising statisticians at some point in their career. Obviously the best way to treat missing information problems is not to have them. Unfortunately circumstances arise in which information is missing and nothing can be done to replace it for one reason or another. In analogy to other accidents-we don't plan on accidents, nevertheless they do occur and safety measures must be aimed at palliating consequences as well as at prevention." ; which also has a nice history of missing data developments at the end
+
+- @tsiatis2005encycl nice concise historical overview
+
+- @hartleyAnalysisIncompleteData1971 on the "evil of incompleteness"
+
+- @papageorgiouAlternativeCharacterizationMAR2021 for the missing data part of joint models aka dropout, causes of death listed in Eva article
+
+- Add bibtex for own papers!!
+
+- @lauMissingnessSettingCompeting2018 easy going overall reference for missing data and competing risks
+
+- @chiang1961probability early definitions of crude/net mortality
+
+- @cornfieldEstimationProbabilityDeveloping1957 to cite re. definition of competing risks. Also nice: "If we are interested in isolating effects, however, and wish to study, say, changes in the pure risk of developing a disease, without regard to changes in other causes of death, such a proportionate frequency may be misleading. Thus, if such a calculation tells us that the probability of developing cancer is higher now than it was in the past, this may be either because the pure risk of developing cancer has increased, or because the chance of dying of other causes has decreased."re. mixed and pure probabilities, sames as net/crude mortality. Also the fun quote as the end of the paper!
+
+- @prenticeAnalysisFailureTimes1978 the main dawg
+
+- In the discussion, add bits about separable/total/controlled direct effects for missing data
+
+- Small primer to allogeneic stem cell transplantation
+
+- use $f(\cdot)$ for density also is cause-spec. paper

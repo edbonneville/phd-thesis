@@ -249,7 +249,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, sharp corners, frame hidden, interior hidden, borderline west={3pt}{0pt}{shadecolor}, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, interior hidden, borderline west={3pt}{0pt}{shadecolor}, enhanced, boxrule=0pt, breakable, sharp corners]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -285,12 +285,290 @@ To learn more about Quarto books visit
 \bookmarksetup{startatroot}
 
 \hypertarget{general-introduction}{%
-\chapter{General Introduction}\label{general-introduction}}
+\chapter{General introduction}\label{general-introduction}}
 
-\hypertarget{outline-of-this-thesis}{%
-\section{Outline of this thesis}\label{outline-of-this-thesis}}
+A variety of biomedical applications involve studying the time between a
+relevant starting point and the occurrence of particular event. For
+instance, time until death is regularly of interest to applied
+researchers, be it from birth, diagnosis of a given disease, or the
+start of a treatment for that disease
+(\protect\hyperlink{ref-vanhouwelingenDynamicPredictionClinical2012}{van
+Houwelingen and Putter, 2012}). One context in which time to death is
+particularly relevant is that of allogeneic haematopoietic stem cell
+transplantation (alloSCT), which is a type of treatment given to
+patients with haematological malignancies such as acute myeloid
+leukaemia (AML)
+(\protect\hyperlink{ref-horowitzGraftversusleukemiaReactionsBone1990}{Horowitz
+\emph{et al.}, 1990}). Specifically, we may be interested in both how
+long patients diagnosed with AML survive on average after an alloSCT,
+and how individual patient characteristics, such as age or the presence
+of specific genetic mutations, influence the rate of death over time.
+The latter question in particular can be sharpened in order to
+investigate the rate of death due to different causes (e.g.~mortality
+related to treatment, or due to an infection post-alloSCT), or the rate
+of events occurring prior to death, such as disease relapse.
+
+In order to research these types of questions, clinical data needs to be
+gathered from patients who have undergone alloSCT. This is typically
+done via clinical registries, which coordinate the collection of both
+baseline (i.e.~patient- and treatment-related characteristics at time of
+alloSCT) and ``follow-up'' information (e.g.~the occurrence and timing
+of relevant clinical events post-alloSCT) for individual patients in
+transplantation centres, possibly across different countries and over
+extended periods of time
+(\protect\hyperlink{ref-horowitzRoleRegistriesFacilitating2008}{Horowitz,
+2008}). These data management complexities mean that \emph{missing} or
+\emph{incomplete} data are an unavoidable feature of registry data.
+
+Different kinds of incomplete data can emerge when collecting data for
+single patient who has undergone an alloSCT. The first, which is a
+defining characteristic of \emph{survival} or \emph{event history} data,
+is that of \emph{censoring} (\protect\hyperlink{ref-Aalen2008}{Aalen
+\emph{et al.}, 2008}). For an example study interested in time to
+disease relapse from alloSCT, some patients may still be alive and
+relapse-free by the end of study, or may have dropped out of the study
+at an earlier point in time without having relapsed. In both cases, the
+individuals are said to be \emph{right-censored}. That is, we only know
+that they were alive and relapse-free until they dropped out or the
+study ended, but not whether or when they would have relapsed had the
+study period been longer or if they remained under follow-up.
+Furthermore, patients may die prior to having relapsed, for example due
+to treatment-related toxicity. Since death precludes the occurrence of
+relapse (or any other event), death here is considered a \emph{competing
+risk}. These and related points were concisely summarised over 60 years
+ago by Chiang
+(\protect\hyperlink{ref-chiangStochasticStudyLife1961}{1961a}):
+
+\begin{quote}
+When the period of observation is ended, there will usually remain a
+number of individuals on whom the mortality data in a typical study will
+be incomplete. Of first importance among these are the persons still
+alive at the close of the study. Secondly, if the investigation is
+concerned with mortality from a specific cause, the necessary
+information is incomplete and unavailable for patients who died from
+other causes. In addition, there will usually be a third group of
+patients who were ``lost'' to the study because of follow-up failure.
+These three groups present a number of statistical problems in the
+estimation of the expectation of life and survival rates.
+\end{quote}
+
+Another kind of incomplete data is \emph{missing covariate data}, where
+relevant baseline information is only partially observed. For example,
+some variables may be collected more systematically later in time after
+their clinical importance has been established (e.g.~age of the stem
+cell donor), or some measurements may be expensive and/or time-consuming
+to collect (e.g.~high-resolution genetic typing). Furthermore, for more
+complex research questions, one may also choose to collect
+\emph{longitudinal} or repeated measurements data, such as immune cell
+counts at regular visit times. These measurements may be missing
+intermittently (e.g.~patients not attending some scheduled visits), or
+missing permanently from the moment a patient dies or drops out from a
+study prematurely.
+
+The present thesis is about statistical methodology for dealing with
+incomplete data in alloSCT studies with competing risks outcomes.
+Primarily, the focus is on the use of \emph{multiple imputation} for
+handling missing covariate data in the context of major competing risks
+regression models. The use of \emph{shared-parameter joint models} for
+dealing with informative drop-out in alloSCT studies is also addressed.
+
+The remainder of the introduction is structured as follows. In
+Section~\ref{sec-intro-comp-risks}, we introduce basic notation for
+competing risks data and prominent regression models. In
+Section~\ref{sec-intro-MI}, we introduce basic concepts for missing
+covariate data and multiple imputation. In Section~\ref{sec-intro-jms},
+we briefly introduce shared-parameter joint models. Finally, the outline
+of the thesis is given in Section~\ref{sec-intro-outline}.
+
+\hypertarget{sec-intro-comp-risks}{%
+\section{Competing risks}\label{sec-intro-comp-risks}}
+
+In competing risks settings, individuals experience only one of \(K\)
+mutually exclusive events. We let \(\tilde{D} \in \{1,...,K\}\) be the
+variable indicating which of these events occurred at time
+\(\tilde{T}\). In practice, \(\tilde{T}\) is subject to right-censoring,
+and is therefore only partially observed. Denoting that right-censoring
+time as \(C\), the observable data are realisations \((t_i, d_i)\) for
+individual \(i\) of \(T = \min(C,\tilde{T})\) and
+\(D = I(\tilde{T} \leq C)\tilde{D}\), where \(I(\cdot)\) is the
+indicator function and \(D = 0\) indicates a right-censored observation.
+
+Suppose interest initially lies in studying the time until any of these
+\(K\) events. For example, we may seek to estimate (for a given
+population) the cumulative probability \(P(\tilde{T} \leq t)\) of dying
+from any cause by a certain timepoint \(t\), or its complement: the
+overall or event-free \emph{survival} probability
+\(S(t) = P(\tilde{T} > t)\). Without any right-censoring, the latter
+quantity can be estimated simply by the empirical proportion of
+individuals still alive by \(t\).
+
+In the presence of right-censoring, it is more convenient to work with
+the so-called all-cause \emph{hazard function}, given by \[
+    h(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t\given \tilde{T} \geq t)}{\Delta t},
+\] assuming the distribution of \(\tilde{T}\) is continuous. It is the
+instantaneous \emph{rate} at which individuals move from an initial
+event-free state to a second state representing death from any cause.
+Importantly, the hazard function has a one-to-one correspondence with
+the overall survival function, given by \[
+  S(t) = \exp \left\{ - \int_{0}^{t} h(u)\diff u \right\}.
+\] Therefore, by modelling the all-cause hazard we can also estimate the
+overall survival function. This is useful because under the independent
+censoring assumption, which states that \(\tilde{T}\) and \(C\) are
+independent, the hazard function remains ``undisturbed'' by any
+right-censoring
+(\protect\hyperlink{ref-beyersmannCompetingRisksMultistate2012}{Beyersmann
+\emph{et al.}, 2012}).
+
+The most well-known estimator of the overall survival function is the
+\emph{Kaplan--Meier} or \emph{product-limit} estimator {[}citation
+here{]}. For a set of \(N\) ordered event times
+\(0 < t_1 < t_2 < \dots < t_N\), the estimator is given by \[
+\hat{S}(t) = \prod_{j:\ t_j \leq t} \bigg\{1 - \frac{d_j}{n_j}\bigg\},
+\] where \(d_j\) and \(n_j\) respectively denote the number of events
+and number of individual's at-risk at time \(t_j\)
+(\protect\hyperlink{ref-putterTutorialBiostatisticsCompeting2007}{Putter
+\emph{et al.}, 2007}).
+
+The cause-specific hazard for the \(k^{\text{th}}\) event is defined
+as\\
+\[
+    h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
+\] These hazards together make up the event-free survival function, \[
+    P(\tilde{T} > t) = \exp \left\{ - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u)\diff u \right\} = \exp \left\{ - \sum_{k = 1}^{K} H_k(t) \right\},
+\] assuming the distribution of \(T\) is continuous, and \(H_k(t)\) is
+the cause-specific cumulative hazard function for the \(k^{\text{th}}\)
+event. The cause-specific cumulative incidence function is then defined
+as \[
+    F_k(t) = P(\tilde{T} \leq t, \tilde{D} = k) = \int_{0}^{t}h_k(u)S(u-)\diff u,
+\] where \(S(u-)\) is the event-free survival probability just prior to
+\(u\).
+
+Use tilde T for true event time throughout the thesis
+
+\hypertarget{cause-specific-cox-model}{%
+\subsection{Cause-specific Cox model}\label{cause-specific-cox-model}}
+
+\begin{figure}
+
+{\centering \includegraphics{general-introduction_files/figure-pdf/unnamed-chunk-2-1.pdf}
+
+}
+
+\caption{Adapted from Figure 2.1 in Geskus}
+
+\end{figure}
+
+\hypertarget{finegray-model}{%
+\subsection{Fine--Gray model}\label{finegray-model}}
+
+\hypertarget{sec-intro-MI}{%
+\section{Multiple imputation and missing covariate
+data}\label{sec-intro-MI}}
+
+\hypertarget{sec-intro-jms}{%
+\section{Joint models and informative drop-out}\label{sec-intro-jms}}
+
+with random effects vector \(b_{i} \sim \mathcal{N}(0, D)\). The
+observations for the \(i^{\text{th}}\) patient at timepoints
+\(t_{ij} \ (j = 1,\ldots,n_i)\) are given by \[
+y_{ij} = m_i(t_{ij}) + \epsilon_{ij},
+\] where \(\epsilon_{ij} \sim \mathcal{N}(0, \sigma^2)\) are independent
+random error terms.
+
+Hickey \emph{et al.}
+(\protect\hyperlink{ref-hickeyComparisonJointModels2018a}{2018})
+
+Good references in here too:
+https://mc-stan.org/rstanarm/articles/jm.html , the Henderson one is
+nicest notation?
+
+\hypertarget{sec-intro-outline}{%
+\section{Outline of this thesis}\label{sec-intro-outline}}
 
 In chapter bla we will bla. That's about it really. And some more.
+
+\begin{itemize}
+\tightlist
+\item
+  Say that DGM chapter related to FG imputation
+\end{itemize}
+
+Change (small change) notation of moet je niet willen for the tilde.
+
+\hypertarget{ideas}{%
+\section*{Ideas}\label{ideas}}
+\addcontentsline{toc}{section}{Ideas}
+
+\markright{Ideas}
+
+Ideas/quotes:
+
+\begin{itemize}
+\item
+  Definition 1.1 from Little and Rubin
+  (\protect\hyperlink{ref-littleStatisticalAnalysisMissing2019}{2019}):
+  ``Missing data are unobserved values that would be meaningful for
+  analysis if observed; in other words, a missing value hides a
+  meaningful value.''
+\item
+  From Orchard and Woodbury
+  (\protect\hyperlink{ref-orchard1972missing}{1972}): ``The problem that
+  a relatively simple analysis is changed into a complex one just
+  because some of the information is missing, is one which faces most
+  practising statisticians at some point in their career. Obviously the
+  best way to treat missing information problems is not to have them.
+  Unfortunately circumstances arise in which information is missing and
+  nothing can be done to replace it for one reason or another. In
+  analogy to other accidents-we don't plan on accidents, nevertheless
+  they do occur and safety measures must be aimed at palliating
+  consequences as well as at prevention.'' ; which also has a nice
+  history of missing data developments at the end
+\item
+  Tsiatis (\protect\hyperlink{ref-tsiatis2005encycl}{2005}) nice concise
+  historical overview
+\item
+  Hartley and Hocking
+  (\protect\hyperlink{ref-hartleyAnalysisIncompleteData1971}{1971}) on
+  the ``evil of incompleteness''
+\item
+  Papageorgiou and Rizopoulos
+  (\protect\hyperlink{ref-papageorgiouAlternativeCharacterizationMAR2021}{2021})
+  for the missing data part of joint models aka dropout, causes of death
+  listed in Eva article
+\item
+  Add bibtex for own papers!!
+\item
+  Lau and Lesko
+  (\protect\hyperlink{ref-lauMissingnessSettingCompeting2018}{2018})
+  easy going overall reference for missing data and competing risks
+\item
+  Chiang (\protect\hyperlink{ref-chiang1961probability}{1961b}) early
+  definitions of crude/net mortality
+\item
+  Cornfield
+  (\protect\hyperlink{ref-cornfieldEstimationProbabilityDeveloping1957}{1957})
+  to cite re. definition of competing risks. Also nice: ``If we are
+  interested in isolating effects, however, and wish to study, say,
+  changes in the pure risk of developing a disease, without regard to
+  changes in other causes of death, such a proportionate frequency may
+  be misleading. Thus, if such a calculation tells us that the
+  probability of developing cancer is higher now than it was in the
+  past, this may be either because the pure risk of developing cancer
+  has increased, or because the chance of dying of other causes has
+  decreased.''re. mixed and pure probabilities, sames as net/crude
+  mortality. Also the fun quote as the end of the paper!
+\item
+  Prentice \emph{et al.}
+  (\protect\hyperlink{ref-prenticeAnalysisFailureTimes1978}{1978}) the
+  main dawg
+\item
+  In the discussion, add bits about separable/total/controlled direct
+  effects for missing data
+\item
+  Small primer to allogeneic stem cell transplantation
+\item
+  use \(f(\cdot)\) for density also is cause-spec. paper
+\end{itemize}
 
 \bookmarksetup{startatroot}
 
@@ -881,8 +1159,8 @@ with, w/o = without. }\tabularnewline
 \toprule
 Variable & Description & Levels & \% Missing & Summary\\
 \midrule
-Age (Donor) & Donor age at alloHCT (decades) &  & 49.49 & 4.21 (3.12, 5.25)\\
-Age (Patient) & Patient age at alloHCT (decades) &  & 0 & 5.6 (4.69, 6.19)\\
+Age (Donor) & Donor age at alloHCT (years) &  & 49.49 & 42.1 (31.2, 52.5)\\
+Age (Patient) & Patient age at alloHCT (years) &  & 0 & 56 (46.9, 61.9)\\
 CMV Patient/Donor & CMV status in patient and donor & Patient -/Donor - & 17.8 & 1439 (27\%)\\
  &  & Patient -/Donor + &  & 544 (10\%)\\
  &  & Patient +/Donor - &  & 1281 (24\%)\\
@@ -1313,8 +1591,8 @@ performance of MI for such examples.
 \hypertarget{sec-comprisks}{%
 \section{Cause-specific competing risks analysis}\label{sec-comprisks}}
 
-In a competing risks setting, we assume that individuals can `fail' from
-only one of \(K\) distinct events. We denote that failure time as
+In a competing risks setting, we assume that individuals can ``fail''
+from only one of \(K\) distinct events. We denote that failure time as
 \(\tilde{T}\), and the competing event indicator as
 \(\tilde{D} \in \{1,...,K\}\). In practice, individuals are subject to
 some right-censoring time \(C\), which is assumed to be independent of
@@ -1606,8 +1884,8 @@ one or more of the \(K\) causes of failure is fitted. Let \(\theta\)
 denote a cause-specific regression coefficient of interest, and let
 \(\hat{\theta}_m\) and \(\widehat{\Var}(\hat{\theta}_m)\) respectively
 denote the estimate and associated variance of this coefficient in the
-\(m^\textsuperscript{th}\) imputed dataset. We can combine these \(M\)
-estimates using Rubin's rules, with estimator
+\(m^{\text{th}}\) imputed dataset. We can combine these \(M\) estimates
+using Rubin's rules, with estimator
 
 \begin{equation*}
     \hat{\theta} = \frac{1}{M}\sum_{m=1}^{M}\hat{\theta}_m.
@@ -1933,10 +2211,10 @@ linked at the end of the present text.
 \subsubsection{Regression
 coefficients}\label{regression-coefficients-1}}
 
-Figure fig:beta1\_MAR summarises the results with regard to bias in the
-estimation of \(\beta_1\) with a MAR mechanism induced on continuous
-\(X\). The plot is a variant of a nested-loop plot, where each
-colour-cluster of points represents a scenario defined by the step
+Figure Figure~\ref{fig-beta1-MAR} summarises the results with regard to
+bias in the estimation of \(\beta_1\) with a MAR mechanism induced on
+continuous \(X\). The plot is a variant of a nested-loop plot, where
+each colour-cluster of points represents a scenario defined by the step
 functions at the bottom of the plot
 (\protect\hyperlink{ref-ruckerPresentingSimulationResults2014}{Rücker
 and Schwarzer, 2014}). For example, the left-most bin in the plot
@@ -1944,6 +2222,22 @@ corresponds to a scenario with data-generating \(\beta_1 = 0.5\), 10\%
 missing data, similar hazard shapes and a weak missingness mechanism.
 For readability, the \(CH_{1}\) method and the analysis ran on the full
 dataset prior to inducing missing data are omitted from the figure.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{chapters/../figures/cause-specific-MI_MAR-B1-NLP.pdf}
+
+}
+
+\caption{\label{fig-beta1-MAR}Bias in \(\beta_1\) for MAR mechanism with
+continuous \(X\). Each cluster of points corresponds to a scenario
+defined by the step functions at the bottom of the plot. Each step
+represents a level of a factor being varied, and is read from
+left-to-right (e.g.~for Hazard shapes, first step is `similar' while the
+second is `different'). Monte-Carlo standard errors of bias for all
+scenarios were below 0.008. Mech. = missingness mechanism.}
+
+\end{figure}
 
 First, we note that in the 16 scenarios depicted, both \(CC\) and smcfcs
 showed little to no bias in the estimation of \(\beta_1\). For \(CC\),
@@ -2406,11 +2700,11 @@ and \(Z\). The number of parameters, including intercept, equals
 parameters to be estimated (intercept included).
 
 If \(Z\) is continuous, there are no exact results due to the
-\(\exp(\gamma_k Z)\) terms. Analogously to White and Royston, we use a
-first order Taylor series around \(\bar{Z}\) to approximate it as
+\(\exp(\gamma_k Z)\) terms. Analogously to White and Royston
+(\protect\hyperlink{ref-whiteImputingMissingCovariate2009}{2009}), we
+use a first order Taylor series around \(\bar{Z}\) to approximate it as
 \(\exp(\gamma_k Z) \approx \exp(\gamma_k \bar{Z}) [ 1 + \gamma_k(Z - \bar{Z}) ]\),
-which is valid if \(\Var(\gamma_k Z)\) is
-small.\cite{whiteImputingMissingCovariate2009} We can thus write
+which is valid if \(\Var(\gamma_k Z)\) is small. We can thus write
 \begin{align*}
     \logit P(X = 1 \mid T, D, Z) &\approx \zeta_0 + \zeta_1 Z + \sum^K_{k = 1} I(D=k) \beta_k \nonumber - \sum^K_{k = 1} H_{k0}(T)(\mathrm{e}^{\beta_k}  - 1)\exp(\gamma_k \bar{Z})(1 - \gamma_k \bar{Z}) \nonumber \\
     &\qquad - \sum^K_{k = 1} H_{k0}(T) Z \gamma_k (\mathrm{e}^{\beta_k}  - 1)\exp(\gamma_k \bar{Z}) \nonumber \\
@@ -2917,8 +3211,8 @@ propose a SMC-FCS approach assuming a Fine--Gray substantive model for
 cause 1, which avoids making explicit modelling assumptions concerning
 cause 2.
 
-\hypertarget{sec-subdist_time}{%
-\subsection{MI based on the Fine--Gray model}\label{sec-subdist_time}}
+\hypertarget{sec-subdist-time}{%
+\subsection{MI based on the Fine--Gray model}\label{sec-subdist-time}}
 
 \hypertarget{sec-fg-smc}{%
 \subsubsection{FG-SMC}\label{sec-fg-smc}}
@@ -4356,8 +4650,7 @@ Similarly to Equation Equation~\ref{eq-sdh1-csh2}, the implied
 \(h_1(t \given X)\) may also become negative. To understand an instance
 of where this can occur, note that we can write the all-cause cumulative
 hazard as a function of \(\lambda_1(t \given X)\) and
-\(h_1(t \given X)\) using Equation \eqref{eq:reduc}, as
-\begin{equation*}
+\(h_1(t \given X)\) using Equation~\ref{eq-reduc}, as \begin{equation*}
     -\log\{S(t \given X)\} = \frac{\lambda_1(t \given X) \exp\{-\Lambda_1(t \given X)\}}{h_1(t \given X)}.
 \end{equation*} As an example, we can use the same Gompertz
 parametrisation for \(\lambda_1(t \given X)\) as in the previous
@@ -4402,7 +4695,7 @@ The reduction factor could also form the basis for a DGM if a model is
 specified for the all-cause hazard
 \(\sum_{k = 1}^{K} H_k(t \given X) = -\log\{S(t \given X)\}\), together
 with the Fine--Gray model for \(\lambda_1(t \given X)\). One can derive
-the implied \(h_1(t \given X)\) from Equation \eqref{eq:reduc}, and
+the implied \(h_1(t \given X)\) from Equation~\ref{eq-reduc}, and
 subtract it from the all-cause hazard to obtain \(h_2(t \given X)\).
 Proportional hazards on the all-cause scale however typically implies
 that the cause-specific hazards will be non-proportional. Note that this
@@ -4457,8 +4750,15 @@ This DGM is arguably the most commonly used approach to simulate
 proportional subdistribution hazard data, as it ensures the TFP remains
 below or equal to 1. Multiple simulation studies, along with the
 original article proposing the Fine--Gray model, have simulated data in
-this way Austin \emph{et al.}
-(\protect\hyperlink{ref-austinFineGraySubdistributionHazard2021}{2021}).
+this way
+(\protect\hyperlink{ref-austinFineGraySubdistributionHazard2021}{Austin
+\emph{et al.}, 2021};
+\protect\hyperlink{ref-bellachWeightedNPMLESubdistribution2019}{Bellach
+\emph{et al.}, 2019};
+\protect\hyperlink{ref-fineProportionalHazardsModel1999}{Fine and Gray,
+1999};
+\protect\hyperlink{ref-saadatiPredictionAccuracyVariable2018}{Saadati
+\emph{et al.}, 2018}).
 
 To illustrate this mechanism, we use Weibull-type distribution functions
 and set \begin{align*}
@@ -5614,6 +5914,17 @@ counts increase the risk of GvHD and decrease the risk of relapse.
 \hypertarget{general-discussion}{%
 \chapter{General Discussion}\label{general-discussion}}
 
+Structure
+
+\begin{itemize}
+\item
+  About missing covariates (conditonal dist plots)
+\item
+  About future joint modelling
+\item
+  About cause-specific vs fine-gray and beyond
+\end{itemize}
+
 \hypertarget{future-research}{%
 \section{Future research}\label{future-research}}
 
@@ -5621,14 +5932,19 @@ counts increase the risk of GvHD and decrease the risk of relapse.
 
 \bookmarksetup{startatroot}
 
-\hypertarget{references}{%
-\chapter*{References}\label{references}}
-\addcontentsline{toc}{chapter}{References}
+\hypertarget{bibliography}{%
+\chapter*{Bibliography}\label{bibliography}}
+\addcontentsline{toc}{chapter}{Bibliography}
 
-\markboth{References}{References}
+\markboth{Bibliography}{Bibliography}
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-Aalen2008}{}}%
+Aalen, O., Borgan, O. and Gjessing, H. (2008) \emph{Survival and Event
+History Analysis: A Process Point of View}. New York: Springer. DOI:
+\href{https://doi.org/10.1007/978-0-387-68560-1}{10.1007/978-0-387-68560-1}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-adesMyelodysplasticSyndromes2014}{}}%
 Adès, L., Itzykson, R. and Fenaux, P. (2014) Myelodysplastic syndromes.
 \emph{The Lancet}, \textbf{383}, 2239--2252. DOI:
@@ -5729,7 +6045,7 @@ data in {RCTs}; a review of the top medical journals. \emph{BMC Medical
 Research Methodology}, \textbf{14}, 118. DOI:
 \href{https://doi.org/10.1186/1471-2288-14-118}{10.1186/1471-2288-14-118}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-bellachWeightedNPMLESubdistribution2019a}{}}%
+\leavevmode\vadjust pre{\hypertarget{ref-bellachWeightedNPMLESubdistribution2019}{}}%
 Bellach, A., Kosorok, M. R., Rüschendorf, L., et al. (2019) Weighted
 {NPMLE} for the {Subdistribution} of a {Competing Risk}. \emph{Journal
 of the American Statistical Association}, \textbf{114}, 259--270. Taylor
@@ -5815,6 +6131,19 @@ oncology? {A} systematic review. \emph{BMC Medical Research
 Methodology}, \textbf{20}, 134. DOI:
 \href{https://doi.org/10.1186/s12874-020-01018-7}{10.1186/s12874-020-01018-7}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-chiangStochasticStudyLife1961}{}}%
+Chiang, C. L. (1961a) A {Stochastic Study} of the {Life Table} and {Its
+Applications}. {III}. {The Follow-Up Study} with the {Consideration} of
+{Competing Risks}. \emph{Biometrics}, \textbf{17}, 57--78. {[}Wiley,
+International Biometric Society{]}. DOI:
+\href{https://doi.org/10.2307/2527496}{10.2307/2527496}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-chiang1961probability}{}}%
+Chiang, C. L. (1961b) On the probability of death from specific causes
+in the presence of competing risks. In: \emph{Proceedings of the fourth
+{Berkeley} symposium on mathematical statistics and probability}, 1961,
+pp. 169--180. University of California Press, Berkeley, CA.
+
 \leavevmode\vadjust pre{\hypertarget{ref-cliftLivingRiskPrediction2020}{}}%
 Clift, A. K., Coupland, C. A. C., Keogh, R. H., et al. (2020) Living
 risk prediction algorithm ({QCOVID}) for risk of hospital admission and
@@ -5822,6 +6151,13 @@ mortality from coronavirus 19 in adults: National derivation and
 validation cohort study. \emph{BMJ}, \textbf{371}, m3731. British
 Medical Journal Publishing Group. DOI:
 \href{https://doi.org/10.1136/bmj.m3731}{10.1136/bmj.m3731}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-cornfieldEstimationProbabilityDeveloping1957}{}}%
+Cornfield, J. (1957)
+\href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1551242}{Estimation
+of the {Probability} of {Developing} a {Disease} in the {Presence} of
+{Competing Risks}}. \emph{American Journal of Public Health and the
+Nations Health}, \textbf{47}, 601--607.
 
 \leavevmode\vadjust pre{\hypertarget{ref-coxPartialLikelihood1975}{}}%
 Cox, D. R. (1975) Partial likelihood. \emph{Biometrika}, \textbf{62},
@@ -6041,6 +6377,12 @@ Receiving Allogeneic Hematopoietic Stem Cell Transplantation}.
 256.e1--256.e7. Netherlands: Elsevier B.V. DOI:
 \href{https://doi.org/10.1016/j.jtct.2020.12.021}{10.1016/j.jtct.2020.12.021}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-hartleyAnalysisIncompleteData1971}{}}%
+Hartley, H. O. and Hocking, R. R. (1971) The {Analysis} of {Incomplete
+Data}. \emph{Biometrics}, \textbf{27}, 783--823. {[}Wiley, International
+Biometric Society{]}. DOI:
+\href{https://doi.org/10.2307/2528820}{10.2307/2528820}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-hassanCMVReactivationInitiates2022}{}}%
 Hassan, N., Eldershaw, S., Stephens, C., et al. (2022) {CMV}
 reactivation initiates long-term expansion and differentiation of the
@@ -6052,6 +6394,14 @@ multiple imputation: A review of the reporting and implementation of the
 method in medical research. \emph{BMC Medical Research Methodology},
 \textbf{15}, 30. DOI:
 \href{https://doi.org/10.1186/s12874-015-0022-1}{10.1186/s12874-015-0022-1}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hickeyComparisonJointModels2018a}{}}%
+Hickey, G. L., Philipson, P., Jorgensen, A., et al. (2018) A
+{Comparison} of {Joint Models} for {Longitudinal} and {Competing Risks
+Data}, with {Application} to an {Epilepsy Drug Randomized Controlled
+Trial}. \emph{Journal of the Royal Statistical Society Series A:
+Statistics in Society}, \textbf{181}, 1105--1123. DOI:
+\href{https://doi.org/10.1111/rssa.12348}{10.1111/rssa.12348}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-hinchliffeFlexibleParametricModelling2013}{}}%
 Hinchliffe, S. R. and Lambert, P. C. (2013) Flexible parametric
@@ -6065,6 +6415,13 @@ Horowitz, M., Gale, R., Sondel, P., et al. (1990) Graft-versus-leukemia
 reactions after bone marrow transplantation. \emph{Blood}, \textbf{75},
 555--562. DOI:
 \href{https://doi.org/10.1182/blood.V75.3.555.555}{10.1182/blood.V75.3.555.555}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-horowitzRoleRegistriesFacilitating2008}{}}%
+Horowitz, M. M. (2008) The role of registries in facilitating clinical
+research in {BMT}: Examples from the {Center} for {International Blood}
+and {Marrow Transplant Research}. \emph{Bone Marrow Transplantation},
+\textbf{42}, S1--S2. Nature Publishing Group. DOI:
+\href{https://doi.org/10.1038/bmt.2008.101}{10.1038/bmt.2008.101}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-hughesAccountingMissingData2019}{}}%
 Hughes, R. A., Heron, J., Sterne, J. A. C., et al. (2019) Accounting for
@@ -6298,11 +6655,25 @@ relapse after allogeneic stem cell transplantation.
 \emph{Haematologica}, \textbf{101}, 1251--1259. DOI:
 \href{https://doi.org/10.3324/haematol.2015.141176}{10.3324/haematol.2015.141176}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-orchard1972missing}{}}%
+Orchard, T. and Woodbury, M. A. (1972) A missing information principle:
+Theory and applications. In: \emph{Proceedings of the sixth berkeley
+symposium on mathematical statistics and probability, volume 1: {Theory}
+of statistics}, 1972, pp. 697--716. University of California Press.
+
 \leavevmode\vadjust pre{\hypertarget{ref-RJ-2017-062}{}}%
 Ozenne, B., Sørensen, A. L., Scheike, T., et al. (2017)
 {riskRegression}: {Predicting} the risk of an event using cox regression
 models. \emph{The R Journal}, \textbf{9}, 440--460. DOI:
 \href{https://doi.org/10.32614/RJ-2017-062}{10.32614/RJ-2017-062}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-papageorgiouAlternativeCharacterizationMAR2021}{}}%
+Papageorgiou, G. and Rizopoulos, D. (2021) An alternative
+characterization of {MAR} in shared parameter models for incomplete
+longitudinal data and its utilization for sensitivity analysis.
+\emph{Statistical Modelling}, \textbf{21}, 95--114. SAGE Publications
+India. DOI:
+\href{https://doi.org/10.1177/1471082X20927114}{10.1177/1471082X20927114}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-pazd.l.GenomicAnalysisPrimary2021}{}}%
 Paz D.L., Riou J., Verger E., et al. (2021) Genomic analysis of primary
@@ -6554,6 +6925,11 @@ Transplantation Identifies Patients} at {Risk} for {Adverse Outcomes}.
 1237--1245. DOI:
 \href{https://doi.org/10.1016/j.bbmt.2015.03.011}{10.1016/j.bbmt.2015.03.011}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-tsiatis2005encycl}{}}%
+Tsiatis, A. A. (2005) Competing risks. In \emph{Encyclopedia of
+Biostatistics}. John Wiley \& Sons, Ltd. DOI:
+\href{https://doi.org/10.1002/0470011815.b2a03035}{10.1002/0470011815.b2a03035}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-uhlMetabolicReprogrammingDonor2020}{}}%
 Uhl, F. M., Chen, S., O'Sullivan, D., et al. (2020) Metabolic
 reprogramming of donor {T} cells enhances graft-versus-leukemia effects
@@ -6582,6 +6958,11 @@ risks models for different questions may give similar results in
 arthroplasty registers in the presence of few events. \emph{Acta
 Orthopaedica}, \textbf{89}, 145--151. Taylor \& Francis. DOI:
 \href{https://doi.org/10.1080/17453674.2018.1427314}{10.1080/17453674.2018.1427314}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-vanhouwelingenDynamicPredictionClinical2012}{}}%
+van Houwelingen, H. and Putter, H. (2012) \emph{Dynamic {Prediction} in
+{Clinical Survival Analysis}}. Boca Raton: CRC Press. DOI:
+\href{https://doi.org/10.1201/b11311}{10.1201/b11311}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-vandenbrouckeStrengtheningReportingObservational2007}{}}%
 Vandenbroucke, J. P., Elm, E. von, Altman, D. G., et al. (2007)
@@ -6662,6 +7043,8 @@ Transplantation}, \textbf{19}, 507--508. Elsevier. DOI:
 \addcontentsline{toc}{chapter}{Summary / samenvatting}
 
 \markboth{Summary / samenvatting}{Summary / samenvatting}
+
+According to ghislaine: should be sticking abtracts together
 
 
 

@@ -113,7 +113,7 @@ Given that a Fine--Gray model is assumed for cause 1, some computational difficu
 
 The above points mean that it is desirable to use an alternative approach which avoids having to specify a model for the cause-specific (or subdistribution) hazard of cause 2. In the next subsection, we propose a SMC-FCS approach assuming a Fine--Gray substantive model for cause 1, which avoids making explicit modelling assumptions concerning cause 2.
 
-### MI based on the Fine--Gray model {#sec-subdist_time}
+### MI based on the Fine--Gray model {#sec-subdist-time}
 
 #### FG-SMC {#sec-fg-smc}
 

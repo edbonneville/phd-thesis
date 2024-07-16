@@ -61,7 +61,10 @@ $$
 $$
 :::
 
-
+```{r}
+#| echo: false
+extension <- if (knitr::is_html_output()) ".png" else ".pdf"
+```
 
 ## Introduction
 
@@ -90,7 +93,7 @@ The dataset contains 6434 patients transplanted between 2000-2012, and registere
 
 ## Cause-specific competing risks analysis {#sec-comprisks}
 
-In a competing risks setting, we assume that individuals can `fail' from only one of $K$ distinct events. We denote that failure time as $\tilde{T}$, and the competing event indicator as $\tilde{D} \in \{1,...,K\}$. In practice, individuals are subject to some right-censoring time $C$, which is assumed to be independent of $\tilde{T}$ and $\tilde{D}$, possibly given covariates. We thus only observe realisations $(t_i, d_i)$ of $T = \min(C,\tilde{T})$ and $D = I(\tilde{T} \leq C)\tilde{D}$, where $D = 0$ indicates a right-censored observation.
+In a competing risks setting, we assume that individuals can "fail" from only one of $K$ distinct events. We denote that failure time as $\tilde{T}$, and the competing event indicator as $\tilde{D} \in \{1,...,K\}$. In practice, individuals are subject to some right-censoring time $C$, which is assumed to be independent of $\tilde{T}$ and $\tilde{D}$, possibly given covariates. We thus only observe realisations $(t_i, d_i)$ of $T = \min(C,\tilde{T})$ and $D = I(\tilde{T} \leq C)\tilde{D}$, where $D = 0$ indicates a right-censored observation.
 
 If we view competing risks as a multi-state process, with a single (event-free) initial state and $K$ absorbing states, interest often lies in the cause-specific hazard, defined for a single event $k$ as
 
@@ -201,7 +204,7 @@ In contrast to MICE, the SMC-FCS approach does not require any approximations - 
 
 ### Regression coefficients
 
-Both the MICE and SMC-FCS procedures result in $m = 1,...,M$ imputed datasets. In each of these datasets, the cause-specific Cox model for one or more of the $K$ causes of failure is fitted. Let $\theta$ denote a cause-specific regression coefficient of interest, and let $\hat{\theta}_m$ and $\widehat{\Var}(\hat{\theta}_m)$ respectively denote the estimate and associated variance of this coefficient in the $m^\textsuperscript{th}$ imputed dataset. We can combine these $M$ estimates using Rubin's rules, with estimator
+Both the MICE and SMC-FCS procedures result in $m = 1,...,M$ imputed datasets. In each of these datasets, the cause-specific Cox model for one or more of the $K$ causes of failure is fitted. Let $\theta$ denote a cause-specific regression coefficient of interest, and let $\hat{\theta}_m$ and $\widehat{\Var}(\hat{\theta}_m)$ respectively denote the estimate and associated variance of this coefficient in the $m^{\text{th}}$ imputed dataset. We can combine these $M$ estimates using Rubin's rules, with estimator
 
 \begin{equation*}
 	\hat{\theta} = \frac{1}{M}\sum_{m=1}^{M}\hat{\theta}_m.
@@ -316,7 +319,18 @@ We focus primarily on $\beta_1$ (the regression coefficient for $X$ in the cause
 
 #### Regression coefficients
 
-Figure fig:beta1_MAR summarises the results with regard to bias in the estimation of $\beta_1$ with a MAR mechanism induced on continuous $X$. The plot is a variant of a nested-loop plot, where each colour-cluster of points represents a scenario defined by the step functions at the bottom of the plot [@ruckerPresentingSimulationResults2014]. For example, the left-most bin in the plot corresponds to a scenario with data-generating $\beta_1 = 0.5$, 10\% missing data, similar hazard shapes and a weak missingness mechanism. For readability, the $CH_{1}$ method and the analysis ran on the full dataset prior to inducing missing data are omitted from the figure.
+Figure @fig-beta1-MAR summarises the results with regard to bias in the estimation of $\beta_1$ with a MAR mechanism induced on continuous $X$. The plot is a variant of a nested-loop plot, where each colour-cluster of points represents a scenario defined by the step functions at the bottom of the plot [@ruckerPresentingSimulationResults2014]. For example, the left-most bin in the plot corresponds to a scenario with data-generating $\beta_1 = 0.5$, 10\% missing data, similar hazard shapes and a weak missingness mechanism. For readability, the $CH_{1}$ method and the analysis ran on the full dataset prior to inducing missing data are omitted from the figure.
+
+<!-- Latex characters need to be escaped quarto -->
+
+```{r}
+#| label: fig-beta1-MAR
+#| fig-cap: "Bias in $\\beta_1$ for MAR mechanism with continuous $X$. Each cluster of points corresponds to a scenario defined by the step functions at the bottom of the plot. Each step represents a level of a factor being varied, and is read from left-to-right (e.g. for Hazard shapes, first step is 'similar' while the second is 'different'). Monte-Carlo standard errors of bias for all scenarios were below 0.008. Mech. = missingness mechanism."
+#| echo: false
+#| out-width: "85%"
+
+knitr::include_graphics(here::here(paste0("figures/cause-specific-MI_MAR-B1-NLP", extension)))
+```
 
 First, we note that in the 16 scenarios depicted, both $CC$ and smcfcs showed little to no bias in the estimation of $\beta_1$. For $CC$, no bias was expected given that this was a case of covariate-dependent MAR, and results for smcfcs were in line with the simulations of @bartlettMissingCovariatesCompeting2016.
 Second, the MICE methods showed varying amounts of bias depending on the scenario. With increasing true covariate effects, and higher proportion of missing values, the bias was larger. This was to be expected in light of the approximations employed in @sec-imp-models-main, which are valid for small covariate effects.  Moreover, the magnitude of the bias was also larger when the baseline hazard shapes were different. Last, adding the interaction terms in the imputation model did not significantly reduce bias, except when the missingness mechanism was weak, and the baseline hazard shapes were different.
@@ -452,7 +466,7 @@ If $Z$ is categorical with $J \geq 2$ levels $(0, \ldots, J-1)$, the above expre
 \end{align*}
 which suggests that for categorical $Z$ we can impute missing $X$ values using a logistic regression with $D$ (as a factor variable), the cumulative baseline hazards, evaluated at $T$, for all causes of failure as covariates, $Z$ (as a factor variable), and the complete interactions between the cumulative baseline hazards at $T$ and $Z$. The number of parameters, including intercept, equals $JK + J + K$. For example, if there are $K = 2$ competing risks and $Z$ has $J = 3$ categories, there are 11 logistic regression parameters to be estimated (intercept included).
 
-If $Z$ is continuous, there are no exact results due to the $\exp(\gamma_k Z)$ terms. Analogously to White and Royston, we use a first order Taylor series around $\bar{Z}$ to approximate it as $\exp(\gamma_k Z) \approx \exp(\gamma_k \bar{Z}) [ 1 + \gamma_k(Z - \bar{Z})  ]$, which is valid if $\Var(\gamma_k Z)$ is small.\cite{whiteImputingMissingCovariate2009} We can thus write
+If $Z$ is continuous, there are no exact results due to the $\exp(\gamma_k Z)$ terms. Analogously to @whiteImputingMissingCovariate2009, we use a first order Taylor series around $\bar{Z}$ to approximate it as $\exp(\gamma_k Z) \approx \exp(\gamma_k \bar{Z}) [ 1 + \gamma_k(Z - \bar{Z})  ]$, which is valid if $\Var(\gamma_k Z)$ is small. We can thus write
 \begin{align*}
 	\logit P(X = 1 \mid T, D, Z) &\approx \zeta_0 + \zeta_1 Z + \sum^K_{k = 1} I(D=k) \beta_k \nonumber - \sum^K_{k = 1} H_{k0}(T)(\mathrm{e}^{\beta_k}  - 1)\exp(\gamma_k \bar{Z})(1 - \gamma_k \bar{Z}) \nonumber \\
 	&\qquad - \sum^K_{k = 1} H_{k0}(T) Z \gamma_k (\mathrm{e}^{\beta_k}  - 1)\exp(\gamma_k \bar{Z}) \nonumber \\
