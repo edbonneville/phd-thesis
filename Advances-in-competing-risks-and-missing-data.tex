@@ -249,7 +249,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, interior hidden, borderline west={3pt}{0pt}{shadecolor}, enhanced, boxrule=0pt, breakable, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, breakable, frame hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}, sharp corners, boxrule=0pt]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -407,7 +407,7 @@ the so-called all-cause \emph{hazard function}, given by \[
     h(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t\given \tilde{T} \geq t)}{\Delta t},
 \] assuming the distribution of \(\tilde{T}\) is continuous. It is the
 instantaneous \emph{rate} at which individuals move from an initial
-event-free state to a second state representing death from any cause.
+event-free state to a second state representing failure from any cause.
 Importantly, the hazard function has a one-to-one correspondence with
 the overall survival function, given by \[
   S(t) = \exp \left\{ - \int_{0}^{t} h(u)\diff u \right\}.
@@ -419,9 +419,20 @@ right-censoring
 (\protect\hyperlink{ref-beyersmannCompetingRisksMultistate2012}{Beyersmann
 \emph{et al.}, 2012}).
 
+\begin{figure}
+
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/haz_surv_panels.png}
+
+}
+
+\caption{\label{fig-intro-haz}(Use workshop materials here?)}
+
+\end{figure}
+
 The most well-known estimator of the overall survival function is the
-\emph{Kaplan--Meier} or \emph{product-limit} estimator {[}citation
-here{]}. For a set of \(N\) ordered event times
+\emph{Kaplan--Meier} or \emph{product-limit} estimator
+(\protect\hyperlink{ref-kaplanNonparametricEstimationIncomplete1958}{Kaplan
+and Meier, 1958}). For a set of \(N\) ordered event times
 \(0 < t_1 < t_2 < \dots < t_N\), the estimator is given by \[
 \hat{S}(t) = \prod_{j:\ t_j \leq t} \bigg\{1 - \frac{d_j}{n_j}\bigg\},
 \] where \(d_j\) and \(n_j\) respectively denote the number of events
@@ -429,34 +440,47 @@ and number of individual's at-risk at time \(t_j\)
 (\protect\hyperlink{ref-putterTutorialBiostatisticsCompeting2007}{Putter
 \emph{et al.}, 2007}).
 
-The cause-specific hazard for the \(k^{\text{th}}\) event is defined
-as\\
+In order to investigate the properties of \emph{specific} events
+occurring in a competing risks setting, we need to make use of the
+\emph{cause-specific hazards}, defined for \(k^{\text{th}}\) event as\\
 \[
     h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
-\] These hazards together make up the event-free survival function, \[
-    P(\tilde{T} > t) = \exp \left\{ - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u)\diff u \right\} = \exp \left\{ - \sum_{k = 1}^{K} H_k(t) \right\},
-\] assuming the distribution of \(T\) is continuous, and \(H_k(t)\) is
-the cause-specific cumulative hazard function for the \(k^{\text{th}}\)
-event. The cause-specific cumulative incidence function is then defined
-as \[
+\] These are now the instantaneous rates of moving from an event-free
+state to a state representing failure from the \(k^{\text{th}}\) event
+(after which one can no longer fail of other causes). Furthermore,
+because the cause-specific hazards sum to the all-cause hazard function,
+and therefore fully define the overall survival function defined
+earlier, \[
+S(t) = \exp \left\{ - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u)\diff u \right\} = \exp \left\{ - \sum_{k = 1}^{K} H_k(t) \right\},
+\] where \(H_k(t)\) is known as cause-specific cumulative hazard
+function for the \(k^{\text{th}}\) event. The cumulative probability of
+the \(k^{\text{th}}\) event occuring, known as cause-specific
+\emph{cumulative incidence function} is defined as \[
     F_k(t) = P(\tilde{T} \leq t, \tilde{D} = k) = \int_{0}^{t}h_k(u)S(u-)\diff u,
 \] where \(S(u-)\) is the event-free survival probability just prior to
-\(u\).
-
-Use tilde T for true event time throughout the thesis
-
-\hypertarget{cause-specific-cox-model}{%
-\subsection{Cause-specific Cox model}\label{cause-specific-cox-model}}
+\(u\). As depicted in Figure~\ref{fig-diag-geskus}, the cumulative
+incidence summarises two key aspects of the competing risks process:
+surviving event-free until just prior to \(t\), and then experiencing
+the \(k^{\text{th}}\) event in the next instant.
 
 \begin{figure}
 
-{\centering \includegraphics{general-introduction_files/figure-pdf/unnamed-chunk-2-1.pdf}
+{\centering \includegraphics{general-introduction_files/figure-pdf/fig-diag-geskus-1.pdf}
 
 }
 
-\caption{Adapted from Figure 2.1 in Geskus}
+\caption{\label{fig-diag-geskus}Adapted from Figure 2.1 in Geskus}
 
 \end{figure}
+
+The Aalen--Johansen estimator is the generalisation of the Kaplan--Meier
+method, allow to estimate cumulative incidence functions
+non-parametrically
+(\protect\hyperlink{ref-aalenEmpiricalTransitionMatrix1978}{Aalen and
+Johansen, 1978}).
+
+\hypertarget{cause-specific-cox-model}{%
+\subsection{Cause-specific Cox model}\label{cause-specific-cox-model}}
 
 \hypertarget{finegray-model}{%
 \subsection{Fine--Gray model}\label{finegray-model}}
@@ -5945,6 +5969,14 @@ Aalen, O., Borgan, O. and Gjessing, H. (2008) \emph{Survival and Event
 History Analysis: A Process Point of View}. New York: Springer. DOI:
 \href{https://doi.org/10.1007/978-0-387-68560-1}{10.1007/978-0-387-68560-1}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-aalenEmpiricalTransitionMatrix1978}{}}%
+Aalen, O. O. and Johansen, S. (1978) An {Empirical Transition Matrix}
+for {Non-Homogeneous Markov Chains Based} on {Censored Observations}.
+\emph{Scandinavian Journal of Statistics}, \textbf{5}, 141--150.
+{[}Board of the Foundation of the Scandinavian Journal of Statistics,
+Wiley{]}. Available at: \url{https://www.jstor.org/stable/4615704}
+(accessed 16 July 2024).
+
 \leavevmode\vadjust pre{\hypertarget{ref-adesMyelodysplasticSyndromes2014}{}}%
 Adès, L., Itzykson, R. and Fenaux, P. (2014) Myelodysplastic syndromes.
 \emph{The Lancet}, \textbf{383}, 2239--2252. DOI:
@@ -6456,6 +6488,13 @@ models versus machine learning for competing risks: Development and
 validation of prognostic models. \emph{BMC Medical Research
 Methodology}, \textbf{23}, 51. DOI:
 \href{https://doi.org/10.1186/s12874-023-01866-z}{10.1186/s12874-023-01866-z}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kaplanNonparametricEstimationIncomplete1958}{}}%
+Kaplan, E. L. and Meier, P. (1958) Nonparametric {Estimation} from
+{Incomplete Observations}. \emph{Journal of the American Statistical
+Association}, \textbf{53}, 457--481. {[}American Statistical
+Association, Taylor \& Francis, Ltd.{]}. DOI:
+\href{https://doi.org/10.2307/2281868}{10.2307/2281868}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-keoghMultipleImputationCox2018}{}}%
 Keogh, R. H. and Morris, T. P. (2018) Multiple imputation in {Cox}

@@ -68,7 +68,7 @@ In order to investigate the properties of *specific* events occurring in a compe
 $$
 	h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
 $$
-These hazards sum to the all-cause hazard function, and therefore fully define the overall survival function defined earlier,
+These are the instantaneous rates of moving from an event-free state to a state representing failure from the $k^{\text{th}}$ event (after which one can no longer fail of other causes). Furthermore, the cause-specific hazards sum up to the all-cause hazard function, and therefore fully define the overall survival function defined earlier,
 $$
 S(t) = \exp \left\{ - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u)\diff u \right\} = \exp \left\{ - \sum_{k = 1}^{K} H_k(t) \right\},
 $$
@@ -76,49 +76,15 @@ where $H_k(t)$ is known as cause-specific cumulative hazard function for the $k^
 $$
 	F_k(t) = P(\tilde{T} \leq t, \tilde{D} = k) = \int_{0}^{t}h_k(u)S(u-)\diff u,
 $$
-where $S(u-)$ is the event-free survival probability just prior to $u$. The general 
-
-[@aalenEmpiricalTransitionMatrix1978]
-
-<!-- Use tilde T for true event time throughout the thesis -->
-
-```{r, engine='tikz'}
-#| echo: false
-#| eval: false
-#| fig-width: 6
-#| fig-height: 3
-#| fig-align: center
-
-
-\usetikzlibrary{automata, positioning, arrows, shapes.geometric}
-\tikzset{square/.style={draw, regular polygon, regular polygon sides=4, minimum size=2cm}}
-
-\begin{tikzpicture}
-  \node[square] at (0,0)  (0) {$0$};
-  \node[square] at (5,2.5)  (1) {$1$};
-  \node[square] at (5,0.5)  (2) {$2$};
-  \node[minimum size=1cm] at (5,-1)  (3) {$\vdots$};
-  \node[square] at (5,-2.5) (4) {$K$};
-  \draw[->, line width=1pt, >= triangle 45, auto]
-  (0) edge node[anchor=center, auto] {} (1)
-  (0) edge node[anchor=center, auto] {} (2)
-  %(0) edge node[anchor=center, auto] {} (3)
-  (0) edge node[anchor=center, below left] {} (4);
-\end{tikzpicture}
-
-% https://stackoverflow.com/questions/76277744/adding-tikz-image-to-quarto-with-cross-reference
-% And use ChatGPT for other diagrams
-```
-
-### Cause-specific Cox model
+where $S(u-)$ is the event-free survival probability just prior to $u$. As depicted in @fig-diag-geskus, the cumulative incidence summarises two key aspects of the competing risks process: surviving event-free until just prior to $t$, and then experiencing the $k^{\text{th}}$ event in the next instant.
 
 ```{r, engine='tikz'}
 #| echo: false
 #| fig-width: 6
 #| fig-height: 3
+#| label: fig-diag-geskus
 #| fig-align: center
-#| fig-cap: "Adapted from Figure 2.1 in Geskus"
-
+#| fig-cap: "Adapted from Figure 2.1 in @geskus2015data"
 
 \usetikzlibrary{arrows.meta, positioning, decorations.pathreplacing}
 
@@ -131,7 +97,7 @@ where $S(u-)$ is the event-free survival probability just prior to $u$. The gene
     \draw[dashed, gray, ->] (2,0) -- (4,-1) node[right, black] {other types};
     
     % Probability brace
-    \draw[decorate,decoration={brace,amplitude=10pt,mirror}] (0,-0.5) -- (2,-0.5) node[midway,yshift=-0.7cm] {$P(\tilde T > t)$};
+    \draw[decorate,decoration={brace,amplitude=10pt,mirror}] (0,-0.5) -- (2,-0.5) node[midway,yshift=-0.7cm] {$S(t-)$};
     
     % Node and arrow for type k
     \draw[->] (2,0) -- (4,1) node[right] {type $k$};
@@ -142,6 +108,14 @@ where $S(u-)$ is the event-free survival probability just prior to $u$. The gene
     \node at (0,-0.2) {$0$};
 \end{tikzpicture}
 ```
+
+The Aalen--Johansen estimator is the generalisation of the Kaplan--Meier method, allowing to estimate cumulative incidence functions non-parametrically [@aalenEmpiricalTransitionMatrix1978].
+
+<!-- Here again mention the peril of not accounting from comprisks, 1 minus km -->
+
+<!-- Use tilde T for true event time throughout the thesis -->
+
+### Cause-specific Cox model
 
 ### Fine--Gray model
 
