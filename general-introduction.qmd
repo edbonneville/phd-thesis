@@ -47,7 +47,7 @@ assuming the distribution of $\tilde{T}$ is continuous. It is the instantaneous 
 $$
   S(t) = \exp \left\{ - \int_{0}^{t} h(u)\diff u \right\}.
 $$
-Therefore, by modelling the all-cause hazard we can also estimate the overall survival function. This is useful because under the independent censoring assumption, which states that $\tilde{T}$ and $C$ are independent, the hazard function remains "undisturbed" by any right-censoring [@beyersmannCompetingRisksMultistate2012].
+Therefore, by modelling the all-cause hazard we can also estimate the overall survival function. This is useful because under the independent censoring assumption, which states that $\tilde{T}$ and $C$ are independent, the hazard function remains "undisturbed" by any right-censoring [@beyersmannCompetingRisksMultistate2012]. That is, the hazard for those censored at a given timepoint is equal to the hazard for those that remain under follow-up. This in turn makes it estimable from observed (i.e. censored) data.
 
 ```{r}
 #| label: fig-intro-haz
@@ -64,7 +64,7 @@ $$
 $$
 where $d_j$ and $n_j$ respectively denote the number of events and number of individual's at-risk at time $t_j$ [@putterTutorialBiostatisticsCompeting2007].
 
-In order to investigate the properties of *specific* events occurring in a competing risks setting, we need to make use of the *cause-specific hazards*, defined for $k^{\text{th}}$ event as  
+In order to investigate the properties of *specific* events occurring in a competing risks setting, we can make use of the *cause-specific hazards*, defined for $k^{\text{th}}$ event as  
 $$
 	h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
 $$
@@ -76,11 +76,11 @@ where $H_k(t)$ is known as cause-specific cumulative hazard function for the $k^
 $$
 	F_k(t) = P(\tilde{T} \leq t, \tilde{D} = k) = \int_{0}^{t}h_k(u)S(u-)\diff u,
 $$
-where $S(u-)$ is the event-free survival probability just prior to $u$. As depicted in @fig-diag-geskus, the cumulative incidence summarises two key aspects of the competing risks process: surviving event-free until just prior to $t$, and then experiencing the $k^{\text{th}}$ event in the next instant.
+where $S(u-)$ is the event-free survival probability just prior to $u$. As depicted in @fig-diag-geskus, the cumulative incidence summarises two key aspects of the competing risks process: surviving event-free until just prior to $t$, and then experiencing the $k^{\text{th}}$ specific event in the next instant.
 
 ```{r, engine='tikz'}
 #| echo: false
-#| fig-width: 6
+#| fig-width: 7
 #| fig-height: 3
 #| label: fig-diag-geskus
 #| fig-align: center
@@ -109,17 +109,34 @@ where $S(u-)$ is the event-free survival probability just prior to $u$. As depic
 \end{tikzpicture}
 ```
 
-The Aalen--Johansen estimator is the generalisation of the Kaplan--Meier method, allowing to estimate cumulative incidence functions non-parametrically [@aalenEmpiricalTransitionMatrix1978].
-
-<!-- Here again mention the peril of not accounting from comprisks, 1 minus km -->
+The Aalen--Johansen estimator is the generalisation of the Kaplan--Meier method, allowing to estimate cumulative incidence functions non-parametrically [@aalenEmpiricalTransitionMatrix1978]. It has been extensively discussed in the literature that "naively" using the complement of the Kaplan--Meier estimator in the presence of competing risks (i.e. by treating competing events as censored) leads to overestimation of the cumulative incidence function, since the independence of censoring assumption is violated [@putterTutorialBiostatisticsCompeting2007].
 
 <!-- Use tilde T for true event time throughout the thesis -->
 
 ### Cause-specific Cox model
 
+Assessing the impact of covaria
+
+<!-- Use the time-dependent Z notation -->
+$$
+h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
+$$
+
 ### Fine--Gray model
 
-## Multiple imputation and missing covariate data {#sec-intro-MI}
+$$
+\lambda_1(t \given \mathbf{Z}) = \lambda_{0}(t)\exp(\boldsymbol{\beta}^\intercal \mathbf{Z})
+$$
+
+Something something
+
+$$
+F_1(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{0}(u)\diff u \Biggr\}
+$$
+
+## Multiple imputation of missing covariate data {#sec-intro-MI}
+
+mdags and with ggdag
 
 ## Joint models and informative drop-out {#sec-intro-jms}
 

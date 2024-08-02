@@ -249,7 +249,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, breakable, frame hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}, sharp corners, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, frame hidden, sharp corners, interior hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}, boxrule=0pt]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -417,7 +417,9 @@ censoring assumption, which states that \(\tilde{T}\) and \(C\) are
 independent, the hazard function remains ``undisturbed'' by any
 right-censoring
 (\protect\hyperlink{ref-beyersmannCompetingRisksMultistate2012}{Beyersmann
-\emph{et al.}, 2012}).
+\emph{et al.}, 2012}). That is, the hazard for those censored at a given
+timepoint is equal to the hazard for those that remain under follow-up.
+This in turn makes it estimable from observed (i.e.~censored) data.
 
 \begin{figure}
 
@@ -445,12 +447,11 @@ occurring in a competing risks setting, we need to make use of the
 \emph{cause-specific hazards}, defined for \(k^{\text{th}}\) event as\\
 \[
     h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
-\] These are now the instantaneous rates of moving from an event-free
-state to a state representing failure from the \(k^{\text{th}}\) event
-(after which one can no longer fail of other causes). Furthermore,
-because the cause-specific hazards sum to the all-cause hazard function,
-and therefore fully define the overall survival function defined
-earlier, \[
+\] These are the instantaneous rates of moving from an event-free state
+to a state representing failure from the \(k^{\text{th}}\) event (after
+which one can no longer fail of other causes). Furthermore, the
+cause-specific hazards sum up to the all-cause hazard function, and
+therefore fully define the overall survival function defined earlier, \[
 S(t) = \exp \left\{ - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u)\diff u \right\} = \exp \left\{ - \sum_{k = 1}^{K} H_k(t) \right\},
 \] where \(H_k(t)\) is known as cause-specific cumulative hazard
 function for the \(k^{\text{th}}\) event. The cumulative probability of
@@ -469,21 +470,42 @@ the \(k^{\text{th}}\) event in the next instant.
 
 }
 
-\caption{\label{fig-diag-geskus}Adapted from Figure 2.1 in Geskus}
+\caption{\label{fig-diag-geskus}Adapted from Figure 2.1 in Geskus
+(\protect\hyperlink{ref-geskus2015data}{2015})}
 
 \end{figure}
 
 The Aalen--Johansen estimator is the generalisation of the Kaplan--Meier
-method, allow to estimate cumulative incidence functions
+method, allowing to estimate cumulative incidence functions
 non-parametrically
 (\protect\hyperlink{ref-aalenEmpiricalTransitionMatrix1978}{Aalen and
-Johansen, 1978}).
+Johansen, 1978}). It has been extensively discussed in the literature
+that ``naively'' using the complement of the Kaplan--Meier estimator in
+the presence of competing risks (i.e.~by treating competing events as
+censored) leads to overestimation of the cumulative incidence function,
+since the independence of censoring assumption is violated
+(\protect\hyperlink{ref-putterTutorialBiostatisticsCompeting2007}{Putter
+\emph{et al.}, 2007}).
 
 \hypertarget{cause-specific-cox-model}{%
 \subsection{Cause-specific Cox model}\label{cause-specific-cox-model}}
 
+\[
+h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
+\]
+
 \hypertarget{finegray-model}{%
 \subsection{Fine--Gray model}\label{finegray-model}}
+
+\[
+\lambda_1(t \given \mathbf{Z}) = \lambda_{0}(t)\exp(\boldsymbol{\beta}^\intercal \mathbf{Z})
+\]
+
+Something something
+
+\[
+F_1(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{0}(u)\diff u \Biggr\}
+\]
 
 \hypertarget{sec-intro-MI}{%
 \section{Multiple imputation and missing covariate
@@ -6341,6 +6363,10 @@ Geskus, R. B. (2011) Cause-{Specific Cumulative Incidence Estimation}
 and the {Fine} and {Gray Model Under Both Left Truncation} and {Right
 Censoring}. \emph{Biometrics}, \textbf{67}, 39--49. DOI:
 \href{https://doi.org/10.1111/j.1541-0420.2010.01420.x}{10.1111/j.1541-0420.2010.01420.x}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-geskus2015data}{}}%
+Geskus, R. B. (2015) \emph{Data Analysis with Competing Risks and
+Intermediate States}. CRC Press.
 
 \leavevmode\vadjust pre{\hypertarget{ref-gooptuEffectSirolimusImmune2019}{}}%
 Gooptu, M., Kim, H. T., Howard, A., et al. (2019) Effect of {Sirolimus}
