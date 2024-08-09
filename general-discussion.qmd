@@ -1,5 +1,7 @@
 # General Discussion
 
+Mentions why the JMs were novel for allo, the extensions, the needed data..
+
 Structure 
 
 - About missing covariates (conditonal dist plots)
@@ -7,6 +9,8 @@ Structure
 - About future joint modelling
 
 - About cause-specific vs fine-gray and beyond
+
+- Mention the recent left truncated imp paper
 
 ## Future research
 

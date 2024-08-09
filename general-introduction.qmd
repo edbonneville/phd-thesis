@@ -17,7 +17,7 @@ $$
 
 A variety of biomedical applications involve studying the time between a relevant starting point and the occurrence of particular event. For instance, time until death is regularly of interest to applied researchers, be it from birth, diagnosis of a given disease, or the start of a treatment for that disease [@vanhouwelingenDynamicPredictionClinical2012]. One context in which time to death is particularly relevant is that of allogeneic haematopoietic stem cell transplantation (alloSCT), which is a type of treatment given to patients with haematological malignancies such as acute myeloid leukaemia (AML) [@horowitzGraftversusleukemiaReactionsBone1990]. Specifically, we may be interested in both how long patients diagnosed with AML survive on average after an alloSCT, and how individual patient characteristics, such as age or the presence of specific genetic mutations, influence the rate of death over time. The latter question in particular can be sharpened in order to investigate the rate of death due to different causes (e.g. mortality related to treatment, or due to an infection post-alloSCT), or the rate of events occurring prior to death, such as disease relapse. 
 
-In order to research these types of questions, clinical data needs to be gathered from patients who have undergone alloSCT. This is typically done via clinical registries, which coordinate the collection of both baseline (i.e. patient- and treatment-related characteristics at time of alloSCT) and "follow-up" information (e.g. the occurrence and timing of relevant clinical events post-alloSCT) for individual patients in transplantation centres, possibly across different countries and over extended periods of time [@horowitzRoleRegistriesFacilitating2008]. These data management complexities mean that *missing* or *incomplete* data are an unavoidable feature of registry data.
+In order to research these types of questions, clinical data needs to be gathered from patients receiving an alloSCT. This is typically done via clinical registries, which coordinate the collection of both baseline (i.e. patient- and treatment-related characteristics at time of alloSCT) and "follow-up" information (e.g. the occurrence and timing of relevant clinical events post-alloSCT) for individual patients in transplantation centres, possibly across different countries and over extended periods of time [@horowitzRoleRegistriesFacilitating2008]. These data management complexities mean that *missing* or *incomplete* data are an unavoidable feature of registry data.
 
 Different kinds of incomplete data can emerge when collecting data for single patient who has undergone an alloSCT. The first, which is a defining characteristic of *survival* or *event history* data, is that of *censoring* [@Aalen2008]. For an example study interested in time to disease relapse from alloSCT, some patients may still be alive and relapse-free by the end of study, or may have dropped out of the study at an earlier point in time without having relapsed. In both cases, the individuals are said to be *right-censored*. That is, we only know that they were alive and relapse-free until they dropped out or the study ended, but not whether or when they would have relapsed had the study period been longer or if they remained under follow-up. Furthermore, patients  may die prior to having relapsed, for example due to treatment-related toxicity. Since death precludes the occurrence of relapse (or any other event), death here is considered a *competing risk*. These and related points were concisely summarised over 60 years ago by @chiangStochasticStudyLife1961:
 
@@ -51,7 +51,7 @@ Therefore, by modelling the all-cause hazard we can also estimate the overall su
 
 ```{r}
 #| label: fig-intro-haz
-#| fig-cap: "(Use workshop materials here?)"
+#| fig-cap: "(To keep in here or not?)"
 #| echo: false
 #| out-width: "85%"
 
@@ -61,14 +61,14 @@ knitr::include_graphics(here::here("figures/haz_surv_panels.png"))
 The most well-known estimator of the overall survival function is the *Kaplan--Meier* or *product-limit* estimator [@kaplanNonparametricEstimationIncomplete1958]. For a set of $N$ ordered event times $0 < t_1 < t_2 < \dots < t_N$, the estimator is given by
 $$
 \hat{S}(t) = \prod_{j:\ t_j \leq t} \bigg\{1 - \frac{d_j}{n_j}\bigg\},
-$$
-where $d_j$ and $n_j$ respectively denote the number of events and number of individual's at-risk at time $t_j$ [@putterTutorialBiostatisticsCompeting2007].
+$${#eq-kaplan}
+where $d_j$ and $n_j$ respectively denote the number of events (of any type) and number of individual's at-risk at time $t_j$ [@putterTutorialBiostatisticsCompeting2007].
 
 In order to investigate the properties of *specific* events occurring in a competing risks setting, we can make use of the *cause-specific hazards*, defined for $k^{\text{th}}$ event as  
 $$
 	h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
 $$
-These are the instantaneous rates of moving from an event-free state to a state representing failure from the $k^{\text{th}}$ event (after which one can no longer fail of other causes). Furthermore, the cause-specific hazards sum up to the all-cause hazard function, and therefore fully define the overall survival function defined earlier,
+These are the instantaneous rates of moving from an event-free state to a state representing failure from the $k^{\text{th}}$ specific event (after which one can no longer fail of other causes). Furthermore, the cause-specific hazards sum up to the all-cause hazard function, and therefore fully define the overall survival function defined earlier,
 $$
 S(t) = \exp \left\{ - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u)\diff u \right\} = \exp \left\{ - \sum_{k = 1}^{K} H_k(t) \right\},
 $$
@@ -84,7 +84,7 @@ where $S(u-)$ is the event-free survival probability just prior to $u$. As depic
 #| fig-height: 3
 #| label: fig-diag-geskus
 #| fig-align: center
-#| fig-cap: "Adapted from Figure 2.1 in @geskus2015data"
+#| fig-cap: "Adapted from Figure 2.1 in @geskus2015data."
 
 \usetikzlibrary{arrows.meta, positioning, decorations.pathreplacing}
 
@@ -113,30 +113,63 @@ The Aalen--Johansen estimator is the generalisation of the Kaplan--Meier method,
 
 <!-- Use tilde T for true event time throughout the thesis -->
 
-### Cause-specific Cox model
+### Competing risks regression models
 
-Assessing the impact of covaria
+Suppose we are interested in understanding the impact of individual-specific characteristics on the occurrence of one of multiple competing events (the "primary" event of interest). In the case of a single categorical covariate of interest (e.g. presence or absence of a genetic mutation), a straightforward approach would be to use the Aalen--Johansen estimator in subsets defined by the categorical covariate. In order to assess the "impact" of this covariate, one may opt to then test the null hypothesis of equality of the resulting strata-specific cumulative incidence functions, usually by means of Gray's test [@grayClassKSampleTests1988].
+
+Two important remarks about the above strategy. The first is that its extension to multiple covariates is suboptimal: groups defined combinations of categorical covariates will become increasingly smaller with the number of covariates, and continuous covariates need to be discretized. The second is that rejection of the aforementioned null hypothesis is only an indicator that being in a particular strata relative to the others increases or decreases the (cumulative) probability of a specific event occurring, in the presence of competing risks. It does *not* however in isolation explain whether or to what extent this increase or decrease is attributable an existing association between the covariate and the competing risks. 
+
+For a more complete understanding of the competing risks process as a function of multiple covariates, one will usually need to specify regression models the cause-specific hazards, which are identifiable and estimable from observed data [@prenticeAnalysisFailureTimes1978]. The most popular approach for modelling the cause-specific hazards is using the semi-parametric Cox proportional hazards model [@coxRegressionModelsLifeTables1972], given for the $k^{\text{th}}$ event by
 
 <!-- Use the time-dependent Z notation -->
 $$
 h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
 $$
+where $h_{k0}(t)$ is the cause-specific baseline hazard, $\mathbf{Z}$ is a $p$-dimensional vector of covariates, and vector $\boldsymbol{\beta}_k$ quantifies the impact of $\mathbf{Z}$ on the cause-specific hazard. Inference on the cause-specific, time-constant *hazard ratios* $\exp(\boldsymbol{\beta}_k)$ is based on maximizing a *partial likelihood* which treats causes other than $k$ as censored. The baseline hazard can be estimated non-parametrically by means of the Breslow estimator [ref]. 
 
-### Fine--Gray model
-
-$$
-\lambda_1(t \given \mathbf{Z}) = \lambda_{0}(t)\exp(\boldsymbol{\beta}^\intercal \mathbf{Z})
-$$
-
-Something something
+It is important to note that a covariate which increases the cause-specific hazard of a particular event will not necessarily also increase the cumulative incidence of that same event, because the cumulative incidence function depends on the cause-specific hazards of *all* events. Depending on direction and magnitude of the covariate effect on competing cause-specific hazards, the same covariate may even have opposing effects on the cause-specific hazard and cumulative incidence function of a particular event. As a result, regression models have been proposed that model the cumulative incidence function(s) *directly*, often through the so-called *subdistribution hazard*, given for a cause $k$ by 
 
 $$
-F_1(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{0}(u)\diff u \Biggr\}
+\begin{aligned}
+	\lambda_k(t) &= \lim_{\Delta t \downarrow 0} \frac{P\{t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t \cup (\tilde{T} \leq t \cap \tilde{D} \neq k)\}}{\Delta t}, \\
+	&= \frac{\diff F_k(t)}{\diff t} \times \{1 - F_k(t)\}^{-1}.
+\end{aligned}
 $$
+
+The most prominently example of a model for the subdistribution hazard is the Fine--Gray model [@fineProportionalHazardsModel1999], given for a cause $k$ by
+$$
+\lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\gamma_k}^\intercal \mathbf{Z}),
+$$
+
+where $\lambda_{0}(t)$ is the subdistribution baseline hazard, and $\boldsymbol{\gamma_k}$ is the vector of log subdistribution hazard ratios. It can also be expressed as a transformation model for the cumulative incidence function, as
+$$
+F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\gamma_k}^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{0}(u)\diff u \Biggr\},
+$$
+with a complementary log-log link function. 
+
+Estimation for the Fine--Gray model is based on analogous partial-likelihood principles as in the cause-specific Cox model, except with a modified risk-set definition. Namely, as part of the estimation, individuals failing from competing events are kept in the risk-set indefinitely. In the presence of random right-censoring, individuals failing from competing events need to have their contribution to the partial likelihood re-weighted, since their competing event failure effectively informatively censors their potential censoring time (i.e. how long they would have been in the risk-set for had they not experienced the competing event). Equivalently, potential censoring times for those failing from competing events can be multiply imputed [@ruanAnalysesCumulativeIncidence2008].
+
+@cornfieldEstimationProbabilityDeveloping1957 nice quote to fit in somewhere:
+
+> The estimate obtained is of a mixed probability. It provides an answer to the question: In a cohort subject for some future number of years to both the pure risk of developing the disease and to the pure risk of dying from some other cause what proportion will develop the disease in question? 
+>
+> If we are interested in isolating effects, however, and wish to study, say, changes in the pure risk of developing a disease, without regard to changes in other causes of death, such a proportionate frequency may be misleading. Thus, if such a calculation tells us that the probability of developing cancer is higher now than it was in the past, this may be either because the pure risk of developing cancer has increased, or because the chance of dying of other causes has decreased.
 
 ## Multiple imputation of missing covariate data {#sec-intro-MI}
 
+As discussed in the preceding section, right-censored survival times are a form of incomplete data. More specifically, they are a form of *coarsened* outcome data, in that they are not "fully" missing: we know that an individual is event-free by their censoring time. When data are missing on covariates, we are usually less fortunate, as these will tend to be fully missing.
+
+The problem of missing covariate data in biomedical research remains pervasive to this day, and methods for dealing with missing covariate data have been extensively discussed in the methodological literature [refs]. The core worry is that naively excluding individuals with missing data in a least one of multiple relevant covariates can result in analyses that biased and/or inefficient [@sterneMultipleImputationMissing2009].
+
+- Missing data patterns
+
+[@rubinInferenceMissingData1976;@little1987statistical]
+
 mdags and with ggdag
+
+- @leeAssumptionsAnalysisPlanning2023
+
+
 
 ## Joint models and informative drop-out {#sec-intro-jms}
 
@@ -178,7 +211,7 @@ Ideas/quotes:
 
 - @chiang1961probability early definitions of crude/net mortality
 
-- @cornfieldEstimationProbabilityDeveloping1957 to cite re. definition of competing risks. Also nice: "If we are interested in isolating effects, however, and wish to study, say, changes in the pure risk of developing a disease, without regard to changes in other causes of death, such a proportionate frequency may be misleading. Thus, if such a calculation tells us that the probability of developing cancer is higher now than it was in the past, this may be either because the pure risk of developing cancer has increased, or because the chance of dying of other causes has decreased."re. mixed and pure probabilities, sames as net/crude mortality. Also the fun quote as the end of the paper!
+- @cornfieldEstimationProbabilityDeveloping1957 to cite re. definition of competing risks. Also nice: ""re. mixed and pure probabilities, sames as net/crude mortality. Also the fun quote as the end of the paper!
 
 - @prenticeAnalysisFailureTimes1978 the main dawg
 

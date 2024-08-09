@@ -249,7 +249,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, frame hidden, sharp corners, interior hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, frame hidden, interior hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}, sharp corners, breakable]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -309,11 +309,11 @@ related to treatment, or due to an infection post-alloSCT), or the rate
 of events occurring prior to death, such as disease relapse.
 
 In order to research these types of questions, clinical data needs to be
-gathered from patients who have undergone alloSCT. This is typically
-done via clinical registries, which coordinate the collection of both
-baseline (i.e.~patient- and treatment-related characteristics at time of
-alloSCT) and ``follow-up'' information (e.g.~the occurrence and timing
-of relevant clinical events post-alloSCT) for individual patients in
+gathered from patients receiving an alloSCT. This is typically done via
+clinical registries, which coordinate the collection of both baseline
+(i.e.~patient- and treatment-related characteristics at time of alloSCT)
+and ``follow-up'' information (e.g.~the occurrence and timing of
+relevant clinical events post-alloSCT) for individual patients in
 transplantation centres, possibly across different countries and over
 extended periods of time
 (\protect\hyperlink{ref-horowitzRoleRegistriesFacilitating2008}{Horowitz,
@@ -427,7 +427,7 @@ This in turn makes it estimable from observed (i.e.~censored) data.
 
 }
 
-\caption{\label{fig-intro-haz}(Use workshop materials here?)}
+\caption{\label{fig-intro-haz}(To keep in here or not?)}
 
 \end{figure}
 
@@ -435,22 +435,24 @@ The most well-known estimator of the overall survival function is the
 \emph{Kaplan--Meier} or \emph{product-limit} estimator
 (\protect\hyperlink{ref-kaplanNonparametricEstimationIncomplete1958}{Kaplan
 and Meier, 1958}). For a set of \(N\) ordered event times
-\(0 < t_1 < t_2 < \dots < t_N\), the estimator is given by \[
+\(0 < t_1 < t_2 < \dots < t_N\), the estimator is given by
+\begin{equation}\protect\hypertarget{eq-kaplan}{}{
 \hat{S}(t) = \prod_{j:\ t_j \leq t} \bigg\{1 - \frac{d_j}{n_j}\bigg\},
-\] where \(d_j\) and \(n_j\) respectively denote the number of events
-and number of individual's at-risk at time \(t_j\)
+}\label{eq-kaplan}\end{equation} where \(d_j\) and \(n_j\) respectively
+denote the number of events (of any type) and number of individual's
+at-risk at time \(t_j\)
 (\protect\hyperlink{ref-putterTutorialBiostatisticsCompeting2007}{Putter
 \emph{et al.}, 2007}).
 
 In order to investigate the properties of \emph{specific} events
-occurring in a competing risks setting, we need to make use of the
+occurring in a competing risks setting, we can make use of the
 \emph{cause-specific hazards}, defined for \(k^{\text{th}}\) event as\\
 \[
     h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
 \] These are the instantaneous rates of moving from an event-free state
-to a state representing failure from the \(k^{\text{th}}\) event (after
-which one can no longer fail of other causes). Furthermore, the
-cause-specific hazards sum up to the all-cause hazard function, and
+to a state representing failure from the \(k^{\text{th}}\) specific
+event (after which one can no longer fail of other causes). Furthermore,
+the cause-specific hazards sum up to the all-cause hazard function, and
 therefore fully define the overall survival function defined earlier, \[
 S(t) = \exp \left\{ - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u)\diff u \right\} = \exp \left\{ - \sum_{k = 1}^{K} H_k(t) \right\},
 \] where \(H_k(t)\) is known as cause-specific cumulative hazard
@@ -462,7 +464,7 @@ the \(k^{\text{th}}\) event occuring, known as cause-specific
 \(u\). As depicted in Figure~\ref{fig-diag-geskus}, the cumulative
 incidence summarises two key aspects of the competing risks process:
 surviving event-free until just prior to \(t\), and then experiencing
-the \(k^{\text{th}}\) event in the next instant.
+the \(k^{\text{th}}\) specific event in the next instant.
 
 \begin{figure}
 
@@ -471,7 +473,7 @@ the \(k^{\text{th}}\) event in the next instant.
 }
 
 \caption{\label{fig-diag-geskus}Adapted from Figure 2.1 in Geskus
-(\protect\hyperlink{ref-geskus2015data}{2015})}
+(\protect\hyperlink{ref-geskus2015data}{2015}).}
 
 \end{figure}
 
@@ -487,15 +489,51 @@ since the independence of censoring assumption is violated
 (\protect\hyperlink{ref-putterTutorialBiostatisticsCompeting2007}{Putter
 \emph{et al.}, 2007}).
 
-\hypertarget{cause-specific-cox-model}{%
-\subsection{Cause-specific Cox model}\label{cause-specific-cox-model}}
+\hypertarget{competing-risks-regression-models}{%
+\subsection{Competing risks regression
+models}\label{competing-risks-regression-models}}
+
+Suppose we are interested in understanding the impact of
+individual-specific characteristics on the occurrence of one of multiple
+competing events (the ``primary'' event of interest). In the case of a
+single categorical covariate of interest (e.g.~presence or absence of a
+genetic mutation), a straightforward approach would be to use the
+Aalen--Johansen estimator in subsets defined by the categorical
+covariate. In order to assess the ``impact'' of this covariate, one may
+opt to then test the null hypothesis of equality of the resulting
+strata-specific cumulative incidence functions, usually by means of
+Gray's test (\protect\hyperlink{ref-grayClassKSampleTests1988}{Gray,
+1988}).
+
+Two important remarks about the above strategy. The first is that its
+extension to multiple covariates is suboptimal: groups defined
+combinations of categorical covariates will become increasingly smaller
+with the number of covariates, and continuous covariates need to be
+discretized. The second is that rejection of the aforementioned null
+hypothesis is only an indicator that being in a particular strata
+relative to the others increases or decreases the (cumulative)
+probability of a specific event occurring, in the presence of competing
+risks. It does \emph{not} however in isolation explain whether or to
+what extent this increase or decrease is attributable an existing
+association between the covariate and the competing risks.
+
+For a more complete understanding of the competing risks process as a
+function of covariates, one will usually need to specify regression
+models the cause-specific hazards, which are identifiable and estimable
+from observed data
+(\protect\hyperlink{ref-prenticeAnalysisFailureTimes1978}{Prentice
+\emph{et al.}, 1978}). The most popular approach for modelling the
+cause-specific hazards is using the semi-parametric Cox proportional
+hazards model
+(\protect\hyperlink{ref-coxRegressionModelsLifeTables1972}{Cox, 1972}),
+given for the \(k^{\text{th}}\) event by
 
 \[
 h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
-\]
-
-\hypertarget{finegray-model}{%
-\subsection{Fine--Gray model}\label{finegray-model}}
+\] where \(h_{k0}(t)\) is the cause-specific baseline hazard,
+\(\mathbf{Z}\) is a \(p\)-dimensional vector of covariates, and
+\(\boldsymbol{\beta}_k\) quantify the impact of \(\mathbf{Z}\) on the
+cause-specific hazard.
 
 \[
 \lambda_1(t \given \mathbf{Z}) = \lambda_{0}(t)\exp(\boldsymbol{\beta}^\intercal \mathbf{Z})
@@ -507,9 +545,45 @@ Something something
 F_1(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{0}(u)\diff u \Biggr\}
 \]
 
+Cornfield
+(\protect\hyperlink{ref-cornfieldEstimationProbabilityDeveloping1957}{1957})
+described this core issue as follows
+
+\begin{quote}
+The estimate obtained is of a mixed probability. It provides an answer
+to the question: In a cohort subject for some future number of years to
+both the pure risk of developing the disease and to the pure risk of
+dying from some other cause what proportion will develop the disease in
+question?
+
+If we are interested in isolating effects, however, and wish to study,
+say, changes in the pure risk of developing a disease, without regard to
+changes in other causes of death, such a proportionate frequency may be
+misleading. Thus, if such a calculation tells us that the probability of
+developing cancer is higher now than it was in the past, this may be
+either because the pure risk of developing cancer has increased, or
+because the chance of dying of other causes has decreased.
+\end{quote}
+
 \hypertarget{sec-intro-MI}{%
-\section{Multiple imputation and missing covariate
+\section{Multiple imputation of missing covariate
 data}\label{sec-intro-MI}}
+
+As discussed in the preceding section, right-censored survival times are
+a form of incomplete data. More specifically, they are a form of
+\emph{coarsened} outcome data, in that they are not ``fully'' missing:
+we know that an individual is event-free by their censoring time. When
+data are missing on covariates, we are usually less fortunate, as these
+will tend to be fully missing.
+
+The problem of missing covariate data in biomedical research remains
+pervasive to this day, and methods for dealing with missing covariate
+data have been extensively discussed in the methodological literature.
+The core worry is that naively excluding individuals with missing data
+in a least one of multiple relevant covariates can result in analyses
+that biased and/or inefficient.
+
+mdags and with ggdag
 
 \hypertarget{sec-intro-jms}{%
 \section{Joint models and informative drop-out}\label{sec-intro-jms}}
@@ -593,16 +667,9 @@ Ideas/quotes:
 \item
   Cornfield
   (\protect\hyperlink{ref-cornfieldEstimationProbabilityDeveloping1957}{1957})
-  to cite re. definition of competing risks. Also nice: ``If we are
-  interested in isolating effects, however, and wish to study, say,
-  changes in the pure risk of developing a disease, without regard to
-  changes in other causes of death, such a proportionate frequency may
-  be misleading. Thus, if such a calculation tells us that the
-  probability of developing cancer is higher now than it was in the
-  past, this may be either because the pure risk of developing cancer
-  has increased, or because the chance of dying of other causes has
-  decreased.''re. mixed and pure probabilities, sames as net/crude
-  mortality. Also the fun quote as the end of the paper!
+  to cite re. definition of competing risks. Also nice: ``\,``re. mixed
+  and pure probabilities, sames as net/crude mortality. Also the fun
+  quote as the end of the paper!
 \item
   Prentice \emph{et al.}
   (\protect\hyperlink{ref-prenticeAnalysisFailureTimes1978}{1978}) the
@@ -5960,6 +6027,9 @@ counts increase the risk of GvHD and decrease the risk of relapse.
 \hypertarget{general-discussion}{%
 \chapter{General Discussion}\label{general-discussion}}
 
+Mentions why the JMs were novel for allo, the extensions, the needed
+data..
+
 Structure
 
 \begin{itemize}
@@ -5969,6 +6039,8 @@ Structure
   About future joint modelling
 \item
   About cause-specific vs fine-gray and beyond
+\item
+  Mention the recent left truncated imp paper
 \end{itemize}
 
 \hypertarget{future-research}{%
@@ -6212,6 +6284,12 @@ Cornfield, J. (1957)
 of the {Probability} of {Developing} a {Disease} in the {Presence} of
 {Competing Risks}}. \emph{American Journal of Public Health and the
 Nations Health}, \textbf{47}, 601--607.
+
+\leavevmode\vadjust pre{\hypertarget{ref-coxRegressionModelsLifeTables1972}{}}%
+Cox, D. R. (1972) Regression {Models} and {Life-Tables}. \emph{Journal
+of the Royal Statistical Society: Series B (Methodological)},
+\textbf{34}, 187--202. DOI:
+\href{https://doi.org/10.1111/j.2517-6161.1972.tb00899.x}{10.1111/j.2517-6161.1972.tb00899.x}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-coxPartialLikelihood1975}{}}%
 Cox, D. R. (1975) Partial likelihood. \emph{Biometrika}, \textbf{62},
