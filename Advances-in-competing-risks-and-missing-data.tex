@@ -249,7 +249,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, frame hidden, interior hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}, sharp corners, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, breakable, enhanced, sharp corners, borderline west={3pt}{0pt}{shadecolor}, interior hidden, frame hidden]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -337,7 +337,7 @@ to treatment-related toxicity. Since death precludes the occurrence of
 relapse (or any other event), death here is considered a \emph{competing
 risk}. These and related points were concisely summarised over 60 years
 ago by Chiang
-(\protect\hyperlink{ref-chiangStochasticStudyLife1961}{1961a}):
+(\protect\hyperlink{ref-chiangStochasticStudyLife1961}{1961}):
 
 \begin{quote}
 When the period of observation is ended, there will usually remain a
@@ -371,6 +371,8 @@ Primarily, the focus is on the use of \emph{multiple imputation} for
 handling missing covariate data in the context of major competing risks
 regression models. The use of \emph{shared-parameter joint models} for
 dealing with informative drop-out in alloSCT studies is also addressed.
+
+\textbf{(?) Thesis aims here? Or give before outline at the end?}
 
 The remainder of the introduction is structured as follows. In
 Section~\ref{sec-intro-comp-risks}, we introduce basic notation for
@@ -518,9 +520,9 @@ what extent this increase or decrease is attributable an existing
 association between the covariate and the competing risks.
 
 For a more complete understanding of the competing risks process as a
-function of covariates, one will usually need to specify regression
-models the cause-specific hazards, which are identifiable and estimable
-from observed data
+function of multiple covariates, one will usually need to specify
+regression models the cause-specific hazards, which are identifiable and
+estimable from observed data
 (\protect\hyperlink{ref-prenticeAnalysisFailureTimes1978}{Prentice
 \emph{et al.}, 1978}). The most popular approach for modelling the
 cause-specific hazards is using the semi-parametric Cox proportional
@@ -531,23 +533,66 @@ given for the \(k^{\text{th}}\) event by
 \[
 h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
 \] where \(h_{k0}(t)\) is the cause-specific baseline hazard,
-\(\mathbf{Z}\) is a \(p\)-dimensional vector of covariates, and
-\(\boldsymbol{\beta}_k\) quantify the impact of \(\mathbf{Z}\) on the
-cause-specific hazard.
+\(\mathbf{Z}\) is a \(p\)-dimensional vector of covariates, and vector
+\(\boldsymbol{\beta}_k\) quantifies the impact of \(\mathbf{Z}\) on the
+cause-specific hazard. Inference on the cause-specific, time-constant
+\emph{hazard ratios} \(\exp(\boldsymbol{\beta}_k)\) is based on
+maximizing a \emph{partial likelihood} which treats causes other than
+\(k\) as censored. The baseline hazard can be estimated
+non-parametrically by means of the Breslow estimator {[}ref{]}.
+
+It is important to note that a covariate which increases the
+cause-specific hazard of a particular event will not necessarily also
+increase the cumulative incidence of that same event, because the
+cumulative incidence function depends on the cause-specific hazards of
+\emph{all} events. Depending on direction and magnitude of the covariate
+effect on competing cause-specific hazards, the same covariate may even
+have opposing effects on the cause-specific hazard and cumulative
+incidence function of a particular event. As a result, regression models
+have been proposed that model the cumulative incidence function(s)
+\emph{directly}, often through the so-called \emph{subdistribution
+hazard}, given for a cause \(k\) by
 
 \[
-\lambda_1(t \given \mathbf{Z}) = \lambda_{0}(t)\exp(\boldsymbol{\beta}^\intercal \mathbf{Z})
+\begin{aligned}
+    \lambda_k(t) &= \lim_{\Delta t \downarrow 0} \frac{P\{t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t \cup (\tilde{T} \leq t \cap \tilde{D} \neq k)\}}{\Delta t}, \\
+    &= \frac{\diff F_k(t)}{\diff t} \times \{1 - F_k(t)\}^{-1}.
+\end{aligned}
 \]
 
-Something something
-
-\[
-F_1(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{0}(u)\diff u \Biggr\}
+The most prominently example of a model for the subdistribution hazard
+is the Fine--Gray model
+(\protect\hyperlink{ref-fineProportionalHazardsModel1999}{Fine and Gray,
+1999}), given for a cause \(k\) by \[
+\lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\gamma_k}^\intercal \mathbf{Z}),
 \]
+
+where \(\lambda_{k0}(t)\) is the subdistribution baseline hazard, and
+\(\boldsymbol{\gamma_k}\) is the vector of log subdistribution hazard
+ratios. It can also be expressed as a transformation model for the
+cumulative incidence function, as \[
+F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\gamma_k}^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{k0}(u)\diff u \Biggr\},
+\] using the complementary log-log link function.
+
+Estimation for the Fine--Gray model is based on analogous
+partial-likelihood principles as in the cause-specific Cox model, except
+with a modified risk-set definition. Namely, as part of the estimation,
+individuals failing from competing events are kept in the risk-set
+indefinitely. In the presence of random right-censoring, individuals
+failing from competing events need to have their contribution to the
+partial likelihood re-weighted, since their competing event failure
+informatively censors their potential censoring time (i.e.~how long they
+would have been in the risk-set for had they not experienced the
+competing event)
+(\protect\hyperlink{ref-geskusCauseSpecificCumulativeIncidence2011}{Geskus,
+2011}). Equivalently, potential censoring times for those failing from
+competing events can be multiply imputed
+(\protect\hyperlink{ref-ruanAnalysesCumulativeIncidence2008}{Ruan and
+Gray, 2008}).
 
 Cornfield
 (\protect\hyperlink{ref-cornfieldEstimationProbabilityDeveloping1957}{1957})
-described this core issue as follows
+nice quote to fit in somewhere:
 
 \begin{quote}
 The estimate obtained is of a mixed probability. It provides an answer
@@ -569,38 +614,125 @@ because the chance of dying of other causes has decreased.
 \section{Multiple imputation of missing covariate
 data}\label{sec-intro-MI}}
 
+\hypertarget{missing-data-concepts}{%
+\subsection{Missing data concepts}\label{missing-data-concepts}}
+
 As discussed in the preceding section, right-censored survival times are
 a form of incomplete data. More specifically, they are a form of
 \emph{coarsened} outcome data, in that they are not ``fully'' missing:
-we know that an individual is event-free by their censoring time. When
-data are missing on covariates, we are usually less fortunate, as these
-will tend to be fully missing.
+we do at least know that an individual is event-free by their censoring
+time. When data are missing on covariates, we are usually less
+fortunate, as these will tend to be fully missing.
 
 The problem of missing covariate data in biomedical research remains
 pervasive to this day, and methods for dealing with missing covariate
-data have been extensively discussed in the methodological literature.
-The core worry is that naively excluding individuals with missing data
-in a least one of multiple relevant covariates can result in analyses
-that biased and/or inefficient.
+data have been extensively discussed in the methodological literature
+{[}refs{]}. The core worry is that naively excluding individuals with
+missing data in a least one of multiple relevant covariates can result
+in estimates (e.g.~of a survival probability) that are biased and/or
+inefficient
+(\protect\hyperlink{ref-sterneMultipleImputationMissing2009}{Sterne
+\emph{et al.}, 2009}).
 
-mdags and with ggdag
+The first step in assessing the extent of the missing data issue for a
+given application is to investigate the \emph{missing data pattern}, and
+outline plausible assumptions for the \emph{missing data mechanism}. As
+described in Enders
+(\protect\hyperlink{ref-endersAppliedMissingData2022}{2022}), ``patterns
+describe where the holes are in the data, whereas mechanisms describe
+why the values are missing''. Specifically, the missing data pattern
+tells us what variables have missing data and in what combination(s),
+while the missing data mechanism describes which variables contribute to
+the probability (and eventually in what functional form) of one of more
+these combinations occurring.
+
+Rubin and colleagues
+(\protect\hyperlink{ref-little1987statistical}{Little and Rubin, 1987};
+\protect\hyperlink{ref-rubinInferenceMissingData1976}{Rubin, 1976})
+developed a now ubiquitous framework for classifying missing data
+mechanisms. Let \(\mathbf{X}\) denote the hypothetically complete data
+dataset, which can be partitioned respectively in observed and missing
+components as
+\(\mathbf{X} = \{\mathbf{X}_{\text{obs}},\mathbf{X}_{\text{mis}}\}\).
+Furthermore, denote \(\mathbf{M}\) the matrix of missing data indicators
+i.e.~equal to 1 when an observation is missing, and 0 otherwise. The
+general form of the mechanism (or missing data model, parametrized by
+\(\psi\)) is given by \[
+P(\mathbf{M} \given \mathbf{X}_{\text{obs}},\mathbf{X}_{\text{mis}};\psi).
+\] The missing data are said to be \emph{missing completely at random}
+(MCAR) when the probability of a particular unit being missing is
+independent of both observed and unobserved information,
+i.e.~\(P(\mathbf{M} \given \mathbf{X}_{\text{obs}},\mathbf{X}_{\text{mis}};\psi) = P(\mathbf{M} \given \psi)\).
+MCAR missingness is often described as non-systematic or ``accidental'',
+occurring for example as a result of measurement apparatus (e.g.~heart
+rate monitor) malfunctioning.
+
+Under \emph{missing at random} (MAR), denoted as
+\(P(\mathbf{M} \given \mathbf{X}_{\text{obs}},\mathbf{X}_{\text{mis}};\psi) = P(\mathbf{M} \given \mathbf{X}_{\text{obs}};\psi)\),
+the missingness depends only on observed information. For example,
+comorbidities may be monitored more closely in elderly patients, and
+therefore availability of information on the presence of absence of
+particular comorbidities may depend on (fully observed) patient age.
+Conversely, if availability of comorbidity information was contingent on
+the underlying (partially missing) presence or absence of particular
+comorbidities, the mechanism is said to be \emph{missing not at random}
+(MNAR). That is, the missingness mechanism depends at least partially on
+unobserved values.
+
+Furthermore, the missing data mechanism is said to be \emph{ignorable}
+when a) the missing data are MAR; b) the parameters \(\psi\) of the
+missing data model, and the parameters of the analysis model \(\theta\)
+(i.e.~the one of scientific interest for the hypothetically complete
+data), are a priori independent. Crucially, it implies that we do not
+need to model the missing data mechanism explicitly (hence ignorable),
+and that inference on \(\theta\) is possible using only observed data.
+
+The above taxonomy does not in isolation fully inform what method(s) we
+can use to handle the missing values, or whether it is possible to
+obtain an unbiased estimate of some target estimand. Usually, one needs
+to also consider issues pertaining the structure of the outcome model
+itself (e.g.~non-collapsibility), and whether or not the missingness
+depends on the outcome variable(s)
+(\protect\hyperlink{ref-carpenterMissingDataStatistical2021}{Carpenter
+and Smuk, 2021}). Related to the latter point, there has been a movement
+towards using graphical causal models to establish whether or not a
+particular estimand can be ``recovered'' in the presence of missing data
+(i.e.~estimated consistently using only the observed data and no
+additional external information)
+(\protect\hyperlink{ref-leeAssumptionsAnalysisPlanning2023}{Lee \emph{et
+al.}, 2023}).
+
+\hypertarget{multiple-imputation}{%
+\subsection{Multiple imputation}\label{multiple-imputation}}
+
+\begin{itemize}
+\tightlist
+\item
+  Brief intro MI
+\end{itemize}
 
 \hypertarget{sec-intro-jms}{%
 \section{Joint models and informative drop-out}\label{sec-intro-jms}}
 
-with random effects vector \(b_{i} \sim \mathcal{N}(0, D)\). The
+Some notation from the appendix of Eva paper:
+
+..with random effects vector \(b_{i} \sim \mathcal{N}(0, D)\). The
 observations for the \(i^{\text{th}}\) patient at timepoints
 \(t_{ij} \ (j = 1,\ldots,n_i)\) are given by \[
 y_{ij} = m_i(t_{ij}) + \epsilon_{ij},
 \] where \(\epsilon_{ij} \sim \mathcal{N}(0, \sigma^2)\) are independent
 random error terms.
 
-Hickey \emph{et al.}
-(\protect\hyperlink{ref-hickeyComparisonJointModels2018a}{2018})
-
-Good references in here too:
-https://mc-stan.org/rstanarm/articles/jm.html , the Henderson one is
-nicest notation?
+\begin{itemize}
+\tightlist
+\item
+  Use Hickey \emph{et al.}
+  (\protect\hyperlink{ref-hickeyComparisonJointModels2018a}{2018})
+\item
+  Good references in here too:
+  https://mc-stan.org/rstanarm/articles/jm.html - the references
+  Henderson paper is nicest notation?
+\end{itemize}
 
 \hypertarget{sec-intro-outline}{%
 \section{Outline of this thesis}\label{sec-intro-outline}}
@@ -611,9 +743,9 @@ In chapter bla we will bla. That's about it really. And some more.
 \tightlist
 \item
   Say that DGM chapter related to FG imputation
+\item
+  Change (small change) notation of moet je niet willen with the tilde.
 \end{itemize}
-
-Change (small change) notation of moet je niet willen for the tilde.
 
 \hypertarget{ideas}{%
 \section*{Ideas}\label{ideas}}
@@ -625,27 +757,12 @@ Ideas/quotes:
 
 \begin{itemize}
 \item
-  Definition 1.1 from Little and Rubin
-  (\protect\hyperlink{ref-littleStatisticalAnalysisMissing2019}{2019}):
-  ``Missing data are unobserved values that would be meaningful for
-  analysis if observed; in other words, a missing value hides a
-  meaningful value.''
+  Brief intro to alloSCT?
 \item
-  From Orchard and Woodbury
-  (\protect\hyperlink{ref-orchard1972missing}{1972}): ``The problem that
-  a relatively simple analysis is changed into a complex one just
-  because some of the information is missing, is one which faces most
-  practising statisticians at some point in their career. Obviously the
-  best way to treat missing information problems is not to have them.
-  Unfortunately circumstances arise in which information is missing and
-  nothing can be done to replace it for one reason or another. In
-  analogy to other accidents-we don't plan on accidents, nevertheless
-  they do occur and safety measures must be aimed at palliating
-  consequences as well as at prevention.'' ; which also has a nice
-  history of missing data developments at the end
+  Motivating datasets? Or already in the papers?
 \item
   Tsiatis (\protect\hyperlink{ref-tsiatis2005encycl}{2005}) nice concise
-  historical overview
+  historical overview competing risks, to complete on cornfield quote
 \item
   Hartley and Hocking
   (\protect\hyperlink{ref-hartleyAnalysisIncompleteData1971}{1971}) on
@@ -656,29 +773,15 @@ Ideas/quotes:
   for the missing data part of joint models aka dropout, causes of death
   listed in Eva article
 \item
-  Add bibtex for own papers!!
-\item
   Lau and Lesko
   (\protect\hyperlink{ref-lauMissingnessSettingCompeting2018}{2018})
   easy going overall reference for missing data and competing risks
 \item
-  Chiang (\protect\hyperlink{ref-chiang1961probability}{1961b}) early
-  definitions of crude/net mortality
-\item
-  Cornfield
-  (\protect\hyperlink{ref-cornfieldEstimationProbabilityDeveloping1957}{1957})
-  to cite re. definition of competing risks. Also nice: ``\,``re. mixed
-  and pure probabilities, sames as net/crude mortality. Also the fun
-  quote as the end of the paper!
-\item
   Prentice \emph{et al.}
-  (\protect\hyperlink{ref-prenticeAnalysisFailureTimes1978}{1978}) the
-  main dawg
+  (\protect\hyperlink{ref-prenticeAnalysisFailureTimes1978}{1978})
 \item
   In the discussion, add bits about separable/total/controlled direct
   effects for missing data
-\item
-  Small primer to allogeneic stem cell transplantation
 \item
   use \(f(\cdot)\) for density also is cause-spec. paper
 \end{itemize}
@@ -889,8 +992,8 @@ a form of single imputation: it assumes (in the case of a categorical
 variable), that missing values belong to a separate category, rather
 than to any one of the existing categories.
 
-\hypertarget{multiple-imputation}{%
-\subsection{Multiple imputation}\label{multiple-imputation}}
+\hypertarget{multiple-imputation-1}{%
+\subsection{Multiple imputation}\label{multiple-imputation-1}}
 
 A more complex strategy to handle missing values is multiple imputation
 (MI). MI leverages the observed data to repeatedly replace the missing
@@ -6258,17 +6361,11 @@ Methodology}, \textbf{20}, 134. DOI:
 \href{https://doi.org/10.1186/s12874-020-01018-7}{10.1186/s12874-020-01018-7}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-chiangStochasticStudyLife1961}{}}%
-Chiang, C. L. (1961a) A {Stochastic Study} of the {Life Table} and {Its
+Chiang, C. L. (1961) A {Stochastic Study} of the {Life Table} and {Its
 Applications}. {III}. {The Follow-Up Study} with the {Consideration} of
 {Competing Risks}. \emph{Biometrics}, \textbf{17}, 57--78. {[}Wiley,
 International Biometric Society{]}. DOI:
 \href{https://doi.org/10.2307/2527496}{10.2307/2527496}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-chiang1961probability}{}}%
-Chiang, C. L. (1961b) On the probability of death from specific causes
-in the presence of competing risks. In: \emph{Proceedings of the fourth
-{Berkeley} symposium on mathematical statistics and probability}, 1961,
-pp. 169--180. University of California Press, Berkeley, CA.
 
 \leavevmode\vadjust pre{\hypertarget{ref-cliftLivingRiskPrediction2020}{}}%
 Clift, A. K., Coupland, C. A. C., Keogh, R. H., et al. (2020) Living
@@ -6378,6 +6475,11 @@ following hematopoietic stem cell transplantation using different stem
 cell sources. \emph{Expert Review of Clinical Immunology}, \textbf{15},
 735--751. Taylor \& Francis. DOI:
 \href{https://doi.org/10.1080/1744666X.2019.1612746}{10.1080/1744666X.2019.1612746}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-endersAppliedMissingData2022}{}}%
+Enders, C. K. (2022) \emph{Applied Missing Data Analysis, 2nd Ed.}
+Applied missing data analysis, 2nd ed. New York, NY, US: The Guilford
+Press.
 
 \leavevmode\vadjust pre{\hypertarget{ref-erlerDealingMissingCovariates2016}{}}%
 Erler, N. S., Rizopoulos, D., Rosmalen, J. van, et al. (2016) Dealing
@@ -6693,6 +6795,17 @@ Studies} framework. \emph{Journal of Clinical Epidemiology},
 \textbf{134}, 79--88. DOI:
 \href{https://doi.org/10.1016/j.jclinepi.2021.01.008}{10.1016/j.jclinepi.2021.01.008}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-leeAssumptionsAnalysisPlanning2023}{}}%
+Lee, K. J., Carlin, J. B., Simpson, J. A., et al. (2023) Assumptions and
+analysis planning in studies with missing data in multiple variables:
+Moving beyond the {MCAR}/{MAR}/{MNAR} classification.
+\emph{International Journal of Epidemiology}, \textbf{52}, 1268--1275.
+DOI: \href{https://doi.org/10.1093/ije/dyad008}{10.1093/ije/dyad008}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-little1987statistical}{}}%
+Little, R. J. and Rubin, D. B. (1987) Statistical analysis with missing
+data. \emph{New York: Wiley}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-littleStatisticalAnalysisMissing2019}{}}%
 Little, R. J. A. and Rubin, D. B. (2019) \emph{Statistical {Analysis}
 with {Missing Data}}. John Wiley \& Sons.
@@ -6797,12 +6910,6 @@ Nikiforow, S., Kim, H. T., Daley, H., et al. (2016) A phase {I} study of
 relapse after allogeneic stem cell transplantation.
 \emph{Haematologica}, \textbf{101}, 1251--1259. DOI:
 \href{https://doi.org/10.3324/haematol.2015.141176}{10.3324/haematol.2015.141176}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-orchard1972missing}{}}%
-Orchard, T. and Woodbury, M. A. (1972) A missing information principle:
-Theory and applications. In: \emph{Proceedings of the sixth berkeley
-symposium on mathematical statistics and probability, volume 1: {Theory}
-of statistics}, 1972, pp. 697--716. University of California Press.
 
 \leavevmode\vadjust pre{\hypertarget{ref-RJ-2017-062}{}}%
 Ozenne, B., Sørensen, A. L., Scheike, T., et al. (2017)
@@ -6913,6 +7020,11 @@ Medicine}, \textbf{27}, 5709--5724. DOI:
 Rubin, D. (1987) \emph{Multiple Imputation for Nonresponse in Surveys}.
 New York: John Wiley \& Sons. DOI:
 \href{https://doi.org/10.1002/9780470316696}{10.1002/9780470316696}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rubinInferenceMissingData1976}{}}%
+Rubin, D. B. (1976) Inference and missing data. \emph{Biometrika},
+\textbf{63}, 581--592. DOI:
+\href{https://doi.org/10.1093/biomet/63.3.581}{10.1093/biomet/63.3.581}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-ruckerPresentingSimulationResults2014}{}}%
 Rücker, G. and Schwarzer, G. (2014) Presenting simulation results in a

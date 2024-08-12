@@ -27,6 +27,8 @@ Another kind of incomplete data is *missing covariate data*, where relevant base
 
 The present thesis is about statistical methodology for dealing with incomplete data in alloSCT studies with competing risks outcomes. Primarily, the focus is on the use of *multiple imputation* for handling missing covariate data in the context of major competing risks regression models. The use of *shared-parameter joint models* for dealing with informative drop-out in alloSCT studies is also addressed.
 
+**(?) Thesis aims here? Or give before outline at the end?**
+
 <!-- Thesis aims here? -->
 
 The remainder of the introduction is structured as follows. In @sec-intro-comp-risks, we introduce basic notation for competing risks data and prominent regression models. In @sec-intro-MI, we introduce basic concepts for missing covariate data and multiple imputation. In @sec-intro-jms, we briefly introduce shared-parameter joint models. Finally, the outline of the thesis is given in @sec-intro-outline.
@@ -141,13 +143,13 @@ $$
 \lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\gamma_k}^\intercal \mathbf{Z}),
 $$
 
-where $\lambda_{0}(t)$ is the subdistribution baseline hazard, and $\boldsymbol{\gamma_k}$ is the vector of log subdistribution hazard ratios. It can also be expressed as a transformation model for the cumulative incidence function, as
+where $\lambda_{k0}(t)$ is the subdistribution baseline hazard, and $\boldsymbol{\gamma_k}$ is the vector of log subdistribution hazard ratios. It can also be expressed as a transformation model for the cumulative incidence function, as
 $$
-F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\gamma_k}^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{0}(u)\diff u \Biggr\},
+F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\gamma_k}^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{k0}(u)\diff u \Biggr\},
 $$
-with a complementary log-log link function. 
+using the complementary log-log link function. 
 
-Estimation for the Fine--Gray model is based on analogous partial-likelihood principles as in the cause-specific Cox model, except with a modified risk-set definition. Namely, as part of the estimation, individuals failing from competing events are kept in the risk-set indefinitely. In the presence of random right-censoring, individuals failing from competing events need to have their contribution to the partial likelihood re-weighted, since their competing event failure effectively informatively censors their potential censoring time (i.e. how long they would have been in the risk-set for had they not experienced the competing event). Equivalently, potential censoring times for those failing from competing events can be multiply imputed [@ruanAnalysesCumulativeIncidence2008].
+Estimation for the Fine--Gray model is based on analogous partial-likelihood principles as in the cause-specific Cox model, except with a modified risk-set definition. Namely, as part of the estimation, individuals failing from competing events are kept in the risk-set indefinitely. In the presence of random right-censoring, individuals failing from competing events need to have their contribution to the partial likelihood re-weighted, since their competing event failure informatively censors their potential censoring time (i.e. how long they would have been in the risk-set for had they not experienced the competing event) [@geskusCauseSpecificCumulativeIncidence2011]. Equivalently, potential censoring times for those failing from competing events can be multiply imputed [@ruanAnalysesCumulativeIncidence2008].
 
 @cornfieldEstimationProbabilityDeveloping1957 nice quote to fit in somewhere:
 
@@ -157,66 +159,73 @@ Estimation for the Fine--Gray model is based on analogous partial-likelihood pri
 
 ## Multiple imputation of missing covariate data {#sec-intro-MI}
 
-As discussed in the preceding section, right-censored survival times are a form of incomplete data. More specifically, they are a form of *coarsened* outcome data, in that they are not "fully" missing: we know that an individual is event-free by their censoring time. When data are missing on covariates, we are usually less fortunate, as these will tend to be fully missing.
+### Missing data concepts
 
-The problem of missing covariate data in biomedical research remains pervasive to this day, and methods for dealing with missing covariate data have been extensively discussed in the methodological literature [refs]. The core worry is that naively excluding individuals with missing data in a least one of multiple relevant covariates can result in analyses that biased and/or inefficient [@sterneMultipleImputationMissing2009].
+As discussed in the preceding section, right-censored survival times are a form of incomplete data. More specifically, they are a form of *coarsened* outcome data, in that they are not "fully" missing: we do at least know that an individual is event-free by their censoring time. When data are missing on covariates, we are usually less fortunate, as these will tend to be fully missing.
 
-- Missing data patterns
+The problem of missing covariate data in biomedical research remains pervasive to this day, and methods for dealing with missing covariate data have been extensively discussed in the methodological literature [refs]. The core worry is that naively excluding individuals with missing data in a least one of multiple relevant covariates can result in estimates (e.g. of a survival probability) that are biased and/or inefficient [@sterneMultipleImputationMissing2009].
 
-[@rubinInferenceMissingData1976;@little1987statistical]
+The first step in assessing the extent of the missing data issue for a given application is to investigate the *missing data pattern*, and outline plausible assumptions for the *missing data mechanism*. As described in @endersAppliedMissingData2022, "patterns describe where the holes are in the data, whereas mechanisms describe why the values are missing". Specifically, the missing data pattern tells us what variables have missing data and in what combination(s), while the missing data mechanism describes which variables contribute to the probability (and eventually in what functional form) of one of more these combinations occurring.
 
-mdags and with ggdag
+Rubin and colleagues [@rubinInferenceMissingData1976;@little1987statistical] developed a now ubiquitous framework for classifying missing data mechanisms. Let $\mathbf{X}$ denote the hypothetically complete data dataset, which can be partitioned respectively in observed and missing components as $\mathbf{X} = \{\mathbf{X}_{\text{obs}},\mathbf{X}_{\text{mis}}\}$. Furthermore, denote $\mathbf{M}$ the matrix of missing data indicators i.e. equal to 1 when an observation is missing, and 0 otherwise. The general form of the mechanism (or missing data model, parametrized by $\psi$) is given by 
+$$
+P(\mathbf{M} \given \mathbf{X}_{\text{obs}},\mathbf{X}_{\text{mis}};\psi).
+$$
+The missing data are said to be *missing completely at random* (MCAR) when the probability of a particular unit being missing is independent of both observed and unobserved information, i.e. $P(\mathbf{M} \given \mathbf{X}_{\text{obs}},\mathbf{X}_{\text{mis}};\psi) = P(\mathbf{M} \given \psi)$. MCAR missingness is often described as non-systematic or "accidental", occurring for example as a result of measurement apparatus (e.g. heart rate monitor) malfunctioning.
 
-- @leeAssumptionsAnalysisPlanning2023
+Under *missing at random* (MAR), denoted as $P(\mathbf{M} \given \mathbf{X}_{\text{obs}},\mathbf{X}_{\text{mis}};\psi) = P(\mathbf{M} \given \mathbf{X}_{\text{obs}};\psi)$, the missingness depends only on observed information. For example, comorbidities may be monitored more closely in elderly patients, and therefore availability of information on the presence of absence of particular comorbidities may depend on (fully observed) patient age. Conversely, if availability of comorbidity information was contingent on the underlying (partially missing) presence or absence of particular comorbidities, the mechanism is said to be *missing not at random* (MNAR). That is, the missingness mechanism depends at least partially on unobserved values.
 
+Furthermore, the missing data mechanism is said to be *ignorable* when a) the missing data are MAR; b) the parameters $\psi$ of the missing data model, and the parameters of the analysis model $\theta$ (i.e. the one of scientific interest for the hypothetically complete data), are a priori independent. Crucially, it implies that we do not need to model the missing data mechanism explicitly (hence ignorable), and that inference on $\theta$ is possible using only observed data.
 
+The above taxonomy does not in isolation fully inform what method(s) we can use to handle the missing values, or whether it is possible to obtain an unbiased estimate of some target estimand. Usually, one needs to also consider issues pertaining the structure of the outcome model itself (e.g. non-collapsibility), and whether or not the missingness depends on the outcome variable(s) [@carpenterMissingDataStatistical2021]. Related to the latter point, there has been a movement towards using graphical causal models to establish whether or not a particular estimand can be "recovered" in the presence of missing data (i.e. estimated consistently using only the observed data and no additional external information) [@leeAssumptionsAnalysisPlanning2023]. 
+
+<!-- Use f for cond density? -->
+<!-- dags here? -->
+
+### Multiple imputation
+
+- Brief intro MI
 
 ## Joint models and informative drop-out {#sec-intro-jms}
 
-with random effects vector $b_{i} \sim \mathcal{N}(0, D)$. The observations for the $i^{\text{th}}$ patient at timepoints $t_{ij} \ (j = 1,\ldots,n_i)$ are given by
+Some notation from the appendix of Eva paper: 
+
+..with random effects vector $b_{i} \sim \mathcal{N}(0, D)$. The observations for the $i^{\text{th}}$ patient at timepoints $t_{ij} \ (j = 1,\ldots,n_i)$ are given by
 $$
 y_{ij} = m_i(t_{ij}) + \epsilon_{ij},
 $$
 where $\epsilon_{ij} \sim \mathcal{N}(0, \sigma^2)$ are independent random error terms.
 
-@hickeyComparisonJointModels2018a
-
-Good references in here too: https://mc-stan.org/rstanarm/articles/jm.html , the Henderson one is nicest notation?
+- Use @hickeyComparisonJointModels2018a
+- Good references in here too: https://mc-stan.org/rstanarm/articles/jm.html - the references Henderson paper is nicest notation?
 
 ## Outline of this thesis {#sec-intro-outline}
 
 In chapter bla we will bla. That's about it really. And some more.
 
 - Say that DGM chapter related to FG imputation
-
-Change (small change) notation of moet je niet willen for the tilde.
+- Change (small change) notation of moet je niet willen with the tilde.
 
 ## Ideas {.unnumbered}
 
 Ideas/quotes:
 
-- Definition 1.1 from @littleStatisticalAnalysisMissing2019: "Missing data are unobserved values that would be meaningful for analysis if observed; in other words, a missing value hides a meaningful value."
+- Brief intro to alloSCT?
 
-- From @orchard1972missing: "The problem that a relatively simple analysis is changed into a complex one just because some of the information is missing, is one which faces most practising statisticians at some point in their career. Obviously the best way to treat missing information problems is not to have them. Unfortunately circumstances arise in which information is missing and nothing can be done to replace it for one reason or another. In analogy to other accidents-we don't plan on accidents, nevertheless they do occur and safety measures must be aimed at palliating consequences as well as at prevention." ; which also has a nice history of missing data developments at the end
+- Motivating datasets? Or already in the papers?
 
-- @tsiatis2005encycl nice concise historical overview
+- @tsiatis2005encycl nice concise historical overview competing risks, to complete on cornfield quote
 
 - @hartleyAnalysisIncompleteData1971 on the "evil of incompleteness"
 
 - @papageorgiouAlternativeCharacterizationMAR2021 for the missing data part of joint models aka dropout, causes of death listed in Eva article
 
-- Add bibtex for own papers!!
-
 - @lauMissingnessSettingCompeting2018 easy going overall reference for missing data and competing risks
 
-- @chiang1961probability early definitions of crude/net mortality
-
-- @cornfieldEstimationProbabilityDeveloping1957 to cite re. definition of competing risks. Also nice: ""re. mixed and pure probabilities, sames as net/crude mortality. Also the fun quote as the end of the paper!
-
-- @prenticeAnalysisFailureTimes1978 the main dawg
+- @prenticeAnalysisFailureTimes1978 
 
 - In the discussion, add bits about separable/total/controlled direct effects for missing data
 
-- Small primer to allogeneic stem cell transplantation
-
 - use $f(\cdot)$ for density also is cause-spec. paper
+
+<!-- Many concepts repeated -->
