@@ -15,11 +15,11 @@ $$
 
 <!-- Ask Eva for more general alloSCT references -->
 
-A variety of biomedical applications involve studying the time between a relevant starting point and the occurrence of particular event. For instance, time until death is regularly of interest to applied researchers, be it from birth, diagnosis of a given disease, or the start of a treatment for that disease [@vanhouwelingenDynamicPredictionClinical2012]. One context in which time to death is particularly relevant is that of allogeneic haematopoietic stem cell transplantation (alloSCT), which is a type of treatment given to patients with haematological malignancies such as acute myeloid leukaemia (AML) [@horowitzGraftversusleukemiaReactionsBone1990]. Specifically, we may be interested in both how long patients diagnosed with AML survive on average after an alloSCT, and how individual patient characteristics, such as age or the presence of specific genetic mutations, influence the rate of death over time. The latter question in particular can be sharpened in order to investigate the rate of death due to different causes (e.g. mortality related to treatment, or due to an infection post-alloSCT), or the rate of events occurring prior to death, such as disease relapse. 
+A variety of biomedical applications involve studying the time between a relevant starting point and the occurrence of a particular event. For instance, time until death is regularly of interest to applied researchers, be it from birth, diagnosis of a given disease, or the start of a treatment for that disease [@vanhouwelingenDynamicPredictionClinical2012]. One context in which time to death is particularly relevant is that of allogeneic haematopoietic stem cell transplantation (alloSCT), which is a type of treatment given to patients with haematological malignancies such as acute myeloid leukaemia (AML) [@horowitzGraftversusleukemiaReactionsBone1990]. Specifically, we may be interested in both how long patients diagnosed with AML survive on average after an alloSCT, and how individual patient characteristics, such as age or the presence of specific genetic mutations, influence the rate of death over time. The latter question in particular can be sharpened in order to investigate the rate of death due to different causes (e.g. mortality related to treatment, or due to an infection post-alloSCT), or the rate of events occurring prior to death, such as disease relapse. 
 
 In order to research these types of questions, clinical data needs to be gathered from patients receiving an alloSCT. This is typically done via clinical registries, which coordinate the collection of both baseline (i.e. patient- and treatment-related characteristics at time of alloSCT) and "follow-up" information (e.g. the occurrence and timing of relevant clinical events post-alloSCT) for individual patients in transplantation centres, possibly across different countries and over extended periods of time [@horowitzRoleRegistriesFacilitating2008]. These data management complexities mean that *missing* or *incomplete* data are an unavoidable feature of registry data.
 
-Different kinds of incomplete data can emerge when collecting data for single patient who has undergone an alloSCT. The first, which is a defining characteristic of *survival* or *event history* data, is that of *censoring* [@Aalen2008]. For an example study interested in time to disease relapse from alloSCT, some patients may still be alive and relapse-free by the end of study, or may have dropped out of the study at an earlier point in time without having relapsed. In both cases, the individuals are said to be *right-censored*. That is, we only know that they were alive and relapse-free until they dropped out or the study ended, but not whether or when they would have relapsed had the study period been longer or if they remained under follow-up. Furthermore, patients  may die prior to having relapsed, for example due to treatment-related toxicity. Since death precludes the occurrence of relapse (or any other event), death here is considered a *competing risk*. These and related points were concisely summarised over 60 years ago by @chiangStochasticStudyLife1961:
+Different kinds of incomplete data can emerge when collecting data for a single patient who has undergone an alloSCT. The first, which is a defining characteristic of *survival* or *event history* data, is that of *censoring* [@Aalen2008]. For an example study interested in time to disease relapse from alloSCT, some patients may still be alive and relapse-free by the end of study, or may have dropped out of the study at an earlier point in time without having relapsed. In both cases, the individuals are said to be *right-censored*. That is, we only know that they were alive and relapse-free until they dropped out or the study ended, but not whether or when they would have relapsed had the study period been longer or if they remained under follow-up. Furthermore, patients  may die prior to having relapsed, for example due to treatment-related toxicity. Since death precludes the occurrence of relapse (or any other event), death here is considered a *competing risk*. These and related points were concisely summarised over 60 years ago by @chiangStochasticStudyLife1961:
 
 > When the period of observation is ended, there will usually remain a number of individuals on whom the mortality data in a typical study will be incomplete. Of first importance among these are the persons still alive at the close of the study. Secondly, if the investigation is concerned with mortality from a specific cause, the necessary information is incomplete and unavailable for patients who died from other causes. In addition, there will usually be a third group of patients who were "lost" to the study because of follow-up failure. These three groups present a number of statistical problems in the estimation of the expectation of life and survival rates.
 
@@ -30,12 +30,15 @@ The present thesis is about statistical methodology for dealing with incomplete 
 **(?) Thesis aims here? Or give before outline at the end?**
 
 <!-- Thesis aims here? -->
+<!-- Also already something about consequences of not dealing with missing info -->
 
 The remainder of the introduction is structured as follows. In @sec-intro-comp-risks, we introduce basic notation for competing risks data and prominent regression models. In @sec-intro-MI, we introduce basic concepts for missing covariate data and multiple imputation. In @sec-intro-jms, we briefly introduce shared-parameter joint models. Finally, the outline of the thesis is given in @sec-intro-outline.
 
 <!-- Basic primer alloSCT? -->
 
 ## Competing risks {#sec-intro-comp-risks}
+
+<!-- Geskus annual review -->
 
 In competing risks settings, individuals experience only one of $K$ mutually exclusive events. We let $\tilde{D} \in \{1,...,K\}$ be the variable indicating which of these events occurred at time $\tilde{T}$. In practice, $\tilde{T}$  is subject to right-censoring, and is therefore only partially observed. Denoting that right-censoring time as $C$, the observable data are realisations $(t_i, d_i)$ for individual $i$ of $T = \min(C,\tilde{T})$ and $D = I(\tilde{T} \leq C)\tilde{D}$, where $I(\cdot)$ is the indicator function and $D = 0$ indicates a right-censored observation. 
 
@@ -66,7 +69,7 @@ $$
 $${#eq-kaplan}
 where $d_j$ and $n_j$ respectively denote the number of events (of any type) and number of individual's at-risk at time $t_j$ [@putterTutorialBiostatisticsCompeting2007].
 
-In order to investigate the properties of *specific* events occurring in a competing risks setting, we can make use of the *cause-specific hazards*, defined for $k^{\text{th}}$ event as  
+In order to investigate the properties of *specific* events occurring in a competing risks setting, we can make use of the *cause-specific hazards*, defined for the $k^{\text{th}}$ event as  
 $$
 	h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
 $$
@@ -77,7 +80,7 @@ $$
 where $H_k(t)$ is known as cause-specific cumulative hazard function for the $k^{\text{th}}$ event. The cumulative probability of the $k^{\text{th}}$ event occuring, known as  cause-specific *cumulative incidence function* is defined as
 $$
 	F_k(t) = P(\tilde{T} \leq t, \tilde{D} = k) = \int_{0}^{t}h_k(u)S(u-)\diff u,
-$$
+$${#eq-cuminc-intro}
 where $S(u-)$ is the event-free survival probability just prior to $u$. As depicted in @fig-diag-geskus, the cumulative incidence summarises two key aspects of the competing risks process: surviving event-free until just prior to $t$, and then experiencing the $k^{\text{th}}$ specific event in the next instant.
 
 ```{r, engine='tikz'}
@@ -96,13 +99,13 @@ where $S(u-)$ is the event-free survival probability just prior to $u$. As depic
     
     % Horizontal lines
     \draw[dashed, gray] (2,0) -- (6,0) node[right, black] {};
-    \draw[dashed, gray, ->] (2,0) -- (4,-1) node[right, black] {other types};
+    \draw[dashed, gray, ->] (2,0) -- (4,-1) node[right, black] {other causes};
     
     % Probability brace
     \draw[decorate,decoration={brace,amplitude=10pt,mirror}] (0,-0.5) -- (2,-0.5) node[midway,yshift=-0.7cm] {$S(t-)$};
     
     % Node and arrow for type k
-    \draw[->] (2,0) -- (4,1) node[right] {type $k$};
+    \draw[->] (2,0) -- (4,1) node[right] {cause $k$};
     \node[rotate=35] at (3,0.8) {$h_k(t)$};
     
     % Labels and nodes
@@ -111,7 +114,11 @@ where $S(u-)$ is the event-free survival probability just prior to $u$. As depic
 \end{tikzpicture}
 ```
 
-The Aalen--Johansen estimator is the generalisation of the Kaplan--Meier method, allowing to estimate cumulative incidence functions non-parametrically [@aalenEmpiricalTransitionMatrix1978]. It has been extensively discussed in the literature that "naively" using the complement of the Kaplan--Meier estimator in the presence of competing risks (i.e. by treating competing events as censored) leads to overestimation of the cumulative incidence function, since the independence of censoring assumption is violated [@putterTutorialBiostatisticsCompeting2007].
+The Aalen--Johansen estimator is the generalisation of the Kaplan--Meier method, allowing to estimate cumulative incidence functions non-parametrically [@aalenEmpiricalTransitionMatrix1978]. It has been extensively discussed in the literature that "naively" using the complement of the Kaplan--Meier estimator in the presence of competing risks (i.e. by treating competing events as censored) leads to overestimation of @eq-cuminc-intro, since it instead estimates
+$$
+\int_{0}^{t}h_k(u)S_k(u-)\diff u,
+$$
+where $S_k(t) = \exp\{-H_k(t)\}$ [@putterTutorialBiostatisticsCompeting2007].
 
 <!-- Use tilde T for true event time throughout the thesis -->
 
@@ -119,17 +126,17 @@ The Aalen--Johansen estimator is the generalisation of the Kaplan--Meier method,
 
 Suppose we are interested in understanding the impact of individual-specific characteristics on the occurrence of one of multiple competing events (the "primary" event of interest). In the case of a single categorical covariate of interest (e.g. presence or absence of a genetic mutation), a straightforward approach would be to use the Aalen--Johansen estimator in subsets defined by the categorical covariate. In order to assess the "impact" of this covariate, one may opt to then test the null hypothesis of equality of the resulting strata-specific cumulative incidence functions, usually by means of Gray's test [@grayClassKSampleTests1988].
 
-Two important remarks about the above strategy. The first is that its extension to multiple covariates is suboptimal: groups defined combinations of categorical covariates will become increasingly smaller with the number of covariates, and continuous covariates need to be discretized. The second is that rejection of the aforementioned null hypothesis is only an indicator that being in a particular strata relative to the others increases or decreases the (cumulative) probability of a specific event occurring, in the presence of competing risks. It does *not* however in isolation explain whether or to what extent this increase or decrease is attributable an existing association between the covariate and the competing risks. 
+Two important remarks can be made about the above strategy. The first is that its extension to multiple covariates is suboptimal: groups defined combinations of categorical covariates will become increasingly smaller with the number of covariates, and continuous covariates need to be discretized. The second is that rejection of the aforementioned null hypothesis is only an indicator that being in a particular strata relative to the others increases or decreases the (cumulative) probability of a specific event occurring, in the presence of competing risks. It does *not* however in isolation explain whether or to what extent this increase or decrease is attributable an existing association between the covariate and the competing risks. 
 
-For a more complete understanding of the competing risks process as a function of multiple covariates, one will usually need to specify regression models the cause-specific hazards, which are identifiable and estimable from observed data [@prenticeAnalysisFailureTimes1978]. The most popular approach for modelling the cause-specific hazards is using the semi-parametric Cox proportional hazards model [@coxRegressionModelsLifeTables1972], given for the $k^{\text{th}}$ event by
+For a more complete understanding of the competing risks process as a function of multiple covariates, one will usually need to specify regression models for the cause-specific hazards, which are identifiable and estimable from observed data [@prenticeAnalysisFailureTimes1978]. The most popular approach for modelling the cause-specific hazards is using the semi-parametric Cox proportional hazards model [@coxRegressionModelsLifeTables1972], given for the $k^{\text{th}}$ event by
 
 <!-- Use the time-dependent Z notation -->
 $$
 h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
 $$
-where $h_{k0}(t)$ is the cause-specific baseline hazard, $\mathbf{Z}$ is a $p$-dimensional vector of covariates, and vector $\boldsymbol{\beta}_k$ quantifies the impact of $\mathbf{Z}$ on the cause-specific hazard. Inference on the cause-specific, time-constant *hazard ratios* $\exp(\boldsymbol{\beta}_k)$ is based on maximizing a *partial likelihood* which treats causes other than $k$ as censored. The baseline hazard can be estimated non-parametrically by means of the Breslow estimator [ref]. 
+where $h_{k0}(t)$ is the cause-specific baseline hazard, $\mathbf{Z}$ is a $p$-dimensional vector of covariates, and vector $\boldsymbol{\beta}_k$ quantifies the impact of $\mathbf{Z}$ on the cause-specific hazard. Inference on the cause-specific, time-constant *hazard ratios* $\exp(\boldsymbol{\beta}_k)$ is based on maximizing a *partial likelihood* which treats causes other than $k$ as censored. The baseline hazard can be estimated non-parametrically by means of the Breslow estimator [@breslow1972]. 
 
-It is important to note that a covariate which increases the cause-specific hazard of a particular event will not necessarily also increase the cumulative incidence of that same event, because the cumulative incidence function depends on the cause-specific hazards of *all* events. Depending on direction and magnitude of the covariate effect on competing cause-specific hazards, the same covariate may even have opposing effects on the cause-specific hazard and cumulative incidence function of a particular event. As a result, regression models have been proposed that model the cumulative incidence function(s) *directly*, often through the so-called *subdistribution hazard*, given for a cause $k$ by 
+It is important to note that a covariate which increases the cause-specific hazard of a particular event will not necessarily also increase the cumulative incidence of that same event, because the cumulative incidence function depends on the cause-specific hazards of *all* events. Depending on the direction and magnitude of the covariate effect on competing cause-specific hazards, the same covariate may even have opposing effects on the cause-specific hazard and cumulative incidence function of a particular event. As a result, regression models have been proposed that model the cumulative incidence function(s) *directly*, often through the so-called *subdistribution hazard*, given for a cause $k$ by 
 
 $$
 \begin{aligned}
@@ -138,7 +145,7 @@ $$
 \end{aligned}
 $$
 
-The most prominently example of a model for the subdistribution hazard is the Fine--Gray model [@fineProportionalHazardsModel1999], given for a cause $k$ by
+The most prominent example of a model for the subdistribution hazard is the Fine--Gray model [@fineProportionalHazardsModel1999], given for a cause $k$ by
 $$
 \lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\gamma_k}^\intercal \mathbf{Z}),
 $$
@@ -151,42 +158,88 @@ using the complementary log-log link function.
 
 Estimation for the Fine--Gray model is based on analogous partial-likelihood principles as in the cause-specific Cox model, except with a modified risk-set definition. Namely, as part of the estimation, individuals failing from competing events are kept in the risk-set indefinitely. In the presence of random right-censoring, individuals failing from competing events need to have their contribution to the partial likelihood re-weighted, since their competing event failure informatively censors their potential censoring time (i.e. how long they would have been in the risk-set for had they not experienced the competing event) [@geskusCauseSpecificCumulativeIncidence2011]. Equivalently, potential censoring times for those failing from competing events can be multiply imputed [@ruanAnalysesCumulativeIncidence2008].
 
-@cornfieldEstimationProbabilityDeveloping1957 nice quote to fit in somewhere:
+While there are many other existing modelling approaches in the presence of competing risks (for a recent overview, see @monterrubio-gomezReviewStatisticalMachine2024), the cause-specific Cox and Fine--Gray models have arguably received the most attention, in both the methodological and applied literature. Much of this attention has gone towards clarifying the different interpretation of the parameters from both models, and related estimands (see e.g. @andersenInterpretabilityImportanceFunctionals2012). Specifically, the Fine--Gray model exclusively targets what historically has been called crude or "mixed" probabilities (i.e. in presence of competing events), while cause-specific Cox models can also be used, under certain assumptions, to target so-called net or "pure" probabilities (i.e. under hypothetical elimination of the competing events). These different potential quantities of interest were clearly summarised by @cornfieldEstimationProbabilityDeveloping1957 : 
 
 > The estimate obtained is of a mixed probability. It provides an answer to the question: In a cohort subject for some future number of years to both the pure risk of developing the disease and to the pure risk of dying from some other cause what proportion will develop the disease in question? 
 >
 > If we are interested in isolating effects, however, and wish to study, say, changes in the pure risk of developing a disease, without regard to changes in other causes of death, such a proportionate frequency may be misleading. Thus, if such a calculation tells us that the probability of developing cancer is higher now than it was in the past, this may be either because the pure risk of developing cancer has increased, or because the chance of dying of other causes has decreased.
 
+More contemporary work has focused on providing a formal causal framework for these and related estimands, and providing the conditions under which they may be estimable from observed data [@youngCausalFrameworkClassical2020a;@martinussenEstimationSeparableDirect2023a ] 
+
 ## Multiple imputation of missing covariate data {#sec-intro-MI}
 
 ### Missing data concepts
 
-As discussed in the preceding section, right-censored survival times are a form of incomplete data. More specifically, they are a form of *coarsened* outcome data, in that they are not "fully" missing: we do at least know that an individual is event-free by their censoring time. When data are missing on covariates, we are usually less fortunate, as these will tend to be fully missing.
+As discussed in the preceding section, right-censored survival times are a form of incomplete data. More specifically, they are a form of *coarsened* outcome data [@heitjanIgnorabilityCoarseData1991], in that they are not "fully" missing: we do at least know that an individual is event-free by their censoring time. When data are missing on an individual's (baseline) covariates, we are usually less fortunate, as these will tend to be fully missing.
 
-The problem of missing covariate data in biomedical research remains pervasive to this day, and methods for dealing with missing covariate data have been extensively discussed in the methodological literature [refs]. The core worry is that naively excluding individuals with missing data in a least one of multiple relevant covariates can result in estimates (e.g. of a survival probability) that are biased and/or inefficient [@sterneMultipleImputationMissing2009].
+The problem of missing covariate data in biomedical research remains pervasive to this day, and methods for dealing with missing covariate data have been extensively discussed in the methodological literature [@buurenFlexibleImputationMissing2018;@endersAppliedMissingData2022;@carpenter2023MI]. The core worry is that naively excluding individuals with missing data in at least one of multiple relevant covariates can result in estimates (e.g. of a survival probability) that are biased and/or inefficient [@sterneMultipleImputationMissing2009].
 
 The first step in assessing the extent of the missing data issue for a given application is to investigate the *missing data pattern*, and outline plausible assumptions for the *missing data mechanism*. As described in @endersAppliedMissingData2022, "patterns describe where the holes are in the data, whereas mechanisms describe why the values are missing". Specifically, the missing data pattern tells us what variables have missing data and in what combination(s), while the missing data mechanism describes which variables contribute to the probability (and eventually in what functional form) of one of more these combinations occurring.
 
-Rubin and colleagues [@rubinInferenceMissingData1976;@little1987statistical] developed a now ubiquitous framework for classifying missing data mechanisms. Let $\mathbf{X}$ denote the hypothetically complete data dataset, which can be partitioned respectively in observed and missing components as $\mathbf{X} = \{\mathbf{X}_{\text{obs}},\mathbf{X}_{\text{mis}}\}$. Furthermore, denote $\mathbf{M}$ the matrix of missing data indicators i.e. equal to 1 when an observation is missing, and 0 otherwise. The general form of the mechanism (or missing data model, parametrized by $\psi$) is given by 
-$$
-P(\mathbf{M} \given \mathbf{X}_{\text{obs}},\mathbf{X}_{\text{mis}};\psi).
-$$
-The missing data are said to be *missing completely at random* (MCAR) when the probability of a particular unit being missing is independent of both observed and unobserved information, i.e. $P(\mathbf{M} \given \mathbf{X}_{\text{obs}},\mathbf{X}_{\text{mis}};\psi) = P(\mathbf{M} \given \psi)$. MCAR missingness is often described as non-systematic or "accidental", occurring for example as a result of measurement apparatus (e.g. heart rate monitor) malfunctioning.
+<!-- Use latest annual review paper Rubin-->
 
-Under *missing at random* (MAR), denoted as $P(\mathbf{M} \given \mathbf{X}_{\text{obs}},\mathbf{X}_{\text{mis}};\psi) = P(\mathbf{M} \given \mathbf{X}_{\text{obs}};\psi)$, the missingness depends only on observed information. For example, comorbidities may be monitored more closely in elderly patients, and therefore availability of information on the presence of absence of particular comorbidities may depend on (fully observed) patient age. Conversely, if availability of comorbidity information was contingent on the underlying (partially missing) presence or absence of particular comorbidities, the mechanism is said to be *missing not at random* (MNAR). That is, the missingness mechanism depends at least partially on unobserved values.
+Rubin and colleagues [@rubinInferenceMissingData1976;@little1987statistical] developed a now ubiquitous framework for classifying missing data mechanisms. Using similar notation to @littleStatisticalAnalysisMissing2019, let $\mathbf{X}=(x_{ij})$ denote the hypothetically complete data matrix, where $x_{ij}$ is the realised value of variable $X_j$ for individual $i$. Additionally, define the observation indicator matrix $\mathbf{M} = (m_{ij})$, where $m_{ij} = 1$ if $x_{ij}$ is observed, and 0 if it is missing. The data can therefore be partitioned into observed and missing components as $\mathbf{X} = \{\mathbf{X}^{\text{obs}},\mathbf{X}^{\text{mis}}\}$. 
 
-Furthermore, the missing data mechanism is said to be *ignorable* when a) the missing data are MAR; b) the parameters $\psi$ of the missing data model, and the parameters of the analysis model $\theta$ (i.e. the one of scientific interest for the hypothetically complete data), are a priori independent. Crucially, it implies that we do not need to model the missing data mechanism explicitly (hence ignorable), and that inference on $\theta$ is possible using only observed data.
+The general form of the mechanism (or missing data model, parametrized by $\psi$) is given by $f_{\mathbf{M} \given \mathbf{X}}(\mathbf{m}_i \given \mathbf{x}_i;\psi)$, assuming that $(\mathbf{m}_i,\mathbf{x}_i)$, the $i^{\text{th}}$ rows of $\mathbf{M}$ and $\mathbf{X}$, are independent and identically distributed across $i$. In other words, $\mathbf{M}$ is treated as a random matrix, where the probability of a *realised* missingness pattern $\mathbf{m}_i$ is allowed to depend on both observed ($\mathbf{x}_i^{\text{obs}}$) and unobserved ($\mathbf{x}_i^{\text{mis}}$) *realised* information  from the same individual. This subtlety in Little and Rubin's definitions was clarified in work by @seamanWhatMeantMissing2013, where broader definitions were also introduced (e.g. for missingness processes that hold across multiple data samples).  
+
+The missing data are said to be *missing completely at random* (MCAR, @mariniMaximumLikelihoodEstimationPanel1980) when the probability of any particular unit being missing is independent of both observed and unobserved information, that is 
+$$
+f(\mathbf{m}_i \given \mathbf{x}_i^{\text{obs}},\mathbf{x}_i^{\text{mis}};\psi) = f(\mathbf{m}_i \given \psi)  \ \text{for all } \mathbf{x}_i.
+$$ 
+MCAR missingness is often described as non-systematic or "accidental", occurring for example as a result of measurement apparatus (e.g. heart rate monitor) malfunctioning or other administrative reasons.
+
+Under *missing at random* (MAR), denoted as 
+$$
+f(\mathbf{m}_i \given \mathbf{x}_i^{\text{obs}},\mathbf{x}_i^{\text{mis}};\psi) = f(\mathbf{m}_i \given \mathbf{x}_i^{\text{obs}}; \psi) \ \text{for all } \mathbf{x}_i^{\text{mis}}.
+$$ 
+That is, the missingness depends only on observed information. For example, comorbidities may be monitored more closely in elderly patients, and therefore availability of information on the presence of absence of particular comorbidities may depend on (fully observed) patient age. Conversely, if availability of comorbidity information was contingent on the underlying (partially missing) presence or absence of particular comorbidities, the mechanism is said to be *missing not at random* (MNAR). That is, the missingness mechanism depends at least partially on unobserved values.
+
+Furthermore, the missing data mechanism is said to be *ignorable* when a) the missing data are MAR; b) the parameters $\psi$ of the missing data model, and the parameters of the analysis model $\theta$ (i.e. the one of scientific interest for the hypothetically complete data), are a priori distinct. Crucially, it implies that we do not need to model the missing data mechanism explicitly (hence ignorable), and that inference on $\theta$ is possible using only observed data.
 
 The above taxonomy does not in isolation fully inform what method(s) we can use to handle the missing values, or whether it is possible to obtain an unbiased estimate of some target estimand. Usually, one needs to also consider issues pertaining the structure of the outcome model itself (e.g. non-collapsibility), and whether or not the missingness depends on the outcome variable(s) [@carpenterMissingDataStatistical2021]. Related to the latter point, there has been a movement towards using graphical causal models to establish whether or not a particular estimand can be "recovered" in the presence of missing data (i.e. estimated consistently using only the observed data and no additional external information) [@leeAssumptionsAnalysisPlanning2023]. 
 
 <!-- Use f for cond density? -->
 <!-- dags here? -->
+<!-- Why the non collapibility bit? -->
 
 ### Multiple imputation
 
-- Brief intro MI
+Given that missing data usually mask values that would have been relevant or useful for analysis had they been observed, it makes sense to consider approaches which try to fill-in or *impute* the unobserved values [@littleStatisticalAnalysisMissing2019]. For example, one may choose to replace all missing values in a given variable by the average or mode of the observed values from that same variable, and then proceed to analyse the data as if they were complete. This is an example of *single imputation*, which is usually problematic for inference purposes since it does not take into account the extra uncertainty due to the missing values. Additionally, the mean or mode may not the most "plausible" guess for a given individual with an unobserved value given their other (observed) characteristics.
+
+*Multiple imputation* (MI) instead repeatedly draws imputed values from a predictive distribution of the missing values given the observed ones, giving rise to multiple "complete" datasets [@rubin:1987]. These can be analysed separately, and then the results can be combined in a way which reflects the additional uncertainty induced by the missing values. As described by @littleMissingDataAnalysis2024, approaches to MI will differ mainly in how this predictive distribution is derived. For example, one could specify a parametric joint model (e.g. multivariate normal, see @carpenter2023MI) for the variables in the dataset, and impute the missing data based on the implied conditional distributions.
+
+The more widely used approach to creating multiply imputed datasets is *multivariate imputation using chained equations* (MICE, @vanbuurens.FlexibleMultivariateImputation1999). This approach is also known as *fully conditional specification* (FCS), since it involves specifying a univariate imputation model for each variable with missing data, fully conditional on the remaining variables in the dataset. These imputation models are iteratively "chained" together until convergence: imputed values for each variable with missing data are drawn conditional on the most recently imputed values for the other variables.
+
+MICE allows to flexibly model
+
+With $X_j$ and $X_{-j}$ notation, brief ref to future chapter here? So you don't need to mention White n Royston?
+
+All approaches rely on ignorability.
+
+
+$$
+\hat{\theta} = \frac{1}{M}\sum_{m=1}^{M}\hat{\theta}_m.
+$$
+The associated variance estimator is
+
+$$
+\widehat{\text{Var}}(\hat{\theta}) = \frac{1}{M}\sum_{m=1}^{M}\widehat{\text{Var}}(\hat{\theta}_m) + \big(1 + \frac{1}{M}\big)\frac{1}{M-1}\sum_{m=1}^{M}(\hat{\theta}_m - \hat{\theta})^2,
+$$
+
+(Works under ignorable, but extensions proposed for non ignorable)
 
 ## Joint models and informative drop-out {#sec-intro-jms}
+
+How to write:
+
+- Missings in time-varying covariate instead of baseline
+- Provide basic notation, mention exogenous vs endogenous covars
+- Mention what the missing data assumptions are now (same names, slightly different meaning)
+- Notation for joint model (henderson), brief mention of time-dependent Cox model
+- Brief mention also association forms, and then also extension to competing risks
+- Use time-dependent X and Z in notation, see joineR package
+- See Comparative review of methods for handling drop-outin longitudinal studies - Philipson?
+
 
 Some notation from the appendix of Eva paper: 
 
@@ -227,5 +280,7 @@ Ideas/quotes:
 - In the discussion, add bits about separable/total/controlled direct effects for missing data
 
 - use $f(\cdot)$ for density also is cause-spec. paper
+
+- Cornfield end of paper quote for the discussions.
 
 <!-- Many concepts repeated -->

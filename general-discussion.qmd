@@ -12,6 +12,8 @@ Structure
 
 - Mention the recent left truncated imp paper
 
+Keep at 4 pages? Skip entirely?
+
 ## Future research
 
 ...
