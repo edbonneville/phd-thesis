@@ -77,7 +77,7 @@ These are the instantaneous rates of moving from an event-free state to a state 
 $$
 S(t) = \exp \left\{ - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u)\diff u \right\} = \exp \left\{ - \sum_{k = 1}^{K} H_k(t) \right\},
 $$
-where $H_k(t)$ is known as cause-specific cumulative hazard function for the $k^{\text{th}}$ event. The cumulative probability of the $k^{\text{th}}$ event occuring, known as  cause-specific *cumulative incidence function* is defined as
+where $H_k(t)$ is known as cause-specific cumulative hazard function for the $k^{\text{th}}$ event. The cumulative probability of the $k^{\text{th}}$ event occurring, known as  cause-specific *cumulative incidence function* is defined as
 $$
 	F_k(t) = P(\tilde{T} \leq t, \tilde{D} = k) = \int_{0}^{t}h_k(u)S(u-)\diff u,
 $${#eq-cuminc-intro}
@@ -112,6 +112,7 @@ where $S(u-)$ is the event-free survival probability just prior to $u$. As depic
     \node at (2,-0.2) {$t$};
     \node at (0,-0.2) {$0$};
 \end{tikzpicture}
+
 ```
 
 The Aalen--Johansen estimator is the generalisation of the Kaplan--Meier method, allowing to estimate cumulative incidence functions non-parametrically [@aalenEmpiricalTransitionMatrix1978]. It has been extensively discussed in the literature that "naively" using the complement of the Kaplan--Meier estimator in the presence of competing risks (i.e. by treating competing events as censored) leads to overestimation of @eq-cuminc-intro, since it instead estimates
@@ -166,9 +167,11 @@ While there are many other existing modelling approaches in the presence of comp
 
 More contemporary work has focused on providing a formal causal framework for these and related estimands, and providing the conditions under which they may be estimable from observed data [@youngCausalFrameworkClassical2020a;@martinussenEstimationSeparableDirect2023a ] 
 
+Chapter x from this thesis provides a data-generating perspective on the Fine--Gray model, and argues in the favour of using cause-specific hazard models instead when multiple competing risks are of scientific interest.
+
 ## Multiple imputation of missing covariate data {#sec-intro-MI}
 
-### Missing data concepts
+### Missing data concepts {#sec-miss-mechs}
 
 As discussed in the preceding section, right-censored survival times are a form of incomplete data. More specifically, they are a form of *coarsened* outcome data [@heitjanIgnorabilityCoarseData1991], in that they are not "fully" missing: we do at least know that an individual is event-free by their censoring time. When data are missing on an individual's (baseline) covariates, we are usually less fortunate, as these will tend to be fully missing.
 
@@ -208,49 +211,45 @@ Given that missing data usually mask values that would have been relevant or use
 
 *Multiple imputation* (MI) instead repeatedly draws imputed values from a predictive distribution of the missing values given the observed ones, giving rise to multiple "complete" datasets [@rubin:1987]. These can be analysed separately, and then the results can be combined in a way which reflects the additional uncertainty induced by the missing values. As described by @littleMissingDataAnalysis2024, approaches to MI will differ mainly in how this predictive distribution is derived. For example, one could specify a parametric joint model (e.g. multivariate normal, see @carpenter2023MI) for the variables in the dataset, and impute the missing data based on the implied conditional distributions.
 
-The more widely used approach to creating multiply imputed datasets is *multivariate imputation using chained equations* (MICE, @vanbuurens.FlexibleMultivariateImputation1999). This approach is also known as *fully conditional specification* (FCS), since it involves specifying a univariate imputation model for each variable with missing data, fully conditional on the remaining variables in the dataset. These imputation models are iteratively "chained" together until convergence: imputed values for each variable with missing data are drawn conditional on the most recently imputed values for the other variables.
+The more widely used approach to creating multiply imputed datasets is *multivariate imputation using chained equations* (MICE, @vanbuurens.FlexibleMultivariateImputation1999). This approach is also known as *fully conditional specification* (FCS), since it involves specifying a univariate imputation model for each variable with missing data, fully conditional on the remaining variables in the dataset. Under the ignorable missingness assumption, the conditional distribution of a variable with missing data given the remaining variables is the *same* for both the observed and unobserved components of the variable. Furthermore, the imputation models are iteratively "chained" together until convergence: imputed values for each variable with missing data are drawn conditional on the most recently imputed values for the other variables. The procedure is comprehensively outlined in the text by @buurenFlexibleImputationMissing2018.
 
-MICE allows to flexibly model
+The flexibility of MICE lies in its variable-by-variable sampling, where each imputation model can be tailored to a particular variable type (e.g. ordered categorical). However, there is no guarantee that these univariate conditional distributions are actually mutually *compatible* with each other i.e. that together they form a coherent joint distribution. Nevertheless, as long as each conditional model fits the data well, this theoretical limitation may not have a large impact on pooled (i.e. after combining the results of the imputed datasets) inference [@liuStationaryDistributionIterative2014;@zhuConvergencePropertiesSequential2015].
 
-With $X_j$ and $X_{-j}$ notation, brief ref to future chapter here? So you don't need to mention White n Royston?
+A related issue that has received more attention is that of compatibility between the imputation model(s) and the analysis model of interest, also called *congeniality*. For example, for models with multi-level or longitudinal outcomes, or those that include non-linear terms such as interactions, the correct conditional distributions are usually difficult to specify directly [@duCompatibilityImputationSpecification2022;@erlerDealingMissingCovariates2016]. This also the case for regression models in the survival setting, such as the Cox model [@whiteImputingMissingCovariate2009;@bartlettMultipleImputationCovariates2015]. 
 
-All approaches rely on ignorability.
+Chapters x and x of this thesis directly tackle this congeniality issue respectively for cause-specific Cox and Fine--Gray models, while Chapter x provides a review of current practices in missing (covariate) data handling in clinical haematology.
 
+## Joint models and informative dropout {#sec-intro-jms}
 
-$$
-\hat{\theta} = \frac{1}{M}\sum_{m=1}^{M}\hat{\theta}_m.
-$$
-The associated variance estimator is
+The focus of the preceding section was on handling missing data in baseline covariates. However, time-varying longitudinal information can also be collected, and may also have missing values. Suppose $\mathbf{y}_{i}^{\text{obs}} = \{y_{ij} = y_i(t_{ij}), \ j = 1,\ldots,n_i\}$ is a vector of observed longitudinal measurements for individual $i$ at timepoints $t_{ij}$. Here, we assume $\mathbf{y}_{i}^{\text{obs}}$ is a subset of an *intended* collection of measurements $\mathbf{y}_{i}$. After defining the vector of (random) observations indicators $\mathbf{m}_{i}$, the definitions of missingness mechanisms are analogous to those described in @sec-miss-mechs - see also Chapter 17 of @fitzmaurice2008longitudinal for further details.
 
-$$
-\widehat{\text{Var}}(\hat{\theta}) = \frac{1}{M}\sum_{m=1}^{M}\widehat{\text{Var}}(\hat{\theta}_m) + \big(1 + \frac{1}{M}\big)\frac{1}{M-1}\sum_{m=1}^{M}(\hat{\theta}_m - \hat{\theta})^2,
-$$
+Intermittent missingness if often assumed to be MAR, which allows the use of methodology based on the "ignorable" likelihood (e.g. mixed models). That is, the marginal observed data density is used, and terms pertaining to the missingness process can be ignored [@rizopoulosJointModelsLongitudinal2012]. However, when missingness is due to *dropout* (i.e. $\mathbf{y}_{i}^{\text{obs}}$ are longitudinal measurements collected before an event or censoring time), the MAR assumption may not be as plausible. We say that dropout is *informative* or *non-random*, when conditioning on $\mathbf{y}_{i}^{\text{obs}}$ (or other fully observed baseline covariates) does not remove the dependence between the unobserved longitudinal measurements and the missingness process [@papageorgiouAlternativeCharacterizationMAR2021]. This is for example the case when latent (unobserved) characteristics of the longitudinal measurements, such as the individual-specific rate of increase or decrease at any timepoint, is related to the dropout probability. Analyses that ignore the dropout process in this context are subject to bias [@littleModelingDropOutMechanism1995].
 
-(Works under ignorable, but extensions proposed for non ignorable)
-
-## Joint models and informative drop-out {#sec-intro-jms}
-
-How to write:
-
-- Missings in time-varying covariate instead of baseline
-- Provide basic notation, mention exogenous vs endogenous covars
-- Mention what the missing data assumptions are now (same names, slightly different meaning)
-- Notation for joint model (henderson), brief mention of time-dependent Cox model
-- Brief mention also association forms, and then also extension to competing risks
-- Use time-dependent X and Z in notation, see joineR package
-- See Comparative review of methods for handling drop-outin longitudinal studies - Philipson?
-
-
-Some notation from the appendix of Eva paper: 
-
-..with random effects vector $b_{i} \sim \mathcal{N}(0, D)$. The observations for the $i^{\text{th}}$ patient at timepoints $t_{ij} \ (j = 1,\ldots,n_i)$ are given by
+An increasingly used approach to model the dependency between one or more longitudinal marker(s) and a dropout process are *shared-parameter joint models* [@rizopoulosJointModelsLongitudinal2012]. The first component of a basic joint model (for a single longitudinal marker and a univariate dropout process) is a longitudinal submodel, given by 
 $$
 y_{ij} = m_i(t_{ij}) + \epsilon_{ij},
 $$
-where $\epsilon_{ij} \sim \mathcal{N}(0, \sigma^2)$ are independent random error terms.
+where $\epsilon_{ij} \sim \mathcal{N}(0, \sigma^2)$ are independent random error terms, and $m_i(t)$ represents the true underlying (unobserved) value of the marker at time $t$. A mixed-effects structure is usually assumed for the latter, as
+$$
+m_i(t) = \boldsymbol{\beta}^\intercal \mathbf{x}_i(t) + \boldsymbol{b}_i^\intercal \mathbf{z}_i(t),
+$$
+where $\mathbf{x}_i(t)$ and $\mathbf{z}_i(t)$ are respectively (possibly time-dependent) design vectors for fixed effects $\boldsymbol{\beta}$ and random effects $\boldsymbol{b}_i \sim \mathcal{N}(0, D)$. 
 
-- Use @hickeyComparisonJointModels2018a
-- Good references in here too: https://mc-stan.org/rstanarm/articles/jm.html - the references Henderson paper is nicest notation?
+The second component is a survival submodel for the time to dropout (or other terminating event, such as death) is usually assumed to follow a proportional hazards structure, given by 
+$$
+h_i(t \given \mathcal{M}_i(t),\mathbf{w}_i) = h_0(t)\exp\{\boldsymbol{\gamma}^\intercal\mathbf{w}_i + \alpha m_i(t)\},
+$$
+where $\mathcal{M}_i(t) = \{m_i(s), \ 0 \leq s < t\}$ represents the history of the true marker value up to time $t$, and $\mathbf{w}_i$ is a vector of baseline covariates. The association between the true "current value" of the longitudinal marker and the terminating event is quantified by $\alpha$, and the baseline hazard $h_0(t)$ is often assumed to follow a flexible parametric form (e.g. using a B-spline basis).
+
+Estimation of a joint model is based on a joint likelihood function which assumes that both longitudinal and dropout processes are independent, conditional on *shared* random effects $\boldsymbol{b}_i$. This latent structure means that joint models can provide unbiased estimates of the trajectories of the longitudinal marker when the dropout mechanisms depends on $\boldsymbol{b}_i$, which is an example of a MNAR mechanism. Furthermore, the joint models is suited for estimating the association between an *endogenous* or internal longitudinal marker and a time-to-event outcome, which is usually underestimated by a time-varying Cox model since it treats these as exogenous [@kalbfleisch2011statistical;sweetingJointModellingLongitudinal2011;@rizopoulosJointModelsLongitudinal2012].
+
+Various extensions bla bla (association) also non continous markers, and competing risks (including Lavalley references? - see also @hickeyComparisonJointModels2018a
+
+Mention also Salzmann; but maybe only in outline bit
+
+- use https://rpsychologist.com/lmm-slope-missingness figure?
+- Refer to @rouanetInterpretationMixedModels2019a ?
+- https://onlinelibrary.wiley.com/doi/full/10.1002/bimj.201100052 good paper for bias of TDC Cox
 
 ## Outline of this thesis {#sec-intro-outline}
 
@@ -271,11 +270,7 @@ Ideas/quotes:
 
 - @hartleyAnalysisIncompleteData1971 on the "evil of incompleteness"
 
-- @papageorgiouAlternativeCharacterizationMAR2021 for the missing data part of joint models aka dropout, causes of death listed in Eva article
-
 - @lauMissingnessSettingCompeting2018 easy going overall reference for missing data and competing risks
-
-- @prenticeAnalysisFailureTimes1978 
 
 - In the discussion, add bits about separable/total/controlled direct effects for missing data
 

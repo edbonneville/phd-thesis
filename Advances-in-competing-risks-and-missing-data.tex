@@ -249,7 +249,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, frame hidden, breakable, sharp corners, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, interior hidden, breakable, enhanced, sharp corners, frame hidden, borderline west={3pt}{0pt}{shadecolor}]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -452,10 +452,10 @@ occurring in a competing risks setting, we can make use of the
 as\\
 \[
     h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
-\] These is the instantaneous rate of moving from an event-free state to
-a state representing failure from the \(k^{\text{th}}\) specific event
-(after which one can no longer fail of other causes). Furthermore, the
-cause-specific hazards sum up to the all-cause hazard function, and
+\] These are the instantaneous rates of moving from an event-free state
+to a state representing failure from the \(k^{\text{th}}\) specific
+event (after which one can no longer fail of other causes). Furthermore,
+the cause-specific hazards sum up to the all-cause hazard function, and
 therefore fully define the overall survival function defined earlier, \[
 S(t) = \exp \left\{ - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u)\diff u \right\} = \exp \left\{ - \sum_{k = 1}^{K} H_k(t) \right\},
 \] where \(H_k(t)\) is known as cause-specific cumulative hazard
@@ -608,7 +608,7 @@ interpretation of the parameters from both models, and related estimands
 (\protect\hyperlink{ref-andersenInterpretabilityImportanceFunctionals2012}{2012})).
 Specifically, the Fine--Gray model exclusively targets what historically
 has been called crude or ``mixed'' probabilities (i.e.~in presence of
-competing events), while the cause-specific Cox model can also be used,
+competing events), while cause-specific Cox models can also be used,
 under certain assumptions, to target so-called net or ``pure''
 probabilities (i.e.~under hypothetical elimination of the competing
 events). These different potential quantities of interest were clearly
@@ -632,20 +632,25 @@ either because the pure risk of developing cancer has increased, or
 because the chance of dying of other causes has decreased.
 \end{quote}
 
-More contemporary work has focused on providing a causal framework for
-these and related estimands, and providing the conditions under which
-they may be estimable from observed data
+More contemporary work has focused on providing a formal causal
+framework for these and related estimands, and providing the conditions
+under which they may be estimable from observed data
 (\protect\hyperlink{ref-martinussenEstimationSeparableDirect2023a}{Martinussen
 and Stensrud, 2023} ;
 \protect\hyperlink{ref-youngCausalFrameworkClassical2020a}{Young
 \emph{et al.}, 2020})
 
+Chapter x from this thesis provides a data-generating perspective on the
+Fine--Gray model, and argues in the favour of using cause-specific
+hazard models instead when multiple competing risks are of scientific
+interest.
+
 \hypertarget{sec-intro-MI}{%
 \section{Multiple imputation of missing covariate
 data}\label{sec-intro-MI}}
 
-\hypertarget{missing-data-concepts}{%
-\subsection{Missing data concepts}\label{missing-data-concepts}}
+\hypertarget{sec-miss-mechs}{%
+\subsection{Missing data concepts}\label{sec-miss-mechs}}
 
 As discussed in the preceding section, right-censored survival times are
 a form of incomplete data. More specifically, they are a form of
@@ -703,10 +708,10 @@ rows of \(\mathbf{M}\) and \(\mathbf{X}\), are independent and
 identically distributed across \(i\). In other words, \(\mathbf{M}\) is
 treated as a random matrix, where the probability of a \emph{realised}
 missingness pattern \(\mathbf{m}_i\) is allowed to depend on both
-observed (\(\mathbf{x}_i^{\text{obs}}\)) and unobserved \emph{realised}
-information (\(\mathbf{x}_i^{\text{mis}}\)) from the same individual.
-This subtlety in Little and Rubin's definitions was clarified in work by
-Seaman \emph{et al.}
+observed (\(\mathbf{x}_i^{\text{obs}}\)) and unobserved
+(\(\mathbf{x}_i^{\text{mis}}\)) \emph{realised} information from the
+same individual. This subtlety in Little and Rubin's definitions was
+clarified in work by Seaman \emph{et al.}
 (\protect\hyperlink{ref-seamanWhatMeantMissing2013}{2013}), where
 broader definitions were also introduced (e.g.~for missingness processes
 that hold across multiple data samples).
@@ -783,46 +788,144 @@ separately, and then the results can be combined in a way which reflects
 the additional uncertainty induced by the missing values. As described
 by Little (\protect\hyperlink{ref-littleMissingDataAnalysis2024}{2024}),
 approaches to MI will differ mainly in how this predictive distribution
-is derived. For example, one could specify a joint model
+is derived. For example, one could specify a parametric joint model
+(e.g.~multivariate normal, see Carpenter \emph{et al.}
+(\protect\hyperlink{ref-carpenter2023MI}{2023})) for the variables in
+the dataset, and impute the missing data based on the implied
+conditional distributions.
 
-All approaches rely on ignorability.
+The more widely used approach to creating multiply imputed datasets is
+\emph{multivariate imputation using chained equations} (MICE, van
+Buuren, S. \emph{et al.}
+(\protect\hyperlink{ref-vanbuurens.FlexibleMultivariateImputation1999}{1999})).
+This approach is also known as \emph{fully conditional specification}
+(FCS), since it involves specifying a univariate imputation model for
+each variable with missing data, fully conditional on the remaining
+variables in the dataset. Under the ignorable missingness assumption,
+the conditional distribution of a variable with missing data given the
+remaining variables is the \emph{same} for both the observed and
+unobserved components of the variable. Furthermore, the imputation
+models are iteratively ``chained'' together until convergence: imputed
+values for each variable with missing data are drawn conditional on the
+most recently imputed values for the other variables. The procedure is
+comprehensively outlined in the text by van Buuren
+(\protect\hyperlink{ref-buurenFlexibleImputationMissing2018}{2018}).
 
-\begin{itemize}
-\tightlist
-\item
-  Add Rubin's rules?
-\item
-  Basics of chained equations?
-\item
-  Do we skip discussion??
-\item
-  Add some refs, use the annual reviews
-\item
-  Add somewhere here
-\end{itemize}
+The flexibility of MICE lies in its variable-by-variable sampling, where
+each imputation model can be tailored to a particular variable type
+(e.g.~ordered categorical). However, there is no guarantee that these
+univariate conditional distributions are actually mutually
+\emph{compatible} with each other i.e.~that together they form a
+coherent joint distribution. Nevertheless, as long as each conditional
+model fits the data well, this theoretical limitation may not have a
+large impact on pooled (i.e.~after combining the results of the imputed
+datasets) inference
+(\protect\hyperlink{ref-liuStationaryDistributionIterative2014}{Liu
+\emph{et al.}, 2014};
+\protect\hyperlink{ref-zhuConvergencePropertiesSequential2015}{Zhu and
+Raghunathan, 2015}).
 
-\[
-\hat{\theta} = \frac{1}{M}\sum_{m=1}^{M}\hat{\theta}_m.
-\] The associated variance estimator is
+A related issue that has received more attention is that of
+compatibility between the imputation model(s) and the analysis model of
+interest, also called \emph{congeniality}. For example, for models with
+multi-level or longitudinal outcomes, or those that include non-linear
+terms such as interactions, the correct conditional distributions are
+usually difficult to specify directly
+(\protect\hyperlink{ref-duCompatibilityImputationSpecification2022}{Du
+\emph{et al.}, 2022};
+\protect\hyperlink{ref-erlerDealingMissingCovariates2016}{Erler \emph{et
+al.}, 2016}). This also the case for regression models in the survival
+setting, such as the Cox model
+(\protect\hyperlink{ref-bartlettMultipleImputationCovariates2015}{Bartlett
+\emph{et al.}, 2015};
+\protect\hyperlink{ref-whiteImputingMissingCovariate2009}{White and
+Royston, 2009}).
 
-\[
-\widehat{\text{Var}}(\hat{\theta}) = \frac{1}{M}\sum_{m=1}^{M}\widehat{\text{Var}}(\hat{\theta}_m) + \big(1 + \frac{1}{M}\big)\frac{1}{M-1}\sum_{m=1}^{M}(\hat{\theta}_m - \hat{\theta})^2,
-\]
+Chapters x and x of this thesis directly tackle this congeniality issue
+respectively for cause-specific Cox and Fine--Gray models, while Chapter
+x provides a review of current practices in missing (covariate) data
+handling in clinical haematology.
 
 \hypertarget{sec-intro-jms}{%
-\section{Joint models and informative drop-out}\label{sec-intro-jms}}
+\section{Joint models and informative dropout}\label{sec-intro-jms}}
+
+The focus of the preceding section was on handling missing data in
+baseline covariates. However, time-varying longitudinal information can
+also be collected, and may also have missing values. Suppose
+\(\mathbf{y}_{i}^{\text{obs}} = \{y_{ij} = y_i(t_{ij}), \ j = 1,\ldots,n_i\}\)
+is a vector of observed longitudinal measurements for individual \(i\)
+at timepoints \(t_{ij}\). Here, we assume
+\(\mathbf{y}_{i}^{\text{obs}}\) is a subset of an \emph{intended}
+collection of measurements \(\mathbf{y}_{i}\). After defining the vector
+of (random) observations indicators \(\mathbf{m}_{i}\), the definitions
+of missingness mechanisms are analogous to those described in
+Section~\ref{sec-miss-mechs} - see also Chapter 17 of Fitzmaurice
+\emph{et al.}
+(\protect\hyperlink{ref-fitzmaurice2008longitudinal}{2008}) for further
+details.
+
+Intermittent missingness if often assumed to be MAR, which allows the
+use of methodology based on the ``ignorable'' likelihood (e.g.~mixed
+models). That is, the marginal observed data density is used, and terms
+pertaining to the missingness process can be ignored
+(\protect\hyperlink{ref-rizopoulosJointModelsLongitudinal2012}{Rizopoulos,
+2012}). However, when missingness is due to \emph{dropout}
+(i.e.~\(\mathbf{y}_{i}^{\text{obs}}\) are longitudinal measurements
+collected before an event or censoring time), the MAR assumption may not
+be as plausible. We say that dropout is \emph{informative} or
+\emph{non-random}, when conditioning on \(\mathbf{y}_{i}^{\text{obs}}\)
+(or other fully observed baseline covariates) does not remove the
+dependence between the unobserved longitudinal measurements and the
+missingness process
+(\protect\hyperlink{ref-papageorgiouAlternativeCharacterizationMAR2021}{Papageorgiou
+and Rizopoulos, 2021}). This is for example the case when latent
+(unobserved) characteristics of the longitudinal measurements, such as
+the individual-specific rate of increase or decrease at any timepoint,
+is related to the dropout probability. Analyses that ignore the dropout
+process in this context are subject to bias
+(\protect\hyperlink{ref-littleModelingDropOutMechanism1995}{Little,
+1995}).
+
+An increasingly used approach to model the dependency between one or
+more longitudinal marker(s) and a dropout process are
+\emph{shared-parameter joint models}
+(\protect\hyperlink{ref-rizopoulosJointModelsLongitudinal2012}{Rizopoulos,
+2012}). The first component of a basic joint model (for a single
+longitudinal marker and a univariate dropout process) is a longitudinal
+submodel, given by \[
+y_{ij} = m_i(t_{ij}) + \epsilon_{ij},
+\] where \(\epsilon_{ij} \sim \mathcal{N}(0, \sigma^2)\) are independent
+random error terms, and \(m_i(t)\) represents the true underlying
+(unobserved) value of the marker at time \(t\). A mixed-effects
+structure is usually assumed for the latter, as \[
+m_i(t) = \boldsymbol{\beta}^\intercal \mathbf{x}_i(t) + \boldsymbol{b}_i^\intercal \mathbf{z}_i(t),
+\] where \(\mathbf{x}_i(t)\) and \(\mathbf{z}_i(t)\) are respectively
+(possibly time-dependent) design vectors for fixed effects
+\(\boldsymbol{\beta}\) and random effects
+\(\boldsymbol{b}_i \sim \mathcal{N}(0, D)\).
+
+The second component is a survival submodel for the time to dropout (or
+other terminating event, such as death) is usually assumed to follow a
+proportional hazards structure, given by \[
+h_i(t \given \mathcal{M}_i(t),\mathbf{w}_i) = h_0(t)\exp\{\boldsymbol{\gamma}^\intercal\mathbf{w}_i + \alpha m_i(t)\},
+\] where \(\mathcal{M}_i(t) = \{m_i(s), \ 0 \leq s < t\}\) represents
+the history of the true marker value up to time \(t\), and
+\(\mathbf{w}_i\) is a vector of baseline covariates. The association
+between the true ``current value'' of the longitudinal marker and the
+terminating event is quantified by \(\alpha\), and the baseline hazard
+\(h_0(t)\) is often assumed to follow a flexible parametric form
+(e.g.~using a B-spline basis).
+
+Estimation of a joint model is based on a joint likelihood functions
+which assumes that both longitudinal and dropout processes are
+independent, conditional on \emph{shared} random effects
+\(\boldsymbol{b}_i\).
 
 How to write:
 
 \begin{itemize}
-\tightlist
-\item
-  Missings in time-varying covariate instead of baseline
 \item
   Provide basic notation, mention exogenous vs endogenous covars
-\item
-  Mention what the missing data assumptions are now (same names,
-  slightly different meaning)
 \item
   Notation for joint model (henderson), brief mention of time-dependent
   Cox model
@@ -830,30 +933,21 @@ How to write:
   Brief mention also association forms, and then also extension to
   competing risks
 \item
-  Use time-dependent X and Z in notation, see joineR package
-\item
-  See Comparative review of methods for handling drop-outin longitudinal
-  studies - Philipson?
-\end{itemize}
-
-Some notation from the appendix of Eva paper:
-
-..with random effects vector \(b_{i} \sim \mathcal{N}(0, D)\). The
-observations for the \(i^{\text{th}}\) patient at timepoints
-\(t_{ij} \ (j = 1,\ldots,n_i)\) are given by \[
-y_{ij} = m_i(t_{ij}) + \epsilon_{ij},
-\] where \(\epsilon_{ij} \sim \mathcal{N}(0, \sigma^2)\) are independent
-random error terms.
-
-\begin{itemize}
-\tightlist
-\item
   Use Hickey \emph{et al.}
   (\protect\hyperlink{ref-hickeyComparisonJointModels2018a}{2018})
 \item
-  Good references in here too:
-  https://mc-stan.org/rstanarm/articles/jm.html - the references
-  Henderson paper is nicest notation?
+  use https://rpsychologist.com/lmm-slope-missingness figure?
+\item
+  Refer to Rouanet \emph{et al.}
+  (\protect\hyperlink{ref-rouanetInterpretationMixedModels2019a}{2019})
+  ?
+\item
+  Kalbfleisch and Prentice
+  (\protect\hyperlink{ref-kalbfleisch2011statistical}{2011}) for
+  endo/exog
+\item
+  https://onlinelibrary.wiley.com/doi/full/10.1002/bimj.201100052 good
+  paper for bias of TDC Cox
 \end{itemize}
 
 \hypertarget{sec-intro-outline}{%
@@ -890,17 +984,9 @@ Ideas/quotes:
   (\protect\hyperlink{ref-hartleyAnalysisIncompleteData1971}{1971}) on
   the ``evil of incompleteness''
 \item
-  Papageorgiou and Rizopoulos
-  (\protect\hyperlink{ref-papageorgiouAlternativeCharacterizationMAR2021}{2021})
-  for the missing data part of joint models aka dropout, causes of death
-  listed in Eva article
-\item
   Lau and Lesko
   (\protect\hyperlink{ref-lauMissingnessSettingCompeting2018}{2018})
   easy going overall reference for missing data and competing risks
-\item
-  Prentice \emph{et al.}
-  (\protect\hyperlink{ref-prenticeAnalysisFailureTimes1978}{1978})
 \item
   In the discussion, add bits about separable/total/controlled direct
   effects for missing data
@@ -6270,6 +6356,8 @@ Structure
   Mention the recent left truncated imp paper
 \end{itemize}
 
+Keep at 4 pages? Skip entirely?
+
 \hypertarget{future-research}{%
 \section{Future research}\label{future-research}}
 
@@ -6586,6 +6674,11 @@ Donders, A. R. T., van der Heijden, G. J. M. G., Stijnen, T., et al.
 \emph{Journal of Clinical Epidemiology}, \textbf{59}, 1087--1091. DOI:
 \href{https://doi.org/10.1016/j.jclinepi.2006.01.014}{10.1016/j.jclinepi.2006.01.014}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-duCompatibilityImputationSpecification2022}{}}%
+Du, H., Alacam, E., Mena, S., et al. (2022) Compatibility in imputation
+specification. \emph{Behavior Research Methods}. DOI:
+\href{https://doi.org/10.3758/s13428-021-01749-5}{10.3758/s13428-021-01749-5}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-dunbarRelationshipCirculatingNatural2008}{}}%
 Dunbar, E. M., Buzzeo, M. P., Levine, J. B., et al. (2008) The
 relationship between circulating natural killer cells after reduced
@@ -6652,6 +6745,10 @@ the {Subdistribution} of a {Competing Risk}. \emph{Journal of the
 American Statistical Association}, \textbf{94}, 496--509. Taylor \&
 Francis. DOI:
 \href{https://doi.org/10.1080/01621459.1999.10474144}{10.1080/01621459.1999.10474144}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-fitzmaurice2008longitudinal}{}}%
+Fitzmaurice, G., Davidian, M., Verbeke, G., et al. (2008)
+\emph{Longitudinal Data Analysis}. {ISSN}. CRC Press.
 
 \leavevmode\vadjust pre{\hypertarget{ref-fleischhauerEffectTcellepitopeMatching2012}{}}%
 Fleischhauer, K., Shaw, B. E., Gooley, T., et al. (2012) Effect of
@@ -6834,6 +6931,11 @@ cumulative incidence function. \emph{Journal of the Royal Statistical
 Society: Series C (Applied Statistics)}, \textbf{55}, 187--200. DOI:
 \href{https://doi.org/10.1111/j.1467-9876.2006.00532.x}{10.1111/j.1467-9876.2006.00532.x}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-kalbfleisch2011statistical}{}}%
+Kalbfleisch, J. D. and Prentice, R. L. (2011) \emph{The Statistical
+Analysis of Failure Time Data}. Wiley series in probability and
+statistics. Wiley.
+
 \leavevmode\vadjust pre{\hypertarget{ref-kantidakisStatisticalModelsMachine2023}{}}%
 Kantidakis, G., Putter, H., Litière, S., et al. (2023) Statistical
 models versus machine learning for competing risks: Development and
@@ -6957,9 +7059,21 @@ Clinical Psychology}, \textbf{20}, 149--173. Annual Reviews. DOI:
 Little, R. J. and Rubin, D. B. (1987) Statistical analysis with missing
 data. \emph{New York: Wiley}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-littleModelingDropOutMechanism1995}{}}%
+Little, R. J. A. (1995) Modeling the {Drop-Out Mechanism} in
+{Repeated-Measures Studies}. \emph{Journal of the American Statistical
+Association}, \textbf{90}, 1112--1121. ASA Website. DOI:
+\href{https://doi.org/10.1080/01621459.1995.10476615}{10.1080/01621459.1995.10476615}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-littleStatisticalAnalysisMissing2019}{}}%
 Little, R. J. A. and Rubin, D. B. (2019) \emph{Statistical {Analysis}
 with {Missing Data}}. John Wiley \& Sons.
+
+\leavevmode\vadjust pre{\hypertarget{ref-liuStationaryDistributionIterative2014}{}}%
+Liu, J., Gelman, A., Hill, J., et al. (2014) On the stationary
+distribution of iterative imputations. \emph{Biometrika}, \textbf{101},
+155--173. {[}Oxford University Press, Biometrika Trust{]}. Available at:
+\url{https://www.jstor.org/stable/43305601} (accessed 23 August 2024).
 
 \leavevmode\vadjust pre{\hypertarget{ref-madley-dowdProportionMissingData2019}{}}%
 Madley-Dowd, P., Hughes, R., Tilling, K., et al. (2019) The proportion
@@ -7179,6 +7293,13 @@ Software}, \textbf{35}, 1--33.
 \leavevmode\vadjust pre{\hypertarget{ref-rizopoulosJointModelsLongitudinal2012}{}}%
 Rizopoulos, D. (2012) \emph{Joint {Models} for {Longitudinal} and
 {Time-to-Event Data}}. 1st edition. Boca Raton: Routledge.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rouanetInterpretationMixedModels2019a}{}}%
+Rouanet, A., Helmer, C., Dartigues, J.-F., et al. (2019) Interpretation
+of mixed models and marginal models with cohort attrition due to death
+and drop-out. \emph{Statistical Methods in Medical Research},
+\textbf{28}, 343--356. SAGE Publications Ltd STM. DOI:
+\href{https://doi.org/10.1177/0962280217723675}{10.1177/0962280217723675}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-ruanAnalysesCumulativeIncidence2008}{}}%
 Ruan, P. K. and Gray, R. J. (2008) Analyses of cumulative incidence
@@ -7471,6 +7592,13 @@ Yun, H. D. and Waller, E. K. (2013) Finding the {Sweet Spot} for {Donor
 Lymphocyte Infusions}. \emph{Biology of Blood and Marrow
 Transplantation}, \textbf{19}, 507--508. Elsevier. DOI:
 \href{https://doi.org/10.1016/j.bbmt.2013.02.005}{10.1016/j.bbmt.2013.02.005}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-zhuConvergencePropertiesSequential2015}{}}%
+Zhu, J. and Raghunathan, T. E. (2015) Convergence {Properties} of a
+{Sequential Regression Multiple Imputation Algorithm}. \emph{Journal of
+the American Statistical Association}, \textbf{110}, 1112--1124. ASA
+Website. DOI:
+\href{https://doi.org/10.1080/01621459.2014.948117}{10.1080/01621459.2014.948117}.
 
 \end{CSLReferences}
 
