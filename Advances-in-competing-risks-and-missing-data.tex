@@ -249,7 +249,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, interior hidden, breakable, enhanced, sharp corners, frame hidden, borderline west={3pt}{0pt}{shadecolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, interior hidden, sharp corners, borderline west={3pt}{0pt}{shadecolor}, boxrule=0pt, breakable, frame hidden]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -302,7 +302,7 @@ leukaemia (AML)
 \emph{et al.}, 1990}). Specifically, we may be interested in both how
 long patients diagnosed with AML survive on average after an alloSCT,
 and how individual patient characteristics, such as age or the presence
-of specific genetic mutations, influence the rate of death over time.
+of particular genetic mutations, influence the rate of death over time.
 The latter question in particular can be sharpened in order to
 investigate the rate of death due to different causes (e.g.~mortality
 related to treatment, or due to an infection post-alloSCT), or the rate
@@ -363,7 +363,10 @@ complex research questions, one may also choose to collect
 counts at regular visit times. These measurements may be missing
 intermittently (e.g.~patients not attending some scheduled visits), or
 missing permanently from the moment a patient dies or drops out from a
-study prematurely.
+study prematurely. For both missing covariates and longitudinal data,
+the assumptions we make about \emph{why} the data are missing are
+crucial in determining what kind of methodology we can use, and the
+potential consequences of using naive approaches.
 
 The present thesis is about statistical methodology for dealing with
 incomplete data in alloSCT studies with competing risks outcomes.
@@ -372,11 +375,9 @@ handling missing covariate data in the context of major competing risks
 regression models. The use of \emph{shared-parameter joint models} for
 dealing with informative drop-out in alloSCT studies is also addressed.
 
-\textbf{(?) Thesis aims here? Or give before outline at the end?}
-
 The remainder of the introduction is structured as follows. In
-Section~\ref{sec-intro-comp-risks}, we introduce basic notation for
-competing risks data and prominent regression models. In
+Section~\ref{sec-intro-comp-risks}, we introduce notation for competing
+risks data and prominent regression models. In
 Section~\ref{sec-intro-MI}, we introduce basic concepts for missing
 covariate data and multiple imputation. In Section~\ref{sec-intro-jms},
 we briefly introduce shared-parameter joint models. Finally, the outline
@@ -412,16 +413,20 @@ instantaneous \emph{rate} at which individuals move from an initial
 event-free state to a second state representing failure from any cause.
 Importantly, the hazard function has a one-to-one correspondence with
 the overall survival function, given by \[
-  S(t) = \exp \left\{ - \int_{0}^{t} h(u)\diff u \right\}.
-\] Therefore, by modelling the all-cause hazard we can also estimate the
-overall survival function. This is useful because under the independent
-censoring assumption, which states that \(\tilde{T}\) and \(C\) are
-independent, the hazard function remains ``undisturbed'' by any
-right-censoring
+  S(t) = \exp \left\{ - \int_{0}^{t} h(u)\diff u \right\},
+\] and further visualised in Figure~\ref{fig-intro-haz}. Therefore, by
+modelling the all-cause hazard we can also estimate the overall survival
+function. This is useful since by assuming that \(\tilde{T}\) and \(C\)
+are stochastically independent of each other, the hazard function
+remains ``undisturbed'' by any right-censoring
 (\protect\hyperlink{ref-beyersmannCompetingRisksMultistate2012}{Beyersmann
 \emph{et al.}, 2012}). That is, the hazard for those censored at a given
 timepoint is equal to the hazard for those that remain under follow-up.
 This in turn makes it estimable from observed (i.e.~censored) data.
+Further discussion on the subtleties regarding the random,
+non-informative, and independent censoring assumptions can be found in
+Kalbfleisch and Prentice
+(\protect\hyperlink{ref-kalbfleisch2011statistical}{2011}).
 
 \begin{figure}
 
@@ -429,7 +434,12 @@ This in turn makes it estimable from observed (i.e.~censored) data.
 
 }
 
-\caption{\label{fig-intro-haz}(To keep in here or not?)}
+\caption{\label{fig-intro-haz}Example (all-cause) hazard and survival
+functions for two subgroups from a given population. The hazard
+summarises two key aspects of the survival function at a particular
+timepoint: its slope (i.e.~how rapidly the curve is decreasing,
+expressed as a rate per unit time), and the proportion of individuals
+still alive.}
 
 \end{figure}
 
@@ -460,7 +470,7 @@ therefore fully define the overall survival function defined earlier, \[
 S(t) = \exp \left\{ - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u)\diff u \right\} = \exp \left\{ - \sum_{k = 1}^{K} H_k(t) \right\},
 \] where \(H_k(t)\) is known as cause-specific cumulative hazard
 function for the \(k^{\text{th}}\) event. The cumulative probability of
-the \(k^{\text{th}}\) event occuring, known as cause-specific
+the \(k^{\text{th}}\) event occurring, known as cause-specific
 \emph{cumulative incidence function} is defined as
 \begin{equation}\protect\hypertarget{eq-cuminc-intro}{}{
     F_k(t) = P(\tilde{T} \leq t, \tilde{D} = k) = \int_{0}^{t}h_k(u)S(u-)\diff u,
@@ -477,7 +487,8 @@ specific event in the next instant.
 
 }
 
-\caption{\label{fig-diag-geskus}Adapted from Figure 2.1 in Geskus
+\caption{\label{fig-diag-geskus}Summary of the competing risks process,
+adapted from Figure 2.1 in Geskus
 (\protect\hyperlink{ref-geskus2015data}{2015}).}
 
 \end{figure}
@@ -613,8 +624,7 @@ under certain assumptions, to target so-called net or ``pure''
 probabilities (i.e.~under hypothetical elimination of the competing
 events). These different potential quantities of interest were clearly
 summarised by Cornfield
-(\protect\hyperlink{ref-cornfieldEstimationProbabilityDeveloping1957}{1957})
-:
+(\protect\hyperlink{ref-cornfieldEstimationProbabilityDeveloping1957}{1957}):
 
 \begin{quote}
 The estimate obtained is of a mixed probability. It provides an answer
@@ -640,10 +650,10 @@ and Stensrud, 2023} ;
 \protect\hyperlink{ref-youngCausalFrameworkClassical2020a}{Young
 \emph{et al.}, 2020})
 
-Chapter x from this thesis provides a data-generating perspective on the
-Fine--Gray model, and argues in the favour of using cause-specific
-hazard models instead when multiple competing risks are of scientific
-interest.
+Chapter~\ref{sec-chap-FG-DGM} from this thesis provides a
+data-generating perspective on the Fine--Gray model, and argues in the
+favour of using cause-specific hazard models instead when multiple
+competing risks are of scientific interest.
 
 \hypertarget{sec-intro-MI}{%
 \section{Multiple imputation of missing covariate
@@ -745,7 +755,10 @@ missing data model, and the parameters of the analysis model \(\theta\)
 (i.e.~the one of scientific interest for the hypothetically complete
 data), are a priori distinct. Crucially, it implies that we do not need
 to model the missing data mechanism explicitly (hence ignorable), and
-that inference on \(\theta\) is possible using only observed data.
+that inference on \(\theta\) is possible using only observed data. See
+also Little
+(\protect\hyperlink{ref-littleMissingDataAssumptions2021}{2021}) for an
+up-to-date discussion on missing data assumptions.
 
 The above taxonomy does not in isolation fully inform what method(s) we
 can use to handle the missing values, or whether it is possible to
@@ -827,10 +840,13 @@ Raghunathan, 2015}).
 
 A related issue that has received more attention is that of
 compatibility between the imputation model(s) and the analysis model of
-interest, also called \emph{congeniality}. For example, for models with
-multi-level or longitudinal outcomes, or those that include non-linear
-terms such as interactions, the correct conditional distributions are
-usually difficult to specify directly
+interest, which is sometimes used interchangeably with the broader but
+closely related concept of \emph{congeniality}
+(\protect\hyperlink{ref-mengMultipleImputationInferencesUncongenial1994}{Meng,
+1994}). For example, for models with multi-level or longitudinal
+outcomes, or those that include non-linear terms such as interactions,
+the correct conditional distributions are usually difficult to specify
+directly
 (\protect\hyperlink{ref-duCompatibilityImputationSpecification2022}{Du
 \emph{et al.}, 2022};
 \protect\hyperlink{ref-erlerDealingMissingCovariates2016}{Erler \emph{et
@@ -841,10 +857,11 @@ setting, such as the Cox model
 \protect\hyperlink{ref-whiteImputingMissingCovariate2009}{White and
 Royston, 2009}).
 
-Chapters x and x of this thesis directly tackle this congeniality issue
-respectively for cause-specific Cox and Fine--Gray models, while Chapter
-x provides a review of current practices in missing (covariate) data
-handling in clinical haematology.
+Chapter~\ref{sec-chap-CS-MI} and Chapter~\ref{sec-chap-FG-MI} of this
+thesis directly tackle this compatibility issue respectively for
+cause-specific Cox and Fine--Gray models, while
+Chapter~\ref{sec-chap-haema-review} provides a review of current
+practices in missing (covariate) data handling in clinical haematology.
 
 \hypertarget{sec-intro-jms}{%
 \section{Joint models and informative dropout}\label{sec-intro-jms}}
@@ -880,9 +897,9 @@ missingness process
 (\protect\hyperlink{ref-papageorgiouAlternativeCharacterizationMAR2021}{Papageorgiou
 and Rizopoulos, 2021}). This is for example the case when latent
 (unobserved) characteristics of the longitudinal measurements, such as
-the individual-specific rate of increase or decrease at any timepoint,
-is related to the dropout probability. Analyses that ignore the dropout
-process in this context are subject to bias
+the individual-specific true rate of increase or decrease at any
+timepoint, is related to the dropout probability. Analyses that ignore
+the dropout process in this context are subject to bias
 (\protect\hyperlink{ref-littleModelingDropOutMechanism1995}{Little,
 1995}).
 
@@ -906,101 +923,211 @@ m_i(t) = \boldsymbol{\beta}^\intercal \mathbf{x}_i(t) + \boldsymbol{b}_i^\interc
 
 The second component is a survival submodel for the time to dropout (or
 other terminating event, such as death) is usually assumed to follow a
-proportional hazards structure, given by \[
+proportional hazards structure, given by
+\begin{equation}\protect\hypertarget{eq-current-value}{}{
 h_i(t \given \mathcal{M}_i(t),\mathbf{w}_i) = h_0(t)\exp\{\boldsymbol{\gamma}^\intercal\mathbf{w}_i + \alpha m_i(t)\},
-\] where \(\mathcal{M}_i(t) = \{m_i(s), \ 0 \leq s < t\}\) represents
-the history of the true marker value up to time \(t\), and
-\(\mathbf{w}_i\) is a vector of baseline covariates. The association
-between the true ``current value'' of the longitudinal marker and the
-terminating event is quantified by \(\alpha\), and the baseline hazard
-\(h_0(t)\) is often assumed to follow a flexible parametric form
-(e.g.~using a B-spline basis).
+}\label{eq-current-value}\end{equation} where
+\(\mathcal{M}_i(t) = \{m_i(s), \ 0 \leq s < t\}\) represents the history
+of the true marker value up to time \(t\), and \(\mathbf{w}_i\) is a
+vector of baseline covariates. The association between the true
+``current value'' of the longitudinal marker and the terminating event
+is quantified by \(\alpha\), and the baseline hazard \(h_0(t)\) is often
+assumed to follow a flexible parametric form (e.g.~using a B-spline
+basis).
 
-Estimation of a joint model is based on a joint likelihood functions
+Estimation of a joint model is based on a joint likelihood function
 which assumes that both longitudinal and dropout processes are
 independent, conditional on \emph{shared} random effects
-\(\boldsymbol{b}_i\).
+\(\boldsymbol{b}_i\). This latent structure means that joint models can
+provide unbiased estimates of the trajectories of the longitudinal
+marker when the dropout mechanisms depends on \(\boldsymbol{b}_i\),
+which is an example of a MNAR mechanism. Furthermore, the joint model is
+suited for estimating the association between an \emph{endogenous} or
+internal longitudinal marker and a time-to-event outcome, which is
+usually underestimated by a time-varying Cox model since it treats these
+as exogenous
+(\protect\hyperlink{ref-kalbfleisch2011statistical}{Kalbfleisch and
+Prentice, 2011};
+\protect\hyperlink{ref-rizopoulosJointModelsLongitudinal2012}{Rizopoulos,
+2012};
+\protect\hyperlink{ref-sweetingJointModellingLongitudinal2011}{Sweeting
+and Thompson, 2011}).
 
-How to write:
+Many extensions to the basic joint model have been proposed. For
+example, the longitudinal submodel can be extended to accommodate
+multiple longitudinal markers of mixed type (i.e.~binary, count, and
+others), usually linked together via their respective random effects
+(\protect\hyperlink{ref-hickeyJointModellingTimetoevent2016}{Hickey
+\emph{et al.}, 2016}). Furthermore, Papageorgiou \emph{et al.}
+(\protect\hyperlink{ref-papageorgiouOverviewJointModeling2019a}{2019})
+outline various extensions for the association structure between the
+longitudinal marker(s) and the time-to-event outcome. In addition to the
+current value parametrisation in Equation~\ref{eq-current-value}, one
+could also consider modelling the current slope
+\(\diff m_i(t) / \diff t\), or more complex transformations such as
+(weighted) cumulative effects.
 
-\begin{itemize}
-\item
-  Provide basic notation, mention exogenous vs endogenous covars
-\item
-  Notation for joint model (henderson), brief mention of time-dependent
-  Cox model
-\item
-  Brief mention also association forms, and then also extension to
-  competing risks
-\item
-  Use Hickey \emph{et al.}
-  (\protect\hyperlink{ref-hickeyComparisonJointModels2018a}{2018})
-\item
-  use https://rpsychologist.com/lmm-slope-missingness figure?
-\item
-  Refer to Rouanet \emph{et al.}
-  (\protect\hyperlink{ref-rouanetInterpretationMixedModels2019a}{2019})
-  ?
-\item
-  Kalbfleisch and Prentice
-  (\protect\hyperlink{ref-kalbfleisch2011statistical}{2011}) for
-  endo/exog
-\item
-  https://onlinelibrary.wiley.com/doi/full/10.1002/bimj.201100052 good
-  paper for bias of TDC Cox
-\end{itemize}
+The time-to-event submodel itself has also been extended in order to
+account for multiple (sequences of) events. Notably, Hickey \emph{et
+al.} (\protect\hyperlink{ref-hickeyComparisonJointModels2018a}{2018})
+provides an overview of joint models that consider time to multiple
+competing events. In Chapter~\ref{sec-chap-JM-DLI} of this thesis, we
+use the competing risks joint model described in Rizopoulos
+(\protect\hyperlink{ref-rizopoulosJointModelsLongitudinal2012}{2012})
+(based on cause-specific Cox proportional hazards) to model the
+trajectories of immune cell counts after T-cell depleted alloSCT.
 
 \hypertarget{sec-intro-outline}{%
-\section{Outline of this thesis}\label{sec-intro-outline}}
+\section{Thesis outline and contributions}\label{sec-intro-outline}}
 
-In chapter bla we will bla. That's about it really. And some more.
+The current thesis aims to develop, assess, and apply statistical
+methodology for dealing with missing data in the context of alloSCT
+studies focusing on competing risks outcomes. In what follows, we
+outline the contributions of the individual chapters comprising this
+thesis.
 
-\begin{itemize}
-\tightlist
-\item
-  Say that DGM chapter related to FG imputation
-\item
-  Change (small change) notation of moet je niet willen with the tilde.
-\end{itemize}
+Chapter~\ref{sec-chap-haema-review} is a review aimed at haematological
+audiences concerning methodology for handling missing covariates. The
+first goal of this article is to provide a gentle introduction to major
+methods for handling missing covariate data, including multiple
+imputation. The second goal is to provide a contemporary overview, by
+means of a systematic review, of how missing covariate data are being
+handled across major haematological journals. While we know from other
+review articles in related applied fields that multiple imputation is
+being increasingly used (e.g. Hayati Rezvan \emph{et al.}
+(\protect\hyperlink{ref-hayatirezvanRiseMultipleImputation2015}{2015})),
+we do not know whether this is also the case for alloSCT studies, or if
+the methodology is being applied and reported adequately. This chapter
+is based on the following publication:
 
-\hypertarget{ideas}{%
-\section*{Ideas}\label{ideas}}
-\addcontentsline{toc}{section}{Ideas}
+\begin{quote}
+\textbf{Bonneville, E. F.}, Schetelig, J., Putter, H., et al.~(2023)
+Handling missing covariate data in clinical studies in haematology.
+\emph{Best Practice \& Research Clinical Haematology}, 36, 101477. DOI:
+\href{https://doi.org/10.1016/j.beha.2023.101477}{10.1016/j.beha.2023.101477}.
+\end{quote}
 
-\markright{Ideas}
+Chapter~\ref{sec-chap-CS-MI} focuses on the use of multiple imputation
+when the analysis model of interest is one or more cause-specific Cox
+proportional hazards models. The first goal of this work is to formally
+derive approximately compatible imputation models for various types of
+missing baseline covariates (e.g.~continuous, binary, etc.). The second
+goal is to compare these approximately compatible imputation models to a
+previously proposed substantive-model-compatible approach
+(\protect\hyperlink{ref-bartlettMissingCovariatesCompeting2016}{Bartlett
+and Taylor, 2016}) as part of large, fully-factorial simulation study. A
+novel aspect of this simulation study is the focus on the impact of
+missing covariate data on the estimation of individual-specific
+cumulative incidence functions. Furthermore, the methodology is applied
+on a dataset with long-term follow-up after an alloSCT for patients with
+myelodysplastic syndromes or secondary acute myeloid leukaemia
+(\protect\hyperlink{ref-scheteligLateTreatmentrelatedMortality2019}{Schetelig
+\emph{et al.}, 2019}). This chapter is based on:
 
-Ideas/quotes:
+\begin{quote}
+\textbf{Bonneville, E. F.}, Resche-Rigon, M., Schetelig, J., et
+al.~(2022) Multiple imputation for cause-specific Cox models: Assessing
+methods for estimation and prediction. \emph{Statistical Methods in
+Medical Research}, 31, 1860--1880. SAGE Publications Ltd STM. DOI:
+\href{https://doi.org/10.1177/09622802221102623}{10.1177/09622802221102623}.
+\end{quote}
+
+In Chapter~\ref{sec-chap-FG-MI}, novel methodology is developed for
+imputing missing covariates compatibly with a Fine--Gray analysis model
+for a competing event of interest, without needing to specify a model
+for the competing event(s). As mentioned by Lau and Lesko
+(\protect\hyperlink{ref-lauMissingnessSettingCompeting2018}{2018}),
+there is a paucity of research regarding the use of multiple imputation
+for missing covariates in competing risks settings, and even more so in
+the context of subdistribution hazard models. The simulation study in
+this work is, to the best of our knowledge, the first systematic
+assessment of how substantive model misspecification at the covariate
+imputation stage affects inference in the competing risks setting. The
+methodology is also assessed using a dataset of patients with
+myelofibrosis who has undergone an alloSCT
+(\protect\hyperlink{ref-polverelliImpactComorbiditiesBody2024a}{Polverelli
+\emph{et al.}, 2024}). This chapter is based on the following preprint
+(and is under review in \emph{Statistics in Medicine}):
+
+\begin{quote}
+\textbf{Bonneville, E. F.}, Beyersmann, J., Keogh, R. H., et al.~(2024)
+Multiple imputation of missing covariates when using the Fine--Gray
+model. arXiv:2405.16602. arXiv. DOI:
+\href{https://doi.org/10.48550/arXiv.2405.16602}{10.48550/arXiv.2405.16602}.
+\end{quote}
+
+Chapter~\ref{sec-chap-FG-DGM} provides an overview of data-generating
+mechanisms where a Fine--Gray model correctly holds for at least one
+competing event. In the context of the present thesis, this work mainly
+relates to the methodology developed in Chapter~\ref{sec-chap-FG-MI}.
+That is, it outlines the possible assumptions that could be made for the
+competing event(s) at the imputation stage, should one want to develop
+substantive-model-compatible imputation methodology based on the
+complete data likelihood (in contrast to the methodology from
+Chapter~\ref{sec-chap-FG-MI}, which is based on the subdistribution time
+for only one competing event). In isolation however, this article
+provides simulation-based arguments against specifying Fine--Gray model
+for more than one competing event, and using cause-specific hazard
+models instead. This chapter is based on the following publication:
+
+\begin{quote}
+\textbf{Bonneville, E. F.}, de Wreede, L. C. and Putter, H. (2024) Why
+you should avoid using multiple Fine--Gray models: Insights from
+(attempts at) simulating proportional subdistribution hazards data.
+\emph{Journal of the Royal Statistical Society Series A: Statistics in
+Society}, qnae056. DOI:
+\href{https://doi.org/10.1093/jrsssa/qnae056}{10.1093/jrsssa/qnae056}.
+\end{quote}
+
+In Chapter~\ref{sec-chap-JM-DLI}, the immune cell kinetics of a cohort
+of patients with acute leukaemia during the 6 months after T-cell
+depleted alloSCT are analysed using competing risks joint models. Prior
+to this work, joint models were rarely used in the alloSCT context (to
+the best of our knowledge, only in Salzmann-Manrique \emph{et al.}
+(\protect\hyperlink{ref-salzmann-manriqueJointModelingImmune2018a}{2018})),
+and did not consider competing risks in the time-to-event submodel or
+time-dependent interventions such as a donor lymphocyte infusion. This
+chapter is based on:
+
+\begin{quote}
+Koster, E. A. S., \textbf{Bonneville, E. F.}, Borne, P. A. von dem, et
+al.~(2023) Joint models quantify associations between immune cell
+kinetics and allo-immunological events after allogeneic stem cell
+transplantation and subsequent donor lymphocyte infusion.
+\emph{Frontiers in Immunology}, 14. Frontiers. DOI:
+\href{https://doi.org/10.3389/fimmu.2023.1208814}{10.3389/fimmu.2023.1208814}.
+\end{quote}
+
+Finally, the main conclusions from the different chapters are brought
+together in Chapter~\ref{sec-chap-discussion}. Software code to
+reproduce the analyses of each chapter are openly available on
+\url{https://github.com/survival-lumc}.
+
+\hypertarget{other-ideas-and-notes}{%
+\section*{Other ideas and notes}\label{other-ideas-and-notes}}
+\addcontentsline{toc}{section}{Other ideas and notes}
+
+\markright{Other ideas and notes}
 
 \begin{itemize}
 \item
   Brief intro to alloSCT?
 \item
-  Motivating datasets? Or already in the papers?
-\item
   Tsiatis (\protect\hyperlink{ref-tsiatis2005encycl}{2005}) nice concise
   historical overview competing risks, to complete on cornfield quote
 \item
-  Hartley and Hocking
-  (\protect\hyperlink{ref-hartleyAnalysisIncompleteData1971}{1971}) on
-  the ``evil of incompleteness''
+  use \(f(\cdot)\) for density also in cause-spec. paper
 \item
-  Lau and Lesko
-  (\protect\hyperlink{ref-lauMissingnessSettingCompeting2018}{2018})
-  easy going overall reference for missing data and competing risks
+  use https://rpsychologist.com/lmm-slope-missingness figure?
 \item
-  In the discussion, add bits about separable/total/controlled direct
-  effects for missing data
-\item
-  use \(f(\cdot)\) for density also is cause-spec. paper
-\item
-  Cornfield end of paper quote for the discussions.
+  Change (small change) notation of moet je niet willen with the tilde.
 \end{itemize}
 
 \bookmarksetup{startatroot}
 
-\hypertarget{handling-missing-covariate-data-in-clinical-studies-in-haematology}{%
+\hypertarget{sec-chap-haema-review}{%
 \chapter{Handling missing covariate data in clinical studies in
-haematology}\label{handling-missing-covariate-data-in-clinical-studies-in-haematology}}
+haematology}\label{sec-chap-haema-review}}
 
 Missing data are frequently encountered across studies in clinical
 haematology. Failure to handle these missing values in an appropriate
@@ -1835,10 +1962,9 @@ the results of their study, both in terms of bias and statistical power.
 
 \bookmarksetup{startatroot}
 
-\hypertarget{multiple-imputation-for-cause-specific-cox-models-assessing-methods-for-estimation-and-prediction}{%
+\hypertarget{sec-chap-CS-MI}{%
 \chapter{Multiple imputation for cause-specific Cox models: Assessing
-methods for estimation and
-prediction}\label{multiple-imputation-for-cause-specific-cox-models-assessing-methods-for-estimation-and-prediction}}
+methods for estimation and prediction}\label{sec-chap-CS-MI}}
 
 In studies analyzing competing time-to-event outcomes, interest often
 lies in both estimating the effects of baseline covariates on the
@@ -3256,10 +3382,9 @@ variance of \(X \mid T, D, Z\) is non-constant in time.
 
 \bookmarksetup{startatroot}
 
-\hypertarget{multiple-imputation-of-missing-covariates-when-using-the-finegray-model}{%
+\hypertarget{sec-chap-FG-MI}{%
 \chapter{Multiple imputation of missing covariates when using the
-Fine--Gray
-model}\label{multiple-imputation-of-missing-covariates-when-using-the-finegray-model}}
+Fine--Gray model}\label{sec-chap-FG-MI}}
 
 The Fine--Gray model for the subdistribution hazard is commonly used for
 estimating associations between covariates and competing risks outcomes.
@@ -4678,10 +4803,10 @@ Aalen-Johansen estimate of the marginal cumulative incidence function.
 
 \bookmarksetup{startatroot}
 
-\hypertarget{why-you-should-avoid-using-multiple-finegray-models-insights-from-attempts-at-simulating-proportional-subdistribution-hazards-data}{%
+\hypertarget{sec-chap-FG-DGM}{%
 \chapter{Why you should avoid using multiple Fine--Gray models: insights
 from (attempts at) simulating proportional subdistribution hazards
-data}\label{why-you-should-avoid-using-multiple-finegray-models-insights-from-attempts-at-simulating-proportional-subdistribution-hazards-data}}
+data}\label{sec-chap-FG-DGM}}
 
 Studies considering competing risks will often aim to estimate the
 cumulative incidence functions conditional on an individual's baseline
@@ -5490,11 +5615,10 @@ Andersen, 2005}).
 
 \bookmarksetup{startatroot}
 
-\hypertarget{joint-models-quantify-associations-between-immune-cell-kinetics-and-allo-immunological-events-after-allogeneic-stem-cell-transplantation-and-subsequent-donor-lymphocyte-infusion}{%
+\hypertarget{sec-chap-JM-DLI}{%
 \chapter{Joint models quantify associations between immune cell kinetics
 and allo-immunological events after allogeneic stem cell transplantation
-and subsequent donor lymphocyte
-infusion}\label{joint-models-quantify-associations-between-immune-cell-kinetics-and-allo-immunological-events-after-allogeneic-stem-cell-transplantation-and-subsequent-donor-lymphocyte-infusion}}
+and subsequent donor lymphocyte infusion}\label{sec-chap-JM-DLI}}
 
 Alloreactive donor-derived T-cells play a pivotal role in alloimmune
 responses after allogeneic hematopoietic stem cell transplantation
@@ -6337,8 +6461,8 @@ counts increase the risk of GvHD and decrease the risk of relapse.
 
 \bookmarksetup{startatroot}
 
-\hypertarget{general-discussion}{%
-\chapter{General Discussion}\label{general-discussion}}
+\hypertarget{sec-chap-discussion}{%
+\chapter{General Discussion}\label{sec-chap-discussion}}
 
 Mentions why the JMs were novel for allo, the extensions, the needed
 data..
@@ -6354,6 +6478,20 @@ Structure
   About cause-specific vs fine-gray and beyond
 \item
   Mention the recent left truncated imp paper
+\end{itemize}
+
+Other ideas:
+
+\begin{itemize}
+\item
+  In the discussion, add bits about separable/total/controlled direct
+  effects for missing
+\item
+  Cornfield end of paper quote for the discussion.
+\item
+  Refer to Rouanet \emph{et al.}
+  (\protect\hyperlink{ref-rouanetInterpretationMixedModels2019a}{2019})
+  in discussion?
 \end{itemize}
 
 Keep at 4 pages? Skip entirely?
@@ -6852,12 +6990,6 @@ Receiving Allogeneic Hematopoietic Stem Cell Transplantation}.
 256.e1--256.e7. Netherlands: Elsevier B.V. DOI:
 \href{https://doi.org/10.1016/j.jtct.2020.12.021}{10.1016/j.jtct.2020.12.021}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-hartleyAnalysisIncompleteData1971}{}}%
-Hartley, H. O. and Hocking, R. R. (1971) The {Analysis} of {Incomplete
-Data}. \emph{Biometrics}, \textbf{27}, 783--823. {[}Wiley, International
-Biometric Society{]}. DOI:
-\href{https://doi.org/10.2307/2528820}{10.2307/2528820}.
-
 \leavevmode\vadjust pre{\hypertarget{ref-hassanCMVReactivationInitiates2022}{}}%
 Hassan, N., Eldershaw, S., Stephens, C., et al. (2022) {CMV}
 reactivation initiates long-term expansion and differentiation of the
@@ -6875,6 +7007,13 @@ Heitjan, D. F. and Rubin, D. B. (1991) Ignorability and {Coarse Data}.
 \emph{The Annals of Statistics}, \textbf{19}, 2244--2253. Institute of
 Mathematical Statistics. DOI:
 \href{https://doi.org/10.1214/aos/1176348396}{10.1214/aos/1176348396}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hickeyJointModellingTimetoevent2016}{}}%
+Hickey, G. L., Philipson, P., Jorgensen, A., et al. (2016) Joint
+modelling of time-to-event and multivariate longitudinal outcomes:
+Recent developments and issues. \emph{BMC Medical Research Methodology},
+\textbf{16}, 117. DOI:
+\href{https://doi.org/10.1186/s12874-016-0212-5}{10.1186/s12874-016-0212-5}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-hickeyComparisonJointModels2018a}{}}%
 Hickey, G. L., Philipson, P., Jorgensen, A., et al. (2018) A
@@ -7050,6 +7189,12 @@ Moving beyond the {MCAR}/{MAR}/{MNAR} classification.
 \emph{International Journal of Epidemiology}, \textbf{52}, 1268--1275.
 DOI: \href{https://doi.org/10.1093/ije/dyad008}{10.1093/ije/dyad008}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-littleMissingDataAssumptions2021}{}}%
+Little, R. J. (2021) Missing {Data Assumptions}. \emph{Annual Review of
+Statistics and Its Application}, \textbf{8}, 89--107. Annual Reviews.
+DOI:
+\href{https://doi.org/10.1146/annurev-statistics-040720-031104}{10.1146/annurev-statistics-040720-031104}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-littleMissingDataAnalysis2024}{}}%
 Little, R. J. (2024) Missing {Data Analysis}. \emph{Annual Review of
 Clinical Psychology}, \textbf{20}, 149--173. Annual Reviews. DOI:
@@ -7136,6 +7281,12 @@ immune profiling and machine learning. \emph{Blood}, \textbf{139},
 608--623. DOI:
 \href{https://doi.org/10.1182/blood.2021013054}{10.1182/blood.2021013054}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-mengMultipleImputationInferencesUncongenial1994}{}}%
+Meng, X.-L. (1994) Multiple-{Imputation Inferences} with {Uncongenial
+Sources} of {Input}. \emph{Statistical Science}, \textbf{9}, 538--558.
+Institute of Mathematical Statistics. Available at:
+\url{https://www.jstor.org/stable/2246252} (accessed 4 September 2024).
+
 \leavevmode\vadjust pre{\hypertarget{ref-mertensConstructionAssessmentPrediction2020}{}}%
 Mertens, B. J. A., Banzato, E. and de Wreede, L. C. (2020) Construction
 and assessment of prediction rules for binary outcome in the presence of
@@ -7208,6 +7359,13 @@ longitudinal data and its utilization for sensitivity analysis.
 \emph{Statistical Modelling}, \textbf{21}, 95--114. SAGE Publications
 India. DOI:
 \href{https://doi.org/10.1177/1471082X20927114}{10.1177/1471082X20927114}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-papageorgiouOverviewJointModeling2019a}{}}%
+Papageorgiou, G., Mauff, K., Tomer, A., et al. (2019) An {Overview} of
+{Joint Modeling} of {Time-to-Event} and {Longitudinal Outcomes}.
+\emph{Annual Review of Statistics and Its Application}, \textbf{6},
+223--240. Annual Reviews. DOI:
+\href{https://doi.org/10.1146/annurev-statistics-030718-105048}{10.1146/annurev-statistics-030718-105048}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-pazd.l.GenomicAnalysisPrimary2021}{}}%
 Paz D.L., Riou J., Verger E., et al. (2021) Genomic analysis of primary
@@ -7459,6 +7617,13 @@ multiple imputation be the method of choice for handling missing data in
 randomized trials? \emph{Statistical Methods in Medical Research},
 \textbf{27}, 2610--2626. SAGE Publications Ltd STM. DOI:
 \href{https://doi.org/10.1177/0962280216683570}{10.1177/0962280216683570}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sweetingJointModellingLongitudinal2011}{}}%
+Sweeting, M. J. and Thompson, S. G. (2011) Joint modelling of
+longitudinal and time-to-event data with application to predicting
+abdominal aortic aneurysm growth and rupture. \emph{Biometrical
+Journal}, \textbf{53}, 750--763. DOI:
+\href{https://doi.org/10.1002/bimj.201100052}{10.1002/bimj.201100052}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-taylor2002survival}{}}%
 Taylor, J. M. G., Murray, S. and Hsu, C.-H. (2002) Survival estimation

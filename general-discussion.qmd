@@ -1,4 +1,4 @@
-# General Discussion
+# General Discussion {#sec-chap-discussion}
 
 Mentions why the JMs were novel for allo, the extensions, the needed data..
 
@@ -11,6 +11,14 @@ Structure
 - About cause-specific vs fine-gray and beyond
 
 - Mention the recent left truncated imp paper
+
+Other ideas:
+
+- In the discussion, add bits about separable/total/controlled direct effects for missing 
+
+- Cornfield end of paper quote for the discussion.
+
+- Refer to @rouanetInterpretationMixedModels2019a in discussion?
 
 Keep at 4 pages? Skip entirely?
 

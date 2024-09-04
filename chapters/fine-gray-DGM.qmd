@@ -1,5 +1,4 @@
 ---
-title: "Why you should avoid using multiple Fine--Gray models: insights from (attempts at) simulating proportional subdistribution hazards data"
 abstract: |
   Studies considering competing risks will often aim to estimate the cumulative incidence functions conditional on an individual's baseline characteristics. While the Fine--Gray subdistribution hazard model is tailor-made for analysing only one of the competing events, it may still be used in settings where multiple competing events are of scientific interest, where it is specified for each cause in turn. In this work, we provide an overview of data-generating mechanisms where proportional subdistribution hazards hold for at least one cause. We use these to motivate why the use of multiple Fine--Gray models should be avoided in favour of better alternatives such as cause-specific hazard models.
 author:
@@ -27,6 +26,8 @@ affiliations:
     city: Dresden
     country: Germany
 ---
+
+# Why you should avoid using multiple Fine--Gray models: insights from (attempts at) simulating proportional subdistribution hazards data {#sec-chap-FG-DGM}
 
 ::: {.content-hidden unless-format="html"}
 $$
