@@ -54,6 +54,8 @@ editor_options:
 
 ::: {.content-hidden unless-format="html"}
 $$
+\newcommand\diff{\mathop{}\!\mathrm{d}}
+\newcommand\Diff[1]{\mathop{}\!\mathrm{d^#1}}
 \DeclareMathOperator{\logit}{logit}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\SE}{SE}
@@ -74,7 +76,7 @@ Furthermore, these registries are often set up for multiple purposes leading to 
 
 In studies considering competing risks outcomes, interest can lie in both the probabilities of events occurring over time and the effect of covariates on the different competing events. Appropriate handling of missing data is then of central concern in view of avoiding potential bias and/or loss of power when estimating these quantities, as could be expected when using simple methods such as complete-case analysis (CCA) [@whiteBiasEfficiencyMultiple2010].
 
-A more principled approach to handling missing covariate data is to use multiple imputation (MI), where a set of complete datasets is generated using samples based on an imputation model to fill in the missing values [@murrayMultipleImputationReview2018]. A substantive model is then run on each of these datasets, before combining the estimates using rules that adequately reflect the uncertainty in the imputation procedure [@rubin:1987]. The imputation model and the substantive model should ideally be compatible, that is, deriving from a joint model under which both models are conditionals. If data are missing across multiple covariates, the fully conditional specification approach can be used [@vanbuurenFullyConditionalSpecification2006]. This involves specifying an imputation model for each variable with missing values, fully conditional on the other variables, including the outcome. The procedure is better known under its more popular name `multivariate imputation by chained equations' (MICE) [@vanbuurens.FlexibleMultivariateImputation1999].
+A more principled approach to handling missing covariate data is to use multiple imputation (MI), where a set of complete datasets is generated using samples based on an imputation model to fill in the missing values [@murrayMultipleImputationReview2018]. A substantive model is then run on each of these datasets, before combining the estimates using rules that adequately reflect the uncertainty in the imputation procedure [@rubin:1987]. The imputation model and the substantive model should ideally be compatible, that is, deriving from a joint model under which both models are conditionals. If data are missing across multiple covariates, the fully conditional specification approach can be used [@vanbuurenFullyConditionalSpecification2006]. This involves specifying an imputation model for each variable with missing values, fully conditional on the other variables, including the outcome. The procedure is better known under its more popular name `multivariate imputation by chained equations' (MICE) [@vanbuurenFlexibleMultivariateImputation1999].
 
 In time-to-event analysis, a popular choice of substantive model is the Cox proportional hazards model. @whiteImputingMissingCovariate2009 showed that when using MICE in the context of a Cox model (in absence of competing events), for each covariate with missing data, the corresponding imputation model should include the remaining covariates, the event indicator, and the cumulative baseline hazard. To implement this model, the cumulative baseline hazard can be approximated by the marginal Nelson-Aalen estimate of the cumulative hazard. Moreover, depending on the type of covariate, the imputation model is simplified with a Taylor approximation for the non-linear terms from the Cox likelihood. In view of this approximate compatibility between the substantive and imputation model, @bartlettMultipleImputationCovariates2015 proposed a variant of MICE called 'substantive model compatible fully conditional specification' (SMC-FCS). The approach ensures full compatibility between the imputation model and the substantive model by imputing missing covariate values in a rejection sampling procedure.
 
@@ -99,24 +101,24 @@ In a competing risks setting, we assume that individuals can "fail" from only on
 If we view competing risks as a multi-state process, with a single (event-free) initial state and $K$ absorbing states, interest often lies in the cause-specific hazard, defined for a single event $k$ as
 
 \begin{equation*}
-	h_k(t) = \lim_{\Delta t \to 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \mid \tilde{T} \geq t)}{\Delta t}.
+	h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
 \end{equation*}
 This hazard function can be interpreted as the instantaneous force of transition, or intensity, of moving between the initial state and state $k$ [@putterTutorialBiostatisticsCompeting2007;@beyersmannCompetingRisksMultistate2012]. A model can then be specified, conditional on a covariate vector $\mathbf{Z}$. A Cox model is the common choice, defined for a failure cause $k$ as
 
 \begin{equation*}
-	h_k(t \mid \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
+	h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
 \end{equation*}
 where $h_{k0}(t)$ is the cause-specific baseline hazard, and $\boldsymbol{\beta}_k$ represents the effects of covariates $\mathbf{Z}$ on the cause-specific hazard. We note that in what follows, we use `effect' to refer to the impact of a covariate in a multivariable model where there may be non-negligible additional confounding, and this should hence not be interpreted as a fully causal quantity. Furthermore, the $K$ hazard functions define the failure-free survival probability:
 
 \begin{equation*}
-	S(t \mid \mathbf{Z}) = \exp \left( - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u \mid \mathbf{Z})du \right)
-        = \exp \left( - \sum_{k = 1}^{K} H_k(t \mid \mathbf{Z}) \right),
+	S(t \given \mathbf{Z}) = \exp \left( - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u \given \mathbf{Z}) \diff u \right)
+        = \exp \left( - \sum_{k = 1}^{K} H_k(t \given \mathbf{Z}) \right),
 \end{equation*} 
-where $H_k(t \mid \mathbf{Z}) = \int_{0}^{t} h_k(u \mid \mathbf{Z})du$ is the cause-specific cumulative hazard for cause $k$. Assuming conditional non-informative censoring, the likelihood contribution of an individual with observations $(t_i, d_i, \mathbf{z}_i)$ is then
+where $H_k(t \given \mathbf{Z}) = \int_{0}^{t} h_k(u \given \mathbf{Z}) \diff u$ is the cause-specific cumulative hazard for cause $k$. Assuming conditional non-informative censoring, the likelihood contribution of an individual with observations $(t_i, d_i, \mathbf{z}_i)$ is then
 
 \begin{equation}
 	\label{eq:likelihood}
-	p(t_i, d_i \mid \mathbf{z}_i) = S(t_i \mid \mathbf{z}_i) \prod_{k=1}^{K} \left[ h_k(t_i \mid \mathbf{z}_i) \right]^{I(d_i=k)},
+	p(t_i, d_i \given \mathbf{z}_i) = S(t_i \given \mathbf{z}_i) \prod_{k=1}^{K} \left[ h_k(t_i \given \mathbf{z}_i) \right]^{I(d_i=k)},
 \end{equation}
 where $I(\cdot)$ is the indicator function. The covariate effects $\boldsymbol{\beta}_k$ on the cause-specific hazard can then be estimated by optimising the partial likelihood [@coxPartialLikelihood1975]. This follows from the observation that the above expression factorises into separate factors for each cause $k$, which each corresponding to a standard Cox likelihood function where events from all other causes are treated as censored observations [@prenticeAnalysisFailureTimes1978].
 
@@ -125,7 +127,7 @@ where $I(\cdot)$ is the indicator function. The covariate effects $\boldsymbol{\
 Beyond assessing covariates, cause-specific hazards can also be used to estimate the so-called cumulative incidence functions, defined as
 
 \begin{align}
-	P(\tilde{T} \leq t, \tilde{D} = k) &= \int_{0}^{t}h_k(u)S(u-)du, \ k=1,...,K,
+	P(\tilde{T} \leq t, \tilde{D} = k) &= \int_{0}^{t}h_k(u)S(u-) \diff u, \ k=1,...,K,
 \end{align}
 where $S(u-)$ is the failure-free survival probability just prior to $u$ [@andersenCompetingRisksMultistate2002]. This cumulative incidence function, or transition probability, is the probability of experiencing event $k$ before or at time $t$. It is also known as the absolute, or crude risk. It can be computed either non-parametrically, or semi-parametrically if Cox models are specified for the $h_k(u)$. In the latter case, the cumulative hazards derived from the Breslow estimator of the cumulative cause-specific baseline hazards are used as ingredients for estimating the cumulative incidence for cause $k$.
 
@@ -137,29 +139,29 @@ In this section, we provide a framework for using MICE and SMC-FCS for both esti
 
 ### Fully conditional approach (MICE) {#sec-imp-models-main}
 
-We introduce $X$ as a single, partially observed covariate, and $Z$ as a fully observed covariate. We note that $Z$ could also represent a vector of complete covariates. Appropriate use of MICE for cause-specific competing risks analysis requires the specification of an *imputation model* $p(X \mid T,D,Z)$, from which a number of imputed datasets are generated. Detailed derivations for $p(X \mid T,D,Z)$ are provided in Appendix A, which we summarise in the present subsection.
+We introduce $X$ as a single, partially observed covariate, and $Z$ as a fully observed covariate. We note that $Z$ could also represent a vector of complete covariates. Appropriate use of MICE for cause-specific competing risks analysis requires the specification of an *imputation model* $p(X \given T,D,Z)$, from which a number of imputed datasets are generated. Detailed derivations for $p(X \given T,D,Z)$ are provided in Appendix A, which we summarise in the present subsection.
 
 To begin with, we note that by Bayes' Theorem,
 
 $$
-	\log p(X \mid T,D,Z) = \log p(T,D \mid X, Z) + \log p(X \mid Z) + c,
+	\log p(X \given T,D,Z) = \log p(T,D \given X, Z) + \log p(X \given Z) + c,
 $${#eq-cond-dist}
-where $c$ is a constant term that does not depend on $X$. For $p(T,D \mid X, Z)$, a cause-specific Cox proportional hazards model for each failure cause $k$ is specified as $h_k(t \mid X, Z) = h_{k0}(t)\exp(\beta_k X + \gamma_k Z)$. In case of binary or continuous $X$ and $Z$, $\beta_k$ and $\gamma_k$ are scalars; for categorical $X$ or $Z$ with two or more levels, $\beta_k$ and $\gamma_k$ are vectors and $X$ and $Z$ represent dummy codings for the levels of the covariates. To impute from the fully conditional distribution in @eq-cond-dist, we also need to specify a model for the missing data, $p(X \mid Z)$. This model will generally vary depending on the covariate type of $X$.
+where $c$ is a constant term that does not depend on $X$. For $p(T,D \given X, Z)$, a cause-specific Cox proportional hazards model for each failure cause $k$ is specified as $h_k(t \given X, Z) = h_{k0}(t)\exp(\beta_k X + \gamma_k Z)$. In case of binary or continuous $X$ and $Z$, $\beta_k$ and $\gamma_k$ are scalars; for categorical $X$ or $Z$ with two or more levels, $\beta_k$ and $\gamma_k$ are vectors and $X$ and $Z$ represent dummy codings for the levels of the covariates. To impute from the fully conditional distribution in @eq-cond-dist, we also need to specify a model for the missing data, $p(X \given Z)$. This model will generally vary depending on the covariate type of $X$.
 
 #### Binary X
 
-If $X$ is binary, we could assume $\logit P(X = 1 \mid Z) = \zeta_0 + \zeta_1 Z$. If $Z$ is categorical with $J \geq 2$ levels (without loss of generality assuming  that $Z$ takes values in $1, \ldots, J$), we can write
+If $X$ is binary, we could assume $\logit P(X = 1 \given Z) = \zeta_0 + \zeta_1 Z$. If $Z$ is categorical with $J \geq 2$ levels (without loss of generality assuming  that $Z$ takes values in $1, \ldots, J$), we can write
 
 $$
 \begin{aligned}
-	\logit P(X = 1 \mid T, D, Z) &= \alpha_0 + \sum^K_{k = 1}\alpha_k I(D=k) + \sum^K_{k = 1} \alpha_{K+k} H_{k0}(T) \nonumber \\
+	\logit P(X = 1 \given T, D, Z) &= \alpha_0 + \sum^K_{k = 1}\alpha_k I(D=k) + \sum^K_{k = 1} \alpha_{K+k} H_{k0}(T) \nonumber \\
 	&\qquad + \sum^{J-1}_{j=1}\alpha_{2K + j}I(Z = j) + \sum^{J-1}_{j=1} \sum^K_{k = 1} \alpha_{(j+1)K + (J-1) + k}I(Z = j) H_{k0}(T),
 \end{aligned}
 $${#eq-Xbin-Zcat}
 which implies that for categorical $Z$ we can impute missing $X$ values using a logistic regression with $D$ (as a factor variable), the cumulative baseline hazards for all causes of failure, $Z$ (as a factor variable), and the complete interactions between the cumulative baseline hazards and $Z$. For continuous $Z$, results are no longer exact. Using a first-order Taylor approximation for the $\exp(\gamma_k Z)$ term, we can write
 $$
 \begin{aligned}
-	\logit P(X = 1 \mid T, D, Z) &\approx \alpha_0  + \sum^K_{k = 1} \alpha_{k} I(D=k) + \sum^K_{k = 1} \alpha_{K + k} H_{k0}(T) + \sum^K_{k = 1} \alpha_{2K + k} H_{k0}(T) Z \nonumber \\
+	\logit P(X = 1 \given T, D, Z) &\approx \alpha_0  + \sum^K_{k = 1} \alpha_{k} I(D=k) + \sum^K_{k = 1} \alpha_{K + k} H_{k0}(T) + \sum^K_{k = 1} \alpha_{2K + k} H_{k0}(T) Z \nonumber \\
 	&\qquad + \alpha_{3K + 1} Z,
 \end{aligned}
 $${#eq-Xbin-Zcontin}
@@ -167,11 +169,11 @@ which is valid if $\Var(\gamma_k Z)$ is small. This approximate imputation model
 
 #### Nominal categorical X
 
-If $X$ is a categorical covariate with $J \geq 2$ levels and $j = \{0,..., J-1\}$, we can specify different imputation models depending on whether $X$ is ordered or not. In the unordered (nominal) case, we can specify a multinomial logistic regression for $p(X \mid Z)$, yielding
+If $X$ is a categorical covariate with $J \geq 2$ levels and $j = \{0,..., J-1\}$, we can specify different imputation models depending on whether $X$ is ordered or not. In the unordered (nominal) case, we can specify a multinomial logistic regression for $p(X \given Z)$, yielding
 
 $$
 \begin{aligned}
-	\log \frac{P(X = j \mid T,D,Z)}{P(X = 0\mid T,D,Z)} &\approx \alpha_{j,0}  + \sum^K_{k = 1} \alpha_{j,k} I(D=k) + \sum^K_{k = 1} \alpha_{j,K + k} H_{k0}(T) + \sum^K_{k = 1} \alpha_{j,2K + k} H_{k0}(T) Z \nonumber \\
+	\log \frac{P(X = j \given T,D,Z)}{P(X = 0\given T,D,Z)} &\approx \alpha_{j,0}  + \sum^K_{k = 1} \alpha_{j,k} I(D=k) + \sum^K_{k = 1} \alpha_{j,K + k} H_{k0}(T) + \sum^K_{k = 1} \alpha_{j,2K + k} H_{k0}(T) Z \nonumber \\
 	&\qquad + \alpha_{j,3K + 1} Z.
 \end{aligned}
 $$
@@ -179,27 +181,27 @@ This comes as a result of generalising $\logit P(X=1|Z) = \zeta_0 + \zeta_1 Z$ t
 
 #### Ordered categorical X
 
-For ordered categorical $X$, a proportional odds model could be assumed as $\logit P(X \leq j \mid Z) = \zeta_{j} + \zeta_Z Z$. This however implies that the fully conditional distribution requires specifying $p(T,D \mid X \leq j, Z)$, which does not have a standard proportional hazards density. Instead, it has a *weighted sum* of proportional hazards densities. Thus, the expression for $P(X \leq j \mid T, D, Z)$ does not extend from the binary case in any simple form. Nevertheless, a proportional odds model including $D$, $Z$ and all $H_{k0}(T)$ could still be used to impute the missing $X$ values, though the properties of such a model are not currently well known. We refer the reader to the book written by @mccullagh1989generalized for a detailed description of both the multinomial logistic regression and proportional odds models.
+For ordered categorical $X$, a proportional odds model could be assumed as $\logit P(X \leq j \given Z) = \zeta_{j} + \zeta_Z Z$. This however implies that the fully conditional distribution requires specifying $p(T,D \given X \leq j, Z)$, which does not have a standard proportional hazards density. Instead, it has a *weighted sum* of proportional hazards densities. Thus, the expression for $P(X \leq j \given T, D, Z)$ does not extend from the binary case in any simple form. Nevertheless, a proportional odds model including $D$, $Z$ and all $H_{k0}(T)$ could still be used to impute the missing $X$ values, though the properties of such a model are not currently well known. We refer the reader to the book written by @mccullagh1989generalized for a detailed description of both the multinomial logistic regression and proportional odds models.
 
 #### Continuous X
 
-If $X$ is a continuous covariate, we could assume it to be normal conditional on $Z$ (possibly after transformation), as $X \mid Z \sim \mathcal{N}(\zeta_0 + \zeta_1 Z, \sigma^2)$. The implied expression for $p(X \mid T, D, Z)$ is not normal due to the $\exp(\beta_k X + \gamma_k Z)$ term, and so a bivariate Taylor approximation is used around the sample means $\bar{X}$ and $\bar{Z}$. To the first degree, the approximate fully conditional distribution is expressed as
+If $X$ is a continuous covariate, we could assume it to be normal conditional on $Z$ (possibly after transformation), as $X \given Z \sim \mathcal{N}(\zeta_0 + \zeta_1 Z, \sigma^2)$. The implied expression for $p(X \given T, D, Z)$ is not normal due to the $\exp(\beta_k X + \gamma_k Z)$ term, and so a bivariate Taylor approximation is used around the sample means $\bar{X}$ and $\bar{Z}$. To the first degree, the approximate fully conditional distribution is expressed as
 
 \begin{equation*}
-	X \mid T, D, Z \sim \mathcal{N}(\alpha_0 + \alpha_1 Z + \sum^K_{k = 1} \alpha_{k+1} I(D=k) + \sum^K_{k = 1} \alpha_{K + k + 1} H_{k0}(T),\sigma^2).
+	X \given T, D, Z \sim \mathcal{N}(\alpha_0 + \alpha_1 Z + \sum^K_{k = 1} \alpha_{k+1} I(D=k) + \sum^K_{k = 1} \alpha_{K + k + 1} H_{k0}(T),\sigma^2).
 \end{equation*}
 This suggests a model for imputing continuous $X$ should be a linear regression with $D$, $Z$ and all $H_{k0}(T)$ again as predictors. With a quadratic approximation for $\exp(\beta_k X + \gamma_k Z)$, the accuracy of the above model can be improved by additionally including the interactions between all $H_{k0}(T)$ and $Z$. The approximations are valid under the assumption of small $\Var(\beta_k X + \gamma_k Z)$.
 
 We note that the above models, like in the simple time-to-event settings, cannot be implemented without a working estimate of $H_{k0}(T)$ - whose true values we will assume are unknown. For the competing risks setting, we can use the marginal Nelson-Aalen estimate of the cumulative cause-specific hazard (which requires treating all events other than $k$ as censored) as an approximation for $H_{k0}(T)$. As explained by @whiteImputingMissingCovariate2009, this approximation becomes poorer with larger true covariate effects. We may then expect the estimated covariate effects after the imputation procedure to be biased. 
 
-### Substantive model compatible approach {#sec-smcfcs-theory}
+### Substantive-model-compatible approach {#sec-smcfcs-theory}
 
 We refer the reader to the work of @bartlettMultipleImputationCovariates2015 for a detailed introduction of the SMC-FCS method, and to the work of @bartlettMissingCovariatesCompeting2016 for its specific extension to cause-specific Cox proportional hazards models. Briefly, the SMC-FCS method (in the current setting) is based on application of Bayes' theorem,
 
 $$
-  p(X \mid T, D, Z) \propto p(T,D \mid X, Z)p(X \mid Z),
+  p(X \given T, D, Z) \propto p(T,D \given X, Z)p(X \given Z),
 $${#eq-smcfcs-propdens}
-which was already introduced on the logarithmic scale in @eq-cond-dist. The parameters associated with both $p(T,D \mid X, Z)$ and $p(X \mid Z)$ are omitted for readability. In essence, the procedure involves choosing $p(X \mid Z)$ as a proposal density and using rejection sampling to draw possible values for missing $X$ from a density proportional to $p(T,D \mid X, Z)p(X \mid Z)$. This is under the assumption that $p(X \mid Z)$ is simple to sample from, as is the case if we specify a model for it, e.g. a linear regression of $X$ conditional on $Z$. The imputation model is then compatible with the substantive model in the sense that a joint distribution exists which contains both the substantive model and the imputation model as its conditional distributions. If multiple covariates have missing data, it is still possible to specify mutually incompatible models for $p(X \mid Z)$, but each fully conditional distribution will be compatible with the substantive model.
+which was already introduced on the logarithmic scale in @eq-cond-dist. The parameters associated with both $p(T,D \given X, Z)$ and $p(X \given Z)$ are omitted for readability. In essence, the procedure involves choosing $p(X \given Z)$ as a proposal density and using rejection sampling to draw possible values for missing $X$ from a density proportional to $p(T,D \given X, Z)p(X \given Z)$. This is under the assumption that $p(X \given Z)$ is simple to sample from, as is the case if we specify a model for it, e.g. a linear regression of $X$ conditional on $Z$. The imputation model is then compatible with the substantive model in the sense that a joint distribution exists which contains both the substantive model and the imputation model as its conditional distributions. If multiple covariates have missing data, it is still possible to specify mutually incompatible models for $p(X \given Z)$, but each fully conditional distribution will be compatible with the substantive model.
 
 In contrast to MICE, the SMC-FCS approach does not require any approximations - neither for the non-linear terms, nor for the cumulative baseline hazard. Of course, the cumulative baseline hazard still needs to be evaluated in order to draw from @eq-smcfcs-propdens. In order to do so, the Breslow estimate is used, and is updated at each iteration of the imputation procedure conditional on the most recent draws from the posterior distribution of the regression coefficients.
 
@@ -259,11 +261,11 @@ $Z$ was conserved as a complete covariate, and missingness was induced in $X$. L
 
 1. Missing completely at random (MCAR), defined as $P(R_X = 0) = 0.5$ or $P(R_X = 0) = 0.1$.
 
-2. Missing at random conditional on $Z$ (MAR), which was defined as $\logit P(R_X = 0 \mid Z) = \eta_0 + \eta_1 Z$.
+2. Missing at random conditional on $Z$ (MAR), which was defined as $\logit P(R_X = 0 \given Z) = \eta_0 + \eta_1 Z$.
 
-3. Outcome-dependent missing at random (MAR-T), which was defined as $\logit P(R_X = 0 \mid T_{\text{stand}}) = \eta_0 + \eta_1 T_{\text{stand}}$. $T_{\text{stand}}$ is $\log T$, standardised to have zero mean and unit variance. Note that $T$ was the observed (event or censoring) time; if missingness depended on the true event time, this would lead to a missing not at random mechanism. 
+3. Outcome-dependent missing at random (MAR-T), which was defined as $\logit P(R_X = 0 \given T_{\text{stand}}) = \eta_0 + \eta_1 T_{\text{stand}}$. $T_{\text{stand}}$ is $\log T$, standardised to have zero mean and unit variance. Note that $T$ was the observed (event or censoring) time; if missingness depended on the true event time, this would lead to a missing not at random mechanism. 
 
-4. Missing not at random conditional on $X$ (MNAR), which was defined as $\logit P(R_X = 0 \mid X) = \eta_0 + \eta_1 X$.
+4. Missing not at random conditional on $X$ (MNAR), which was defined as $\logit P(R_X = 0 \given X) = \eta_0 + \eta_1 X$.
 
 For mechanisms 2-4, $\eta_1$ represented the strength and direction of the missingness mechanism. For example, if $\eta_1 < 0$ in the MAR mechanism, observations with smaller values of the $Z$ had a larger probability (increasing with more extreme $\eta_1$) of the corresponding $X$ being missing. In the present study, we varied $\eta_1 = \{-1, -2\}$, representing 'weak' and 'strong' mechanisms respectively. In this context, the MAR-T mechanism could reflect a measurement that is only collected if a subject survives long enough into a study and is in follow-up, as may be the case with a genetic test. Although this kind of measurement is collected or only available at a later point in time, it can still be considered as baseline information and does *not* constitute conditioning on the future.
 
@@ -275,7 +277,7 @@ The simulation study is chosen to follow a partially factorial design,  where th
 
 ### Estimands
 
-The analysis models of interest are the cause-specific Cox proportional hazards models for REL and NRM, $h_k(t \mid X, Z) = h_{k0}(t)\exp(\beta_k X + \gamma_k Z)$ for $k = \{1,2\}$. We then have two main sets of estimands of interest:
+The analysis models of interest are the cause-specific Cox proportional hazards models for REL and NRM, $h_k(t \given X, Z) = h_{k0}(t)\exp(\beta_k X + \gamma_k Z)$ for $k = \{1,2\}$. We then have two main sets of estimands of interest:
 
 - $\theta_{\text{regr}} = \{\beta_1,\gamma_1,\beta_2,\gamma_2\}$, which are the data-generating regression coefficients from both cause-specific Cox models.
 
@@ -295,7 +297,7 @@ Five missing data methods were compared in each simulation scenario:
 
 - $CH_{12,\text{Int}}$ - identical to the $CH_{12}$, with the addition of the interactions $\hat{H}_{1}(T) \times Z$ and $\hat{H}_{2}(T) \times Z$; outlined in @sec-imp-models-main.
 
-- smcfcs - the approach outlined in @sec-smcfcs-theory}, using $Z$ as sole predictor in the $X \mid Z$ model (default setting).
+- smcfcs - the approach outlined in @sec-smcfcs-theory}, using $Z$ as sole predictor in the $X \given Z$ model (default setting).
 
 
 The $CH_{1}$ method corresponds to the 'FCS survival' method explored in the simulation study by Bartlett and Taylor, where failures other than cause one are treated as censored and the cumulative hazard of cause two is omitted from the imputation model. It corresponds to a direct application of the @whiteImputingMissingCovariate2009 results to the cause-specific Cox model for cause one, which may present itself as intuitive when interest lies in a single failure cause.
@@ -320,7 +322,7 @@ We focus primarily on $\beta_1$ (the regression coefficient for $X$ in the cause
 
 #### Regression coefficients
 
-Figure @fig-beta1-MAR summarises the results with regard to bias in the estimation of $\beta_1$ with a MAR mechanism induced on continuous $X$. The plot is a variant of a nested-loop plot, where each colour-cluster of points represents a scenario defined by the step functions at the bottom of the plot [@ruckerPresentingSimulationResults2014]. For example, the left-most bin in the plot corresponds to a scenario with data-generating $\beta_1 = 0.5$, 10\% missing data, similar hazard shapes and a weak missingness mechanism. For readability, the $CH_{1}$ method and the analysis ran on the full dataset prior to inducing missing data are omitted from the figure.
+@fig-beta1-MAR summarises the results with regard to bias in the estimation of $\beta_1$ with a MAR mechanism induced on continuous $X$. The plot is a variant of a nested-loop plot, where each colour-cluster of points represents a scenario defined by the step functions at the bottom of the plot [@ruckerPresentingSimulationResults2014]. For example, the left-most bin in the plot corresponds to a scenario with data-generating $\beta_1 = 0.5$, 10\% missing data, similar hazard shapes and a weak missingness mechanism. For readability, the $CH_{1}$ method and the analysis ran on the full dataset prior to inducing missing data are omitted from the figure.
 
 <!-- Latex characters need to be escaped quarto -->
 
@@ -336,17 +338,43 @@ knitr::include_graphics(here::here(paste0("figures/cause-specific-MI_MAR-B1-NLP"
 First, we note that in the 16 scenarios depicted, both $CC$ and smcfcs showed little to no bias in the estimation of $\beta_1$. For $CC$, no bias was expected given that this was a case of covariate-dependent MAR, and results for smcfcs were in line with the simulations of @bartlettMissingCovariatesCompeting2016.
 Second, the MICE methods showed varying amounts of bias depending on the scenario. With increasing true covariate effects, and higher proportion of missing values, the bias was larger. This was to be expected in light of the approximations employed in @sec-imp-models-main, which are valid for small covariate effects.  Moreover, the magnitude of the bias was also larger when the baseline hazard shapes were different. Last, adding the interaction terms in the imputation model did not significantly reduce bias, except when the missingness mechanism was weak, and the baseline hazard shapes were different.
 
-For contrast, we also present the results for $\beta_1$ with a MAR-T mechanism in Figure fig:beta1_MART, again with continuous $X$. In this case, $CC$ was consistently biased, as is expected when missingness is dependent on the outcome. Particularly for a high proportion of missing values, the bias in both MICE methods was even more severe than that of $CC$, reaching close to 20\% (relatively). Conversely, smcfcs was consistently unbiased across the depicted scenarios.
+For contrast, we also present the results for $\beta_1$ with a MAR-T mechanism in @fig-beta1-MAR-T, again with continuous $X$. In this case, $CC$ was consistently biased, as is expected when missingness is dependent on the outcome. Particularly for a high proportion of missing values, the bias in both MICE methods was even more severe than that of $CC$, reaching close to 20\% (relatively). Conversely, smcfcs was consistently unbiased across the depicted scenarios.
+
+```{r}
+#| label: fig-beta1-MAR-T
+#| fig-cap: "Bias in $\\beta_1$ for MAR-T mechanism with continuous
+#| X. Monte-Carlo standard errors of bias for all scenarios were
+#| below 0.008. Refer to @fig-beta1-MAR for a description on how to
+#| read this type of plot. Mech.: missingness mechanism; MAR-T:
+#| outcome-dependent missing at random."
+#| echo: false
+#| out-width: "85%"
+
+knitr::include_graphics(here::here(paste0("figures/cause-specific-MI_MAR-T-B1-NLP", extension)))
+```
 
 We also briefly summarise some of the more general findings across the simulations reported in the supplementary material. First, efficiency gains (in the form of smaller estimated standard errors) were mainly observed for  $\gamma_1$ and $\gamma_2$. Second, the $CH_{1}$ method yielded the largest biases, and lowest coverage probabilities of all methods. This was unsurprising, as $CH_{1}$ corresponded to imputing $X$ as if competing outcomes were considered as censoring. Third, the findings with MCAR missingness were largely analogous to those of the MAR reported above; and in presence of MNAR, all imputation methods (including smcfcs) showed appreciable bias. Last, in scenarios with binary $X$, the overall bias in the MICE methods was lower with respect to scenarios with continuous $X$. This could be attributed to the different terms that are being approximated in the imputation models. In addition to the cumulative baseline hazards, only $\exp(\gamma_k Z)$ is being approximated in the case of binary $X$, whereas in the continuous case a fuller $\exp(\beta_k X + \gamma_k Z)$ is being approximated.
 
-In terms of RMSE, which summarises both bias and variance, the differences in performance between the methods in M(C)AR scenarios was smaller, aside from when missingness was high and the baseline hazard shapes were different (see for example figure 2.1.2 of supplementary material on regression coefficients). 
+In terms of RMSE, which summarises both bias and variance, the differences in performance between the methods in M(C)AR scenarios was smaller, aside from when missingness was high and the baseline hazard shapes were different (see for example Figure 2.1.2 of supplementary material on regression coefficients). 
 
 #### Predicted probabilities
 
-Concerning predicted probabilities, we focus on the estimation of 5-year REL and NRM probabilities for a 'low-risk' individual, i.e. $\{X,Z\} = \{-1, -1\}$ with continuous $X$. Figure fig:5year_MAR summarises the RMSE of these probabilities under a MAR mechanism where 50\% of values are missing.
+Concerning predicted probabilities, we focus on the estimation of 5-year REL and NRM probabilities for a 'low-risk' individual, i.e. $\{X,Z\} = \{-1, -1\}$ with continuous $X$. @fig-five-year-MAR summarises the RMSE of these probabilities under a MAR mechanism where 50\% of values are missing.
 
-We point the reader to the $y$-axis of the plot, where results are now on the probability scale. The largest RMSE reported in the plot was just under 2.5\%, with most RMSE values for the imputation methods being under 1.5\%, with little to no difference between them. In these scenarios, the imputation methods outperform $CC$, but with the finest of margins. This is part of a general finding across the simulations: the predicted probabilities when using the imputation methods overall had very little bias, and little reduction in variability was observed beyond $m = 25$ imputations. We note that since all methods were similarly biased under M(C)AR (as seen for example in figure 1.2.1 of supplementary material on predictions), the RMSE for $CC$ is expected to be a factor of $\sqrt{2}$ larger than for the imputation methods when missingness was `high', given that $CC$ used half as much data.
+```{r}
+#| label: fig-five-year-MAR
+#| fig-cap: "RMSE of 5-year REL and NRM probabilities with $\\{X, Z\\} = \\{-1, -1\\}$ for MAR with 50% missing values. Monte-Carlo
+#| standard errors of RMSE for all scenarios were below 0.002. Refer to
+#| Figure 1 for a description on how to read this type of plot. Mech.:
+#| missingness mechanism; RMSE: root mean square error; REL: relapse;
+#| MAR: missing at random; NRM: non-relapse mortality."
+#| echo: false
+#| out-width: "85%"
+
+knitr::include_graphics(here::here(paste0("figures/cause-specific-MI_MAR-pred-NLP", extension)))
+```
+
+We point the reader to the $y$-axis of the plot, where results are now on the probability scale. The largest RMSE reported in the plot was just under 2.5\%, with most RMSE values for the imputation methods being under 1.5\%, with little to no difference between them. In these scenarios, the imputation methods outperform $CC$, but with the finest of margins. This is part of a general finding across the simulations: the predicted probabilities when using the imputation methods overall had very little bias, and little reduction in variability was observed beyond $m = 25$ imputations. We note that since all methods were similarly biased under M(C)AR (as seen for example in Figure 1.2.1 of supplementary material on predictions), the RMSE for $CC$ is expected to be a factor of $\sqrt{2}$ larger than for the imputation methods when missingness was `high', given that $CC$ used half as much data.
  
 We propose various explanations for this behaviour. First, we note that the prediction results for $\{X,Z\} = \{0, 0\}$ (with $X$ continuous or binary) can be taken as a proxy for how precisely the cause-specific baseline hazards are estimated. For all non-MNAR scenarios, little to no bias was found in the predicted probabilities for these reference patients. This may be additionally linked to the fact that $X$ and $Z$ are centered and normal, which could imply that $H_{k0}(\tilde{T})$ is adequately approximated by the Nelson-Aalen estimator. Second, regarding regression coefficients, bias was primarily observed in $\beta_1$ and $\beta_2$, with the former showing more extreme bias when data-generating $\beta_1 = 1$. Estimates of $\gamma_1$ and $\gamma_2$ however generally only exhibited biases of up to 5\% in the MAR scenarios, and slightly higher for $CC$ in MAR-T scenarios. Well-estimated cause-specific baseline hazards in tandem with close to unbiased estimates of $\gamma_k$ could then  explain the small bias in the predictions, since bias in the linear predictor as a whole ($\beta_k X + \gamma_k Z$) only reached 10\% in the most extreme cases, and was mostly below the 5\% mark otherwise.  
 
@@ -356,16 +384,49 @@ In supplementary material I (available online), we performed two additional simu
 
 ## Illustrative analysis {#sec-illust-analysis}
 
-We used the motivating alloHCT dataset introduced in @sec-motivating-example to illustrate the methods described in the simulation study. Cause-specific Cox proportional hazards models were fitted for both REL and NRM, conditional on a set of baseline predictors chosen on the basis of substantive clinical knowledge. An overview of these predictors, including their names, descriptions and proportion of missing values, can be found in Appendix B. The same predictors were used in the models for REL and NRM.
+We used the motivating alloHCT dataset introduced in @sec-motivating-example to illustrate the methods described in the simulation study. Cause-specific Cox proportional hazards models were fitted for both REL and NRM, conditional on a set of baseline predictors chosen on the basis of substantive clinical knowledge. An overview of these predictors, including their names, descriptions and proportion of missing values, can be found in @tbl-data-dictionary from the previous chapter. The same predictors were used in the models for REL and NRM.
+
+<!-- Reusing table from previous chapterrrr -->
 
 We used the $CC$, $CH_{12}$ and smcfcs methods to handle the missing baseline covariate data, which we assumed to be missing at random. Given that $CH_{12,\text{Int}}$ did not show much improvement over $CH_{12}$ in the simulation study, we decided to use the more parsimonious latter. Therefore, the imputation model for a partially observed covariate using $CH_{12}$ contained as predictors the remaining fully and partially observed covariates from the substantive model, and the marginal cumulative hazards for both events. For smcfcs, the imputation model similarly contained the remaining fully and partially observed covariates from the substantive model, which is the default setting. Continuous covariates were imputed using linear regression, binary covariates using logistic regression, ordered categorical using proportional odds regression and nominal categorical using multinomial logistic regression. Since missingness spanned multiple covariates, chained equations were required.
 
 To motivate the choice of $m$ for $CH_{12}$ and smcfcs, we used von Hippel's quadratic rule based on the fraction of missing information (FMI) rather than the proportion of complete cases [@vonhippelHowManyImputations2020;@madley-dowdProportionMissingData2019]. We first ran a set of $m = 20$ imputations, with $n_{\text{iter}} = 20$ iterations. After pooling, the coefficient with largest FMI was that of donor age in the model for NRM, with a value of approximately 0.49. Based on an 95\% upper-bound for this FMI, and for a desired coefficient of variation (CV) of 0.05, we would require approximately $m = 84$ imputed datasets. We rounded this upwards, and performed our final analysis with $m = 100$. We conserved $n_{\text{iter}} = 20$ as convergence was generally observed from 10 iterations onwards.
 
-Figure fig:forest_mds summarises the exponentiated point estimates (hazard ratios, HR) and associated 95\% confidence intervals (CI) from the cause-specific model for REL. The CIs for $CH_{12}$ and smcfcs are based on the pooled standard errors and the $t$-distribution. First, we observed a clear gain in efficiency across all coefficients for both imputation methods relative to $CC$. Second, there was general agreement between the estimates obtained from both $CH_{12}$ and smcfcs; a finding which was also reported in the illustrative analysis in the work by @bartlettMissingCovariatesCompeting2016. Third, we did note some differences between $CC$ and the imputation methods for certain variables, such as remission status or Karnofsky score. The most surprising case of this was with the MDS class of the patient, which was completely observed. In the model for REL, the HR for the sAML category estimated with $CC$ is just above three, whereas the imputation methods estimate it much closer to two. This also raises the point that for categorical variables, differences in methods can be seen on the category level rather than on the variable level as a whole - as also evidenced by the estimated HRs for the cytogenetics variable. Results for the cause-specific NRM model are summarized in Figure fig:forest_nrm.
+@fig-forest-rel summarises the exponentiated point estimates (hazard ratios, HR) and associated 95\% confidence intervals (CI) from the cause-specific model for REL. The CIs for $CH_{12}$ and smcfcs are based on the pooled standard errors and the $t$-distribution. First, we observed a clear gain in efficiency across all coefficients for both imputation methods relative to $CC$. Second, there was general agreement between the estimates obtained from both $CH_{12}$ and smcfcs; a finding which was also reported in the illustrative analysis in the work by @bartlettMissingCovariatesCompeting2016. Third, we did note some differences between $CC$ and the imputation methods for certain variables, such as remission status or Karnofsky score. The most surprising case of this was with the MDS class of the patient, which was completely observed. In the model for REL, the HR for the sAML category estimated with $CC$ is just above three, whereas the imputation methods estimate it much closer to two. This also raises the point that for categorical variables, differences in methods can be seen on the category level rather than on the variable level as a whole - as also evidenced by the estimated HRs for the cytogenetics variable. Results for the cause-specific NRM model are summarized in @fig-forest-nrm.
+
+```{r}
+#| label: fig-forest-rel
+#| fig-cap: "Forest plot with point estimates and 95\\% confidence
+#| interval for the cause-specific Cox model for Relapse. On the x-axis
+#| are the hazard ratios, which is plotted on the log scale where the
+#| confidence intervals are symmetric. Variables and their descriptions
+#| can be found in the data dictionary. Per level of factor and for
+#| continuous variables, we show the observed counts ($n$) and the
+#| number of relapse events (# Events) in the full data set."
+#| echo: false
+#| out-width: "90%"
+
+knitr::include_graphics(here::here(paste0("figures/cause-specific-MI_forest-rel", extension)))
+```
+
+```{r}
+#| label: fig-forest-nrm
+#| fig-cap: "Forest plot with point estimates and 95\\% confidence
+#| interval for the cause-specific Cox model for non-relapse mortality
+#| (NRM). On the x-axis
+#| are the hazard ratios, which is plotted on the log scale where the
+#| confidence intervals are symmetric. Variables and their descriptions
+#| can be found in the data dictionary. Per level of factor and for
+#| continuous variables, we show the observed counts ($n$) and the
+#| number of NRM events (# Events) in the full data set."
+#| echo: false
+#| out-width: "90%"
+
+knitr::include_graphics(here::here(paste0("figures/cause-specific-MI_forest-nrm", extension)))
+```
 
 Furthermore, we computed the predicted 5-year cumulative incidences of REL and NRM for a set of three reference patients. These corresponded to the three MDS classes, all with the median patient and donor ages at transplant, and with reference levels for the remaining categorical covariates.
-Table tab:cuminc_mds summarises the point estimates, and corresponding 95\% CIs. For the imputation methods, the variances of the predicted probabilities were obtained with the Aalen estimator [@dewreedeMstatePackageEstimation2010]. Subsequently, the 95\% CIs were constructed after transformation on the complementary log-log scale, as described in the work of @morisotProstateCancerNet2015. For comparability, the CIs for $CC$ were also constructed on the complementary log-log scale. In line with the results from the estimated regression coefficients, both imputation methods yielded quasi identical results. By contrast, $CC$ yielded cumulative incidences that were generally lower by approximately 3 to 7 percentage points, with CIs that were up to twice as wide. 
+@tbl-cuminc-mds summarises the point estimates, and corresponding 95\% CIs. For the imputation methods, the variances of the predicted probabilities were obtained with the Aalen estimator [@dewreedeMstatePackageEstimation2010]. Subsequently, the 95\% CIs were constructed after transformation on the complementary log-log scale, as described in the work of @morisotProstateCancerNet2015. For comparability, the CIs for $CC$ were also constructed on the complementary log-log scale. In line with the results from the estimated regression coefficients, both imputation methods yielded quasi identical results. By contrast, $CC$ yielded cumulative incidences that were generally lower by approximately 3 to 7 percentage points, with CIs that were up to twice as wide. 
 
 ```{r}
 #| echo: false
@@ -405,7 +466,7 @@ if (knitr::is_html_output()) {
 ```
 
 
-Such differences between the MI methods and $CC$ do question the validity of the M(C)AR assumption made. In the EBMT registry, many missing values can be considered MCAR, for reasons relating to data management. Variables such as comorbidity score, cytogenetic classification and donor age became more frequently collected over time as their clinical relevance grew clearer. Missingness may also be related to the transplant center, i.e. particular measurements not being recorded in certain clinics. In the current analysis, both calendar date and transplant center (categorical, large number of levels) were not included in the imputation model for simplicity. An option would have been to include them as auxiliary variables (added as predictor to $X \mid Z$, but not to substantive model), however the use of auxiliary variables was not a focus of this manuscript, and both MICE and SMC-FCS make different assumptions with respect to inclusion of these variables in the imputation model. Specifically, SMC-FCS would assume independence of center and outcome given the covariates in the substantive model - an assumption which likely does not hold in the registry [@snowdenBenchmarkingSurvivalOutcomes2020].
+Such differences between the MI methods and $CC$ do question the validity of the M(C)AR assumption made. In the EBMT registry, many missing values can be considered MCAR, for reasons relating to data management. Variables such as comorbidity score, cytogenetic classification and donor age became more frequently collected over time as their clinical relevance grew clearer. Missingness may also be related to the transplant center, i.e. particular measurements not being recorded in certain clinics. In the current analysis, both calendar date and transplant center (categorical, large number of levels) were not included in the imputation model for simplicity. An option would have been to include them as auxiliary variables (added as predictor to $X \given Z$, but not to substantive model), however the use of auxiliary variables was not a focus of this manuscript, and both MICE and SMC-FCS make different assumptions with respect to inclusion of these variables in the imputation model. Specifically, SMC-FCS would assume independence of center and outcome given the covariates in the substantive model - an assumption which likely does not hold in the registry [@snowdenBenchmarkingSurvivalOutcomes2020].
 
 ## Discussion {#sec-cs-MI-discussion}
 
@@ -429,81 +490,81 @@ The present findings add to a broader literature concerning missing covariates i
 
 ## Supplementary materials {.unnumbered .unlisted}
 
-There are two supplements to the present manuscript. The first, supplementary material I, is available alongside the manuscript. It presents two additional simulation studies, the non-parametric cumulative incidence curves from the alloHCT data and additional simulation results referred to in-text. Supplementary material II is an online supplement, hosted at [https://github.com/survival-lumc/CauseSpecCovarMI](https://github.com/survival-lumc/CauseSpecCovarMI). It contains full code, simulation data and results, in addition to a synthetic version of illustrative analysis dataset. 
+There are two supplements to the present manuscript. The first, supplementary material I, is available online at [https://doi.org/10.1177/09622802221102623](https://doi.org/10.1177/09622802221102623). It presents two additional simulation studies, the non-parametric cumulative incidence curves from the alloHCT data and additional simulation results referred to in-text. Supplementary material II is an online supplement, hosted at [https://github.com/survival-lumc/CauseSpecCovarMI](https://github.com/survival-lumc/CauseSpecCovarMI). It contains full code, simulation data and results, in addition to a synthetic version of illustrative analysis dataset. 
 
 ## Appendix A {.unnumbered}
 
 ### Imputation model derivations {.unnumbered}
 
-Without loss of generality, we assume that $X$ and $Z$ are scalars. The following derivations are valid under the MAR assumption, but also apply if the missing data are MCAR. Letting $R_X$ indicate whether elements of $X$ are missing ($R_X = 0$) or observed ($R_X = 1$), MAR implies $R_X \indep X \mid \{T,D,Z\}$ while for MCAR $R_X \indep X$.
+Without loss of generality, we assume that $X$ and $Z$ are scalars. The following derivations are valid under the MAR assumption, but also apply if the missing data are MCAR. Letting $R_X$ indicate whether elements of $X$ are missing ($R_X = 0$) or observed ($R_X = 1$), MAR implies $R_X \indep X \given \{T,D,Z\}$ while for MCAR $R_X \indep X$.
 
 We can express the log conditional density of the (right-censored) competing risks outcomes given the covariate data as
 \begin{equation*}
-	\log p(T, D \mid X, Z) =  \log S(T \mid X, Z) + \sum^K_{k = 1} I(D=k) \log h_k(T \mid X, Z).
+	\log p(T, D \given X, Z) =  \log S(T \given X, Z) + \sum^K_{k = 1} I(D=k) \log h_k(T \given X, Z).
 \end{equation*}
-Using $\log S(T \mid X, Z) = -\sum^K_{k = 1} H_k(T \mid X,Z)$, and assuming a cause-specific Cox proportional hazards model for each failure cause $k$ as $h_k(t \mid X, Z) = h_{k0}(t)\exp(\beta_k X + \gamma_k Z)$, we can write
+Using $\log S(T \given X, Z) = -\sum^K_{k = 1} H_k(T \given X,Z)$, and assuming a cause-specific Cox proportional hazards model for each failure cause $k$ as $h_k(t \given X, Z) = h_{k0}(t)\exp(\beta_k X + \gamma_k Z)$, we can write
 \begin{equation*}
-	\log p(T, D \mid X, Z) = \sum^K_{k = 1} \Bigl\{ I(D=k) \bigl[\log h_{k0}(T) + (\beta_k X + \gamma_k Z)\bigr] -  H_{k0}(T)\exp(\beta_k X + \gamma_k Z) \Bigr\}.
+	\log p(T, D \given X, Z) = \sum^K_{k = 1} \Bigl\{ I(D=k) \bigl[\log h_{k0}(T) + (\beta_k X + \gamma_k Z)\bigr] -  H_{k0}(T)\exp(\beta_k X + \gamma_k Z) \Bigr\}.
 \end{equation*}
 We can then plug-in the above expression into @eq-cond-dist describing the fully conditional density of $X$, yielding
 \begin{equation*}
-	\log p(X \mid T,D,Z) = \log p(X \mid Z) + \sum^K_{k = 1} I(D=k) (\beta_k X + \gamma_k Z) - \sum^K_{k = 1} H_{k0}(T)\exp(\beta_k X + \gamma_k Z) + c,
+	\log p(X \given T,D,Z) = \log p(X \given Z) + \sum^K_{k = 1} I(D=k) (\beta_k X + \gamma_k Z) - \sum^K_{k = 1} H_{k0}(T)\exp(\beta_k X + \gamma_k Z) + c,
 \end{equation*}
 where $c$ may depend on $T$, $D$ or $Z$, but not on $X$. We note that if $Z$ is a categorical variable with more than two levels, $\gamma_k$ represents a vector of coefficients for the dummy codes of $Z$.
 
-#### Binary X
+#### Binary X {.unnumbered}
 
-Suppose $X$ is a binary covariate, depending on $Z$ through a logistic regression model $\logit P(X = 1 \mid Z) = \zeta_0 + \zeta_1 Z$. Given this missing data model, the objective now is to derive an expression for $\logit P(X = 1 \mid T, D, Z)$. In general we have that
+Suppose $X$ is a binary covariate, depending on $Z$ through a logistic regression model $\logit P(X = 1 \given Z) = \zeta_0 + \zeta_1 Z$. Given this missing data model, the objective now is to derive an expression for $\logit P(X = 1 \given T, D, Z)$. In general we have that
 $$
 \begin{aligned}
-	\logit P(X = 1 \mid T, D, Z) &= \log p(T, D \mid X = 1, Z) - \log p(T, D \mid X = 0, Z) + \logit P(X = 1 \mid Z)  \\
+	\logit P(X = 1 \given T, D, Z) &= \log p(T, D \given X = 1, Z) - \log p(T, D \given X = 0, Z) + \logit P(X = 1 \given Z)  \\
 	&= \zeta_0 + \zeta_1 Z + \sum^K_{k = 1} I(D=k) \beta_k - \sum^K_{k = 1} H_{k0}(T)\exp(\gamma_k Z)(\mathrm{e}^{\beta_k}  - 1). 
 \end{aligned}
 $${#eq-imp-bin}
 If $Z$ is categorical with $J \geq 2$ levels $(0, \ldots, J-1)$, the above expression extends to
 \begin{align*}
-	\logit P(X = 1 \mid T, D, Z) &= \alpha_0 + \sum^K_{k = 1}\alpha_k I(D=k) + \sum^K_{k = 1} \alpha_{K+k} H_{k0}(T) \nonumber \\
+	\logit P(X = 1 \given T, D, Z) &= \alpha_0 + \sum^K_{k = 1}\alpha_k I(D=k) + \sum^K_{k = 1} \alpha_{K+k} H_{k0}(T) \nonumber \\
 	&\qquad + \sum^{J-1}_{j=1}\alpha_{2K + j}I(Z = j) + \sum^{J-1}_{j=1} \sum^K_{k = 1} \alpha_{(j+1)K + (J-1) + k}I(Z = j) H_{k0}(T),
 \end{align*}
 which suggests that for categorical $Z$ we can impute missing $X$ values using a logistic regression with $D$ (as a factor variable), the cumulative baseline hazards, evaluated at $T$, for all causes of failure as covariates, $Z$ (as a factor variable), and the complete interactions between the cumulative baseline hazards at $T$ and $Z$. The number of parameters, including intercept, equals $JK + J + K$. For example, if there are $K = 2$ competing risks and $Z$ has $J = 3$ categories, there are 11 logistic regression parameters to be estimated (intercept included).
 
 If $Z$ is continuous, there are no exact results due to the $\exp(\gamma_k Z)$ terms. Analogously to @whiteImputingMissingCovariate2009, we use a first order Taylor series around $\bar{Z}$ to approximate it as $\exp(\gamma_k Z) \approx \exp(\gamma_k \bar{Z}) [ 1 + \gamma_k(Z - \bar{Z})  ]$, which is valid if $\Var(\gamma_k Z)$ is small. We can thus write
 \begin{align*}
-	\logit P(X = 1 \mid T, D, Z) &\approx \zeta_0 + \zeta_1 Z + \sum^K_{k = 1} I(D=k) \beta_k \nonumber - \sum^K_{k = 1} H_{k0}(T)(\mathrm{e}^{\beta_k}  - 1)\exp(\gamma_k \bar{Z})(1 - \gamma_k \bar{Z}) \nonumber \\
+	\logit P(X = 1 \given T, D, Z) &\approx \zeta_0 + \zeta_1 Z + \sum^K_{k = 1} I(D=k) \beta_k \nonumber - \sum^K_{k = 1} H_{k0}(T)(\mathrm{e}^{\beta_k}  - 1)\exp(\gamma_k \bar{Z})(1 - \gamma_k \bar{Z}) \nonumber \\
 	&\qquad - \sum^K_{k = 1} H_{k0}(T) Z \gamma_k (\mathrm{e}^{\beta_k}  - 1)\exp(\gamma_k \bar{Z}) \nonumber \\
 	&= \alpha_0  + \sum^K_{k = 1} \alpha_{k} I(D=k) + \sum^K_{k = 1} \alpha_{K + k} H_{k0}(T) + \sum^K_{k = 1} \alpha_{2K + k} H_{k0}(T) Z \nonumber \\
 	&\qquad + \alpha_{3K + 1} Z.
 \end{align*}
 This suggests an approximate imputation model for binary $X$ and continuous $Z$ including the following predictors: $Z$, $D$ (as a factor) and all $H_{k0}(T)$. Adding an interaction between all $H_{k0}(T)$ and $Z$ improves the accuracy of this approximation.
 
-#### Nominal categorical X
+#### Nominal categorical X {.unnumbered}
 
-Suppose $X$ is categorical with $J>2$ levels. If we assume the variable to be unordered, we can specify a polytomous logistic regression (also known as multinomial regression) for $p(X \mid Z)$. The model can be expressed in log odds form as
+Suppose $X$ is categorical with $J>2$ levels. If we assume the variable to be unordered, we can specify a polytomous logistic regression (also known as multinomial regression) for $p(X \given Z)$. The model can be expressed in log odds form as
 \begin{equation*}
-	\log \frac{P(X = j \mid Z)}{P(X = 0\mid Z)}  = \zeta_{j0} + \zeta_{j1} Z.
+	\log \frac{P(X = j \given Z)}{P(X = 0\given Z)}  = \zeta_{j0} + \zeta_{j1} Z.
 \end{equation*}
 By coding the reference category as $X=0$, analogously to @eq-imp-bin we obtain
 \begin{equation*}
-    \log \frac{P(X = j \mid T,D,Z)}{P(X = 0\mid T,D,Z)} = \zeta_{j0} + \zeta_{j1} Z + \sum^K_{k = 1} I(D=k) \beta_{jk} - \sum^K_{k = 1} H_{k0}(T)\exp(\gamma_k Z)(\mathrm{e}^{\beta_{jk}}  - 1).
+    \log \frac{P(X = j \given T,D,Z)}{P(X = 0\given T,D,Z)} = \zeta_{j0} + \zeta_{j1} Z + \sum^K_{k = 1} I(D=k) \beta_{jk} - \sum^K_{k = 1} H_{k0}(T)\exp(\gamma_k Z)(\mathrm{e}^{\beta_{jk}}  - 1).
 \end{equation*}
-From this it becomes clear that all derivations and approximations of $\logit P(X = 1 \mid T, D, Z)$ for binary $X$ continue to hold for $\log \frac{P(X = j \mid T,D,Z)}{P(X = 0\mid T,D,Z)}$, replacing $\zeta_0$ and $\zeta_1$ by $\zeta_{j0}$ and $\zeta_{j1}$, and $\alpha_k$'s by $\alpha_{jk}$'s. This implies that the imputation model for an unordered categorical $X$ should contain the same predictors as for a binary $X$. The above expression is again exact, given no $Z$, and also for categorical $Z$, provided the full interactions between the levels of $Z$ and the cumulative baseline hazards are used; the expression for categorical $Z$ with more than 2 levels extends in the same way.
+From this it becomes clear that all derivations and approximations of $\logit P(X = 1 \given T, D, Z)$ for binary $X$ continue to hold for $\log \frac{P(X = j \given T,D,Z)}{P(X = 0\given T,D,Z)}$, replacing $\zeta_0$ and $\zeta_1$ by $\zeta_{j0}$ and $\zeta_{j1}$, and $\alpha_k$'s by $\alpha_{jk}$'s. This implies that the imputation model for an unordered categorical $X$ should contain the same predictors as for a binary $X$. The above expression is again exact, given no $Z$, and also for categorical $Z$, provided the full interactions between the levels of $Z$ and the cumulative baseline hazards are used; the expression for categorical $Z$ with more than 2 levels extends in the same way.
 
-#### Ordered categorical X
+#### Ordered categorical X {.unnumbered}
 
-We consider $X$ as categorical with $J>2$ ordered levels. A proportional odds model can then be specified for $p(X \mid Z)$, which can be expressed by
+We consider $X$ as categorical with $J>2$ ordered levels. A proportional odds model can then be specified for $p(X \given Z)$, which can be expressed by
 \begin{equation*}
-	\log \frac{P(X \leq j \mid Z)}{1 - P(X \leq j \mid Z)} = \zeta_{j} + \zeta_Z Z,
+	\log \frac{P(X \leq j \given Z)}{1 - P(X \leq j \given Z)} = \zeta_{j} + \zeta_Z Z,
 \end{equation*}
-or simply $\logit P(X \leq j \mid Z) = \zeta_{j} + \zeta_Z Z$ for $j = \{1,...,J-1\}$.
+or simply $\logit P(X \leq j \given Z) = \zeta_{j} + \zeta_Z Z$ for $j = \{1,...,J-1\}$.
 
-To motivate the fully conditional imputation model for $X$, we need an expression for $\logit P(X \leq j \mid T,D,Z)$. This involves specifying $p(T, D \mid X \leq j,Z)$, which no longer has a proportional hazards density, but instead a \textit{weighted sum} of proportional hazards densities. The imputation model for an ordered categorical $X$ thus does not have a simple extension from binary case. Nonetheless, including the cumulative cause-specific baseline hazards, $D$ as a factor variable and the remaining covariates in the imputation model is still reasonable as an ad hoc solution.
+To motivate the fully conditional imputation model for $X$, we need an expression for $\logit P(X \leq j \given T,D,Z)$. This involves specifying $p(T, D \given X \leq j,Z)$, which no longer has a proportional hazards density, but instead a \textit{weighted sum} of proportional hazards densities. The imputation model for an ordered categorical $X$ thus does not have a simple extension from binary case. Nonetheless, including the cumulative cause-specific baseline hazards, $D$ as a factor variable and the remaining covariates in the imputation model is still reasonable as an ad hoc solution.
 
-#### Continuous X
+#### Continuous X {.unnumbered}
 
-In the case of a continuous $X$, we specify an exposure model $X \mid Z \sim \mathcal{N}(\zeta_0 + \zeta_1 Z, \sigma^2)$. We can write
+In the case of a continuous $X$, we specify an exposure model $X \given Z \sim \mathcal{N}(\zeta_0 + \zeta_1 Z, \sigma^2)$. We can write
 $$
 \begin{aligned}
-	\log p(X \mid T, D, Z) &= \sum^K_{k = 1} I(D=k) \beta_k X - \sum^K_{k = 1} H_{k0}(T)\exp(\beta_k X + \gamma_k Z) \\
+	\log p(X \given T, D, Z) &= \sum^K_{k = 1} I(D=k) \beta_k X - \sum^K_{k = 1} H_{k0}(T)\exp(\beta_k X + \gamma_k Z) \\
 	&\qquad - \frac{X^2 - 2X ( \zeta_0 + \zeta_1 Z)}{2\sigma^2} + c, 
 \end{aligned}
 $${#eq-app-continX}
@@ -514,7 +575,7 @@ where the terms that do not depend on $X$ from the normal density are subsumed i
 Using first the linear component of the above approximation in @eq-app-continX yields
 $$
 \begin{aligned}
-	\log p(X \mid T, D, Z) &\approx \sum^K_{k = 1} I(D=k) \beta_k X - \sum^K_{k = 1} H_{k0}(T) \beta_k X \exp(\beta_k \bar{X} + \gamma_k \bar{Z}) \\
+	\log p(X \given T, D, Z) &\approx \sum^K_{k = 1} I(D=k) \beta_k X - \sum^K_{k = 1} H_{k0}(T) \beta_k X \exp(\beta_k \bar{X} + \gamma_k \bar{Z}) \\
 	&\qquad - \frac{X^2 - 2X\zeta_0 - 2X\zeta_1 Z}{2\sigma^2} + c, \\
 	&=  \frac{2\sigma^2\sum^K_{k = 1} I(D=k) \beta_k X - 2\sigma^2 \sum^K_{k = 1} H_{k0}(T) \beta_k X \exp(\beta_k \bar{X} + \gamma_k \bar{Z})}{2\sigma^2} \\
 	&\qquad - \frac{X^2 - 2X\zeta_0 - 2X\zeta_1 Z}{2\sigma^2} + c,
@@ -522,23 +583,23 @@ $$
 $${#eq-app-contin-lin}
 and hence
 \begin{align*}
-	&\log p(X \mid T, D, Z) \approx \\
+	&\log p(X \given T, D, Z) \approx \\
 	&- \frac{X^2 -2X\big[ \overbrace{\zeta_0}^{\alpha_0} + \overbrace{\zeta_1}^{\alpha_1} Z + \sum^K_{k = 1} I(D=k) \overbrace{\beta_k \sigma^2}^{\alpha_{k+1}} + \sum^K_{k = 1} H_{k0}(T) \overbrace{(-\beta_k) \sigma^2 \exp(\beta_k \bar{X} + \gamma_k \bar{Z})}^{\alpha_{K + k + 1}} \big]}{2\sigma^2} \\ &+ c.
 \end{align*}
 Thus, approximately
 \begin{equation*}
-	X \mid T, D, Z \sim \mathcal{N}(\alpha_0 + \alpha_1 Z + \sum^K_{k = 1} \alpha_{k+1} I(D=k) + \sum^K_{k = 1} \alpha_{K + k + 1} H_{k0}(T),\sigma^2).
+	X \given T, D, Z \sim \mathcal{N}(\alpha_0 + \alpha_1 Z + \sum^K_{k = 1} \alpha_{k+1} I(D=k) + \sum^K_{k = 1} \alpha_{K + k + 1} H_{k0}(T),\sigma^2).
 \end{equation*}
 Based on a linear approximation for $\exp(\beta_k X + \gamma_k Z)$, the suggested imputation model for missing $X$ is a linear regression containing $Z$, $D$ (as a factor variable) and all $H_{k0}(T)$ as covariates. This approximation is valid for small $\Var(\beta_k X + \gamma_k Z)$.
 
 For a more precise imputation model, we can revisit @eq-app-contin-lin and add the remaining terms from the quadratic part of the approximation (that do not depend on $X$). After setting $w = \exp(\beta_k \bar{X} + \gamma_k \bar{Z})$, adding the quadratic terms yields
 \begin{align*}
-	\log p(X \mid T, D, Z) &\approx \sum^K_{k = 1} I(D=k) \beta_k X - \frac{X^2 - 2X\zeta_0 - 2X\zeta_1 Z}{2\sigma^2} \\
+	\log p(X \given T, D, Z) &\approx \sum^K_{k = 1} I(D=k) \beta_k X - \frac{X^2 - 2X\zeta_0 - 2X\zeta_1 Z}{2\sigma^2} \\
 	&\qquad - \sum^K_{k = 1} H_{k0}(T) w \bigg[ \beta_k X + \frac{1}{2} \beta_k^2(X - \bar{X})^2 + \beta_k \gamma_k X (Z - \bar{Z}) \bigg] + c.
 \end{align*}
 After adjusting by $2\sigma^2$ and adding $- \sum^K_{k = 1} H_{k0}(T) w(\beta^2_k\bar{X}^2/2)$ to $c$, we can write
 \begin{align*}
-	\log p(X \mid T, D, Z) &\approx -\frac{X^2\big[1 + \sigma^2 \sum^K_{k = 1} \beta_k^2  H_{k0}(T)\big]}{2\sigma^2} \\
+	\log p(X \given T, D, Z) &\approx -\frac{X^2\big[1 + \sigma^2 \sum^K_{k = 1} \beta_k^2  H_{k0}(T)\big]}{2\sigma^2} \\
 	&\qquad + 2X \times \Biggl\{ \frac{\zeta_0 + \zeta_1 Z +  \sigma^2 \sum^K_{k = 1} \beta_k \big[ I(D=k) - H_{k0}(T)w(1 - \beta_k \bar{X}) \big]}{2\sigma^2} \Biggr\} \\
 	&\qquad - 2X \times \Biggl\{ \frac{\sigma^2\sum^K_{k = 1}H_{k0}(T)w \beta_k \gamma_k(Z - \bar{Z})}{2\sigma^2}\Biggr\} + c.
 \end{align*}
@@ -550,4 +611,4 @@ and variance
 \begin{equation*}
 	\frac{\sigma^2}{1 + \sigma^2 \sum^K_{k = 1} \beta_k^2  H_{k0}(T)}.
 \end{equation*}
-Based on a quadratic approximation for $\exp(\beta_k X + \gamma_k Z)$, the suggested imputation model for missing $X$ is a linear regression containing $Z$, $D$ (as a factor variable), all $H_{k0}(T)$ and all $H_{k0}(T)Z$ interactions as covariates. As explained by @whiteImputingMissingCovariate2009, this is only valid by ignoring terms in $\beta^2_k$ and for small $\sigma^2 \sum^K_{k = 1} \beta_k^2  H_{k0}(T)$. We also note that the variance of $X \mid T, D, Z$ is non-constant in time.
+Based on a quadratic approximation for $\exp(\beta_k X + \gamma_k Z)$, the suggested imputation model for missing $X$ is a linear regression containing $Z$, $D$ (as a factor variable), all $H_{k0}(T)$ and all $H_{k0}(T)Z$ interactions as covariates. As explained by @whiteImputingMissingCovariate2009, this is only valid by ignoring terms in $\beta^2_k$ and for small $\sigma^2 \sum^K_{k = 1} \beta_k^2  H_{k0}(T)$. We also note that the variance of $X \given T, D, Z$ is non-constant in time.

@@ -7,24 +7,28 @@ book:
   author: "Edouard F Bonneville"
   chapters:
     - index.qmd
-    - general-introduction.qmd
-    - chapters/haema-review.qmd # add broader sections/parts after, if necessary
+    - chapters/haema-review.qmd
     - chapters/cause-specific-MI.qmd
+    - chapters/polverelli-comorbs.qmd
     - chapters/fine-gray-MI.qmd
     - chapters/fine-gray-DGM.qmd
     - chapters/joint-models-DLI.qmd
-    - general-discussion.qmd
-    - references.qmd
-    - summary.qmd # after this: CV, acknowledegments and other tings
+    - chapters/general-discussion.qmd
+    - chapters/references.qmd
+    - chapters/summary.qmd
+    - chapters/publications.qmd
+    - chapters/dankwoord.qmd
+    - chapters/vitae.qmd
 
 format:
   html:
     theme: cosmo
     fig-height: 10
   pdf:
-    documentclass: scrreprt #scrbook or book
+    documentclass: scrreprt #, scrbook or book
+    mathspec: true # important for boldsymbols
     link-citations: true
-    #citeproc: false # recommended by filters
+    #citeproc: false # recommended by filters, bib per chapter
     toc-depth: 2
     lot: true
     lof: true
