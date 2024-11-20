@@ -1,6 +1,8 @@
 ---
 abstract: |
   The Fine--Gray model for the subdistribution hazard is commonly used for estimating associations between covariates and competing risks outcomes. When there are missing values in the covariates included in a given model, researchers may wish to multiply impute them. Assuming interest lies in estimating the risk of only one of the competing events, this paper develops a substantive-model-compatible multiple imputation approach that exploits the parallels between the Fine--Gray model and the standard (single-event) Cox model. In the presence of right-censoring, this involves first imputing the potential censoring times for those failing from competing events, and thereafter imputing the missing covariates by leveraging methodology previously developed for the Cox model in the setting without competing risks. In a simulation study, we compared the proposed approach to alternative methods, such as imputing compatibly with cause-specific Cox models. The proposed method performed well (in terms of estimation of both subdistribution log hazard ratios and cumulative incidences) when data were generated assuming proportional subdistribution hazards, and performed satisfactorily when this assumption was not satisfied. The gain in efficiency compared to a complete-case analysis was demonstrated in both the simulation study and in an applied data example on competing outcomes following an allogeneic stem cell transplantation. For individual-specific cumulative incidence estimation, assuming proportionality on the correct scale at the analysis phase appears to be more important than correctly specifying the imputation procedure used to impute the missing covariates.
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Multiple imputation of missing covariates when using the Fine--Gray model {#sec-chap-FG-MI}
@@ -491,3 +493,97 @@ The upper panel shows the imputed potential censoring times for a random selecti
 The upper panel in particular gives additional insights regarding the FG-Approx method, where $I(D = 1)$ and $\hat{\Lambda}_1(V)$ are included as predictors in the imputation model. Namely, the secondary x-axis shows the value of $\hat{\Lambda}_1(V)$ used in the imputation model for a missing $X_j$, for given imputed $V$. A first key point is that one should always use $\hat{\Lambda}_1(V)$ in the imputation model, and not $\hat{\Lambda}_1(T)$. Since the observed cause 2 failure time occurs before the eventual censoring time, $\hat{\Lambda}_1(T)$ will always be smaller than the marginal cumulative subdistribution hazard at the eventual censoring time, and so the imputation model will incur some downward bias. A second point is that in settings with fewer event 1 failures (e.g. $p = 0.15$ scenario in the simulation study), the corresponding secondary x-axis will have a smaller range, since the subdistribution hazard will be lower overall. The imputed potential censoring times will therefore have a relatively smaller influence on the imputed $X_j$.
 
 The lower panel shows that the estimated $\hat{\Lambda}_1(t)$ varies very little between imputed datasets, with differences only being noticeable later on in follow-up as risk sets become smaller and associated cumulative hazard jumps more pronounced. Note also that while $\hat{\Lambda}_1(t)$ based on the true $V$ appears in this dataset to be a kind of "average" of the functions based on imputed $V$, this will not be the case in general, especially with smaller sample sizes. The $\hat{\Lambda}_1(t)$ based on the weighted estimator [@geskusCauseSpecificCumulativeIncidence2011] will however coincide with the "average" of the functions based on imputed $V$, as will using the negative log of one minus the Aalen-Johansen estimate of the marginal cumulative incidence function.
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| eval: false
+#| message: false
+#| label: tbl-table1-polverelli
+#| tbl-cap: "Test."
+
+# This would be the appendix C later...
+
+dat_data_dict <- read.csv(
+  file = here::here("tables/MI-FG_data-dictionary.csv"), 
+  sep = ";",
+  header = TRUE
+)
+
+library(kableExtra)
+
+colnames(dat_data_dict) <- c("Variable or level", "N = 3982")
+contin_vars <- c(
+  "White blood cell count (WBC, x$10^9$/L)",
+  "Peripheral blood (PB) blasts (%)",
+  "Interval diagnosis-transplantation (years)",
+  "Year of transplantation",
+  "Hemoglobin (g/dL)",
+  "Patient age (years)"
+)
+#dat_data_dict$`Variable or level` <- ifelse(
+#  (dat_data_dict$`Variable or level` %in% contin_vars) |
+#    is.na(dat_data_dict$`N = 3982`),
+#  no = paste0("&nbsp;", dat_data_dict$`Variable or level`),
+#  yes = dat_data_dict$`Variable or level`
+#)
+dat_data_dict$`N = 3982` <- ifelse(
+  is.na(dat_data_dict$`N = 3982`),
+  "",
+  dat_data_dict$`N = 3982`
+)
+dat_data_dict$`N = 3982` <- gsub(
+    pattern = "(\\%)",
+    x = dat_data_dict$`N = 3982`, 
+    replacement = "\\\\%"
+  )
+dat_data_dict$`Variable or level` <- gsub(
+    pattern = "(\\%)",
+    x = dat_data_dict$`Variable or level`, 
+    replacement = "\\\\%"
+  )
+
+# dat_data_dict$`Variable or level` <- gsub(
+#     pattern = "(\\geq)",
+#     x = dat_data_dict$`Variable or level`, 
+#     replacement = "\\\\geq"
+#   )
+# 
+# dat_data_dict$`Variable or level` <- gsub(
+#     pattern = "(\\leq)",
+#     x = dat_data_dict$`Variable or level`, 
+#     replacement = "\\\\leq"
+#   )
+
+kableExtra::kbl(
+  dat_data_dict
+) |> 
+  pack_rows(
+      index = c(
+        "Age at alloSCT (years)" = 1,
+        "Disease" = 4
+        #"Nonmyeloablative conditioning" = 2,
+        #"Donor" = 3,
+        #"Graft source" = 2,
+      #  "CMV serostatus patient/donor" = 4,
+       # "Main reason for intention for early low-dose DLI" = 12
+      )
+    )
+
+kableExtra::kbl(
+    dat_data_dict,
+    booktabs = "T", 
+    position = "h",
+    linesep = "",
+    format = "latex", # important for landscape? Not working..
+    escape = F, 
+    digits = 2,
+    longtable = TRUE
+  ) 
+
+#if (knitr::is_html_output()) 
+  
+#}
+```
+

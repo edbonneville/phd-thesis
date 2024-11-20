@@ -25,7 +25,7 @@ Inclusion and exclusion criteria, definitions, and methodology are
 available in Appendix A.
 
 Overall, 4086 patients were included in the final analysis.
-Patients' characteristics are available in Appendix B. Out of 3157
+Patients' characteristics are available in the online supplementary materials. Out of 3157
 patients with fully reported comorbidity data, 1701 patients (54%)
 had at least one comorbidity, with pulmonary conditions being the
 most prevalent (12.7% moderate and 6.8% severe), as documented
@@ -199,8 +199,4 @@ Missing values in covariates, which were assumed to be missing at random, were m
 
 Outcomes in the analysis for aGvHD/death before aGvHD were artificially censored at 4 months after allo-HCT, while remaining outcomes were censored at 60 months after allo-HCT. All statistical tests were two-sided, at a significance level of 0.05. All analyses were performed in R version 4.2.1, using “survival,” “cmprsk,” “prodlim”, “rms”,  and “mice” packages.
 
-**Add citations for individual packages**
-
-## Appendix B: descriptives {.unnumbered}
-
-(To be added and also referenced in the Fine--Gray MI chapter)
+<!-- Add citations for individual packages --> 

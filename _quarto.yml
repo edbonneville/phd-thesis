@@ -2,9 +2,9 @@ project:
   type: book
 
 book:
-  title: "Advances in competing risks and missing data"
-  subtitle: "With applications to allogeneic stem cell transplantation"
-  author: "Edouard F Bonneville"
+  title: "Statistical modelling of competing risks with incomplete data, with applications to allogeneic stem cell transplantation"
+  #subtitle: ""
+  author: "Édouard F. Bonneville"
   chapters:
     - index.qmd
     - chapters/haema-review.qmd

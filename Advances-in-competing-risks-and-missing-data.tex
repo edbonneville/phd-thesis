@@ -343,17 +343,18 @@ awareness and use of methods that appropriately account for competing
 risks has grown over time, the potential impact of missing data in this
 setting has received comparatively little attention. In particular, the
 paucity of methodological research for dealing with missing data in
-competing risks settings suggests researchers are at risk of a) naively
-excluding individuals with missing data; b) using advanced methods such
-as \emph{multiple imputation}, but failing to optimally account for the
-competing risks outcomes at the imputation stage. Consequently,
-depending on the extent and nature of a given missing data problem, the
-results of such analyses may be biased and/or make poor use of the
-observed information in the data. The development of methodological
-theory and associated user-friendly software implementations, the design
-and execution of simulation studies, and real data applications are all
-crucial in understanding when and how different statistical methods can
-be used for dealing with missing data in competing risks settings.
+competing risks settings suggests that researchers are at risk of a)
+naively excluding individuals with missing data; b) using advanced
+methods such as \emph{multiple imputation}, but failing to optimally
+account for the competing risks outcomes at the imputation stage.
+Consequently, depending on the extent and nature of a given missing data
+problem, the results of such analyses may be biased and/or make poor use
+of the observed information in the data. The development of
+methodological theory and associated user-friendly software
+implementations, the design and execution of simulation studies, and
+real data applications are all crucial in understanding when and how
+different statistical methods can be used for dealing with missing data
+in competing risks settings.
 
 The present thesis is therefore about statistical methodology for
 dealing with incomplete data in observational studies with competing
@@ -387,11 +388,11 @@ indicator function and \(D = 0\) indicates a right-censored observation.
 
 Suppose interest initially lies in studying the time until any of these
 \(K\) events. For example, we may seek to estimate (for a given
-population) the cumulative probability \(P(\tilde{T} \leq t)\) of dying
-from any cause by a certain timepoint \(t\), or its complement: the
-event-free survival (EFS) probability \(S(t) = P(\tilde{T} > t)\).
+population) the cumulative probability \(P(\tilde{T} \leq t)\) of
+failing from any cause by a certain timepoint \(t\), or its complement:
+the event-free survival (EFS) probability \(S(t) = P(\tilde{T} > t)\).
 Without any right-censoring, the latter quantity can be estimated simply
-by the empirical proportion of individuals still alive by \(t\).
+by the empirical proportion of individuals still event-free by \(t\).
 
 In the presence of right-censoring, it is necessary to work with the
 so-called all-cause \emph{hazard function}, given by \[
@@ -426,10 +427,10 @@ Kalbfleisch and Prentice
 
 \caption{\label{fig-intro-haz}Example (all-cause) hazard and survival
 functions for two subgroups from a given population. The hazard
-summarises two aspects of the survival function at a particular
-timepoint: its value (i.e.~the proportion of individuals still alive),
-and its slope (i.e.~how rapidly the curve is decreasing, expressed as a
-rate per unit time). Mathematically,
+summarises is based on two aspects of the survival function at a
+particular timepoint: its value (i.e.~the proportion of individuals
+still alive), and its slope (i.e.~how rapidly the curve is decreasing,
+expressed as a rate per unit time). Mathematically,
 \(h(t) = \{-\diff S(t)/\diff t\} \times S(t)^{-1}\).}
 
 \end{figure}%
@@ -531,9 +532,7 @@ and estimable from observed data
 1978}). The most popular approach for modelling the cause-specific
 hazards is using the semi-parametric Cox proportional hazards model
 (\citeproc{ref-coxRegressionModelsLifeTables1972}{Cox, 1972}), given for
-the \(k^{\text{th}}\) event by
-
-\[
+the \(k^{\text{th}}\) event by \[
 h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
 \] where \(h_{k0}(t)\) is the cause-specific baseline hazard,
 \(\mathbf{Z}\) is a \(p\)-dimensional vector of covariates, and vector
@@ -595,14 +594,12 @@ competing events can be multiply imputed
 2008}).
 
 While there are many other existing modelling approaches in the presence
-of competing risks (for a recent overview, see Monterrubio-Gómez
-\emph{et al.}
-(\citeproc{ref-monterrubio-gomezReviewStatisticalMachine2024}{2024})),
-the cause-specific Cox and Fine--Gray models have arguably received the
-most attention in both the methodological and applied literature. Much
-of this attention has gone towards clarifying the different
-interpretation of the parameters from both models, and related estimands
-(see e.g.
+of competing risks Geskus
+(\citeproc{ref-geskusCompetingRisksConcepts2024}{2024}), the
+cause-specific Cox and Fine--Gray models have arguably received the most
+attention in both the methodological and applied literature. Much of
+this attention has gone towards clarifying the different interpretation
+of the parameters from both models, and related estimands (see e.g.
 \citeproc{ref-andersenInterpretabilityImportanceFunctionals2012}{Andersen
 and Keiding, 2012}). Specifically, the Fine--Gray model exclusively
 targets what historically has been called crude or ``mixed''
@@ -709,10 +706,10 @@ definitions were also introduced (e.g.~for missingness processes that
 hold across multiple data samples).
 
 The missing data are said to be \emph{missing completely at random}
-(MCAR, Marini \emph{et al.}
-(\citeproc{ref-mariniMaximumLikelihoodEstimationPanel1980}{1980})) when
-the probability of any particular unit being missing is independent of
-both observed and unobserved information, that is \[
+(MCAR, \citeproc{ref-mariniMaximumLikelihoodEstimationPanel1980}{Marini
+\emph{et al.}, 1980}) when the probability of any particular unit being
+missing is independent of both observed and unobserved information, that
+is \[
 f(\mathbf{m}_i \given \mathbf{x}_i^{\text{obs}},\mathbf{x}_i^{\text{mis}};\psi) = f(\mathbf{m}_i \given \psi)  \ \text{for all } \mathbf{x}_i.
 \] MCAR missingness is often described as non-systematic or
 ``accidental'', occurring for example as a result of measurement
@@ -785,26 +782,25 @@ the additional uncertainty induced by the missing values. As described
 by Little (\citeproc{ref-littleMissingDataAnalysis2024}{2024}),
 approaches to MI will differ mainly in how this predictive distribution
 is derived. For example, one could specify a parametric joint model
-(e.g.~multivariate normal, see Carpenter \emph{et al.}
-(\citeproc{ref-carpenter2023MI}{2023})) for the variables in the
-dataset, and impute the missing data based on the implied conditional
-distributions.
+(e.g.~multivariate normal, see \citeproc{ref-carpenter2023MI}{Carpenter
+\emph{et al.}, 2023}) for the variables in the dataset, and impute the
+missing data based on the implied conditional distributions.
 
 The more widely used approach to creating multiply imputed datasets is
-\emph{multivariate imputation using chained equations} (MICE, van Buuren
-\emph{et al.}
-(\citeproc{ref-vanbuurenFlexibleMultivariateImputation1999}{1999})).
-This approach is also known as \emph{fully conditional specification}
-(FCS), since it involves specifying a univariate imputation model for
-each variable with missing data, fully conditional on the remaining
-variables in the dataset. Under the ignorable missingness assumption,
-the conditional distribution of a variable with missing data given the
-remaining variables is the \emph{same} for both the observed and
-unobserved components of the variable. Furthermore, the imputation
-models are iteratively ``chained'' together until convergence: imputed
-values for each variable with missing data are drawn conditional on the
-most recently imputed values for the other variables. The procedure is
-comprehensively outlined in the text by van Buuren
+\emph{multivariate imputation using chained equations} (MICE,
+\citeproc{ref-vanbuurenFlexibleMultivariateImputation1999}{van Buuren
+\emph{et al.}, 1999}). This approach is also known as \emph{fully
+conditional specification} (FCS), since it involves specifying a
+univariate imputation model for each variable with missing data, fully
+conditional on the remaining variables in the dataset. Under the
+ignorable missingness assumption, the conditional distribution of a
+variable with missing data given the remaining variables is the
+\emph{same} for both the observed and unobserved components of the
+variable. Furthermore, the imputation models are iteratively ``chained''
+together until convergence: imputed values for each variable with
+missing data are drawn conditional on the most recently imputed values
+for the other variables. The procedure is comprehensively outlined in
+the text by van Buuren
 (\citeproc{ref-buurenFlexibleImputationMissing2018}{2018}).
 
 The flexibility of MICE lies in its variable-by-variable sampling, where
@@ -7907,6 +7903,12 @@ Censoring}. \emph{Biometrics}, \textbf{67}, 39--49. DOI:
 \bibitem[\citeproctext]{ref-geskus2015data}
 Geskus, R. B. (2015) \emph{Data Analysis with Competing Risks and
 Intermediate States}. CRC Press.
+
+\bibitem[\citeproctext]{ref-geskusCompetingRisksConcepts2024}
+Geskus, R. B. (2024) Competing {Risks}: {Concepts}, {Methods}, and
+{Software}. \emph{Annual Review of Statistics and Its Application},
+\textbf{11}, 227--254. Annual Reviews. DOI:
+\href{https://doi.org/10.1146/annurev-statistics-040522-094556}{10.1146/annurev-statistics-040522-094556}.
 
 \bibitem[\citeproctext]{ref-gooptuEffectSirolimusImmune2019}
 Gooptu, M., Kim, H. T., Howard, A., et al. (2019) Effect of {Sirolimus}
