@@ -314,7 +314,7 @@ For $\hat{\theta}_{\text{pred}}$, we recorded the point estimates, empirical sta
 
 ### Software
 
-All analyses were performed using R version 3.6.2 [@rcoreteamLanguageEnvironmentStatistical2020]. The substantive model compatible imputation was performed using the smcfcs package version 1.4.1 [@bartlettSmcfcsMultipleImputation2022] and MICE was performed using the mice package version 3.8.0 [@buurenMiceMultivariateImputation2011]. The cause-specific Cox models were run and subsequent predicted cumulative incidences were obtained using the mstate package version 0.2.12 [@dewreedeMstatePackageAnalysis2011].
+All analyses were performed using R version 3.6.2 [@rcoreteamLanguageEnvironmentStatistical2020]. The substantive model compatible imputation was performed using the smcfcs package version 1.4.1 [@bartlettSmcfcsMultipleImputation2022] and MICE was performed using the mice package version 3.8.0 [@vanbuurenMiceMultivariateImputation2011]. The cause-specific Cox models were run and subsequent predicted cumulative incidences were obtained using the mstate package version 0.2.12 [@dewreedeMstatePackageAnalysis2011].
 
 ### Results
 

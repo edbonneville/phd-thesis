@@ -1,0 +1,58 @@
+"**Characteristic**";"**N = 3,982**"
+"Patient age (years)";"58 (52, 64)"
+"Patient/donor CMV match";NA
+"Patient negative/Donor negative";"1,142 (30%)"
+"Other";"2,715 (70%)"
+"(Missing)";"125"
+"Donor type";NA
+"HLA identical sibling";"1,183 (30%)"
+"Other";"2,795 (70%)"
+"(Missing)";"4"
+"Hemoglobin (g/dL)";"9.10 (8.10, 10.40)"
+"(Missing)";"1,873"
+"HCT-CI risk category";NA
+"Low risk ($0$)";"1,674 (54%)"
+"Intermediate risk ($1-2$)";"743 (24%)"
+"High risk ($\geq 3$)";"674 (22%)"
+"(Missing)";"891"
+"Interval diagnosis-transplantation (years)";"3 (1, 9)"
+"Karnosfky performance score";NA
+"$\geq 90$";"2,475 (66%)"
+"$80$";"986 (26%)"
+"$\leq 70$";"267 (7.2%)"
+"(Missing)";"254"
+"Patient sex";NA
+"Female";"1,484 (37%)"
+"Male";"2,498 (63%)"
+"Peripheral blood (PB) blasts (%)";"1.0 (0.0, 3.0)"
+"(Missing)";"2,323"
+"Conditioning";NA
+"Standard";"1,373 (35%)"
+"Reduced";"2,553 (65%)"
+"(Missing)";"56"
+"Ruxolitinib given";NA
+"No";"1,832 (66%)"
+"Yes";"931 (34%)"
+"(Missing)";"1,219"
+"Disease subclassification";NA
+"Primary MF";"2,912 (73%)"
+"Secondary MF";"1,070 (27%)"
+"Night sweats";NA
+"No";"1,256 (70%)"
+"Yes";"529 (30%)"
+"(Missing)";"2,197"
+"T-cell depletion (in- or ev-vivo)";NA
+"No";"1,012 (26%)"
+"Yes";"2,905 (74%)"
+"(Missing)";"65"
+"Cytogenetics";NA
+"Normal";"1,318 (59%)"
+"Abnormal";"910 (41%)"
+"(Missing)";"1,754"
+"White blood cell count (WBC, x$10^9$/L)";"7 (4, 14)"
+"(Missing)";"1,884"
+">10% Weight loss prior to transplantation";NA
+"No";"1,329 (73%)"
+"Yes";"492 (27%)"
+"(Missing)";"2,161"
+"Year of transplantation";"2,015.0 (2,012.0, 2,018.0)"

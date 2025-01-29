@@ -262,4 +262,4 @@ In summary, joint modelling allowed us to capture the associations between DLI, 
 
 Supplementary tables and figures are available online at [https://doi.org/10.3389/fimmu.2023.1208814](https://doi.org/10.3389/fimmu.2023.1208814).
 
-**(Statistical supplement here?)**
+<!-- Statistical supplement here? -->

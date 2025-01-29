@@ -1,5 +1,9 @@
 # Curriculum vitae {.unnumbered}
 
-<!-- According to ghislaine, should be sticking abtracts together -->
+Edouard Francis Bonneville was born on July 20th 1995 in Madrid (Spain). After completing his secondary education in Colomiers (France) in 2013, he pursued a BSc in Psychology at the University of Bristol (United Kingdom). In 2016, he moved to Leiden (The Netherlands) for the MSc Statistical Science for the Life and Behavioural Sciences (now known as Statistics and Data Science). As part of his master thesis, he spent three months at the RIVM Dutch National Institute for Public Health and the Environment working on a Bayesian approach for forecasting infection disease epidemics. 
 
-(To come)
+In 2019, he started a PhD in Biostatistics at the department of Biomedical Data Sciences at Leiden University Medical Center (LUMC, The Netherlands) under the supervision of dr. Liesbeth de Wreede and prof. dr. Hein Putter. [Research visits] 
+
+For part of this PhD trajectory, he worked part-time as a study statistician for the European Society for Bone and Marrow Transplantation (EBMT). Furthermore, he was a [LAP]. He has also served as a reviewer for *Statistics in Medicine*, *Statistical Methods in Medical Research*, *BMC Medical Research Methodology*, and *Journal of Computation and Graphical Statistics*.
+
+<!-- Decidate Ramiro en Pierre -->

@@ -26,7 +26,7 @@ extension <- if (knitr::is_html_output()) ".png" else ".pdf"
 
 The presence of missing covariate data continues to be pervasive across biomedical research. Among the many existing approaches for dealing with missing covariate data, multiple imputation (MI) methods in particular have become increasingly popular in practice [@carpenterMissingDataStatistical2021]. Compared to a complete-case analysis (CCA), MI can provide inferences that are both less biased and more efficient, under certain missingness mechanisms [@sterneMultipleImputationMissing2009].
 
-The most common approach to MI is to specify and fit regression models for partially observed covariates, from which imputations are then generated. Ideally, each one of these imputation models should be compatible with the substantive model of interest. That is, the assumptions made by both models should not conflict with each other, e.g. the imputation model should at least feature the remaining substantive model covariates, as well as the outcome. We refer to an imputation model as being "directly specified" when substantive model covariates and outcome variable(s), or any transformations thereof, are included explicitly as predictors in the imputation model. The use of these directly specified imputation models in settings with missingness spanning multiple covariates is more commonly known as MICE (multivariate imputation by chained equations, @buurenMiceMultivariateImputation2011).
+The most common approach to MI is to specify and fit regression models for partially observed covariates, from which imputations are then generated. Ideally, each one of these imputation models should be compatible with the substantive model of interest. That is, the assumptions made by both models should not conflict with each other, e.g. the imputation model should at least feature the remaining substantive model covariates, as well as the outcome. We refer to an imputation model as being "directly specified" when substantive model covariates and outcome variable(s), or any transformations thereof, are included explicitly as predictors in the imputation model. The use of these directly specified imputation models in settings with missingness spanning multiple covariates is more commonly known as MICE (multivariate imputation by chained equations, @vanbuurenFlexibleMultivariateImputation1999).
 
 In the context of cause-specific Cox proportional hazards models [@prenticeAnalysisFailureTimes1978], it has been shown that the imputation model for a partially observed covariate should at least include as predictors the other covariates from the substantive model, together with the cause-specific cumulative hazard and event indicator for each competing risk [@bonnevilleMultipleImputationCausespecific2022]. Analogously to the standard single-event survival setting, this directly specified imputation model is generally only approximately compatible with the proportional hazards substantive model[@whiteImputingMissingCovariate2009]. Concretely, when the outcome model assumes proportional hazards, the conditional distribution of a partially observed covariate modelled using MICE is only an approximation of the "true" (i.e. implied assuming the substantive model is correctly specified) conditional distribution of the partially observed covariate given the outcome and other substantive model covariates. If imputed values can instead be directly sampled from the latter distribution, it would ensure compatibility between analysis and imputation model. This alternative "indirect" way of obtaining imputations is referred to as the substantive-model-compatible imputation [SMC-FCS, @bartlettMultipleImputationCovariates2015] approach, and it was extended by Bartlett and Taylor to accommodate cause-specific Cox substantive models [@bartlettMissingCovariatesCompeting2016]. In terms of estimating cause-specific hazard ratios, simulation studies have shown that the SMC-FCS approach tends to outperform MICE in cases when the substantive model is correctly specified [@bonnevilleMultipleImputationCausespecific2022;@bartlettMissingCovariatesCompeting2016].
 
@@ -365,7 +365,7 @@ The primary measure of interest was bias in the estimated subdistribution log ha
 
 #### Software
 
-Analyses were performed using R version 4.3.1 [@rcoreteamLanguageEnvironmentStatistical2023]. Core packages used were: {survival} version 3.5.7 [@survival-package], {mice} version 3.16.0 [@buurenMiceMultivariateImputation2011], {smcfcs} version 1.7.1 [@bartlettSmcfcsMultipleImputation2022], {kmi} version 0.5.5 [@allignolSoftwareFittingNonstandard2010], and {rsimsum} version 0.11.3 [@gaspariniRsimsumSummariseResults2018].
+Analyses were performed using R version 4.3.1 [@rcoreteamLanguageEnvironmentStatistical2023]. Core packages used were: {survival} version 3.5.7 [@survival-package], {mice} version 3.16.0 [@vanbuurenMiceMultivariateImputation2011], {smcfcs} version 1.7.1 [@bartlettSmcfcsMultipleImputation2022], {kmi} version 0.5.5 [@allignolSoftwareFittingNonstandard2010], and {rsimsum} version 0.11.3 [@gaspariniRsimsumSummariseResults2018].
 
 ### Results
 
@@ -499,8 +499,9 @@ The lower panel shows that the estimated $\hat{\Lambda}_1(t)$ varies very little
 #| echo: false
 #| warning: false
 #| eval: false
+#| result: false
 #| message: false
-#| label: tbl-table1-polverelli
+##| label: tbl-table1-polverelli
 #| tbl-cap: "Test."
 
 # This would be the appendix C later...

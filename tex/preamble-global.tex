@@ -6,6 +6,13 @@
 %\usepackage[utf8]{inputenc}
 %\usepackage{amsmath,amssymb,amsfonts,amsthm}
 
+\KOMAoptions{%
+  listof=totoc,
+  listof=nochaptergap,
+  listof=flat,
+  index=totoc
+}
+%\usepackage{scrhack}
 
 \DeclareMathOperator{\logit}{logit}
 \DeclareMathOperator{\Var}{Var}
@@ -15,4 +22,103 @@
 \newcommand\diff{\mathop{}\!\mathrm{d}}
 \newcommand\Diff[1]{\mathop{}\!\mathrm{d^#1}}
 
+% https://ctan.math.illinois.edu/macros/latex/contrib/defoldfonts/defoldfonts.pdf
 % \usepackage[Sonny]{fncychap} % Only works with class: book
+% https://github.com/komascript
+% https://github.com/komascript/defoldfonts
+%
+%\usepackage[Sonny]{fncychap}
+%\usepackage{scrlayer-fancyhdr}
+\usepackage{scrlayer-scrpage}
+
+% .. se defoldfonts documentation..
+% .. is this an issue with the bibliography??
+%\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+%\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
+%\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
+%\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+%\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
+%\DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
+%\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
+%\DeclareOldFontCommand{\sfb}{\normalfont\sffamily\bfseries}{\@nomath\sfb}
+
+%\usepackage[Sonny]{fncychap}
+%\usepackage[Lenny]{fncychap}
+%\usepackage[Bjornstrup]{fncychap}
+%\KOMAoption{listof}{nochaptergap}
+%\KOMAoptions{draft=true}
+
+% --------------------------------------------------------------------------
+% --------------------------------------------------------------------------
+% Originalcode von: <http://www.komascript.de/fncychap-Lenny>
+% Copyright (c) Markus Kohm
+% Version: 2018-01-22
+% Changes:
+% - 2016-09-03 erste Version
+% - 2017-05-24 Anpassung von beforeskip an aktuelles KOMA-Script
+% - 2018-01-22 Korrektur der Liniendicke (Dank Elke)
+% Weitergabe und Verwendung gestattet, solange dieser Hinsweiskommentar
+% einschließlich Link und Copyrightinformation erhalten bleibt.
+
+% 1. Emulation von fncychap mit KOMA-Script-Mitteln:
+\newlength{\ChapterRuleWidth}
+\newcommand*{\ChRuleWidth}[1]{\setlength{\ChapterRuleWidth}{\dimexpr #1}}%
+\newcommand*{\ChNameVar}{\setkomafont{chapterprefix}}%
+\newcommand*{\ChTitleVar}{\setkomafont{chapter}}%
+\newcommand*{\ChNumVar}{\setkomafont{chapternumber}}%
+\newcommand*{\ChapterNameCase}[1]{#1}
+\newcommand*{\ChNameUpperCase}{\let\ChapterNameCase\MakeUppercase}
+\newcommand*{\ChNameIs}{\renewcommand*\ChapterNameCase[1]{##1}}
+\newcommand*{\ChNameLowerCase}{\let\ChapterNameCase\MakeLowercase}
+\newcommand*{\ChapterTitleCase}[1]{#1}
+\newcommand*{\ChTitleUpperCase}{\let\ChapterTitleCase\MakeUppercase}
+\newcommand*{\ChTitleIs}{\renewcommand*\ChapterTitleCase[1]{##1}}
+\newcommand*{\ChTitleLowerCase}{\let\ChapterTitleCase\MakeLowercase}
+
+% 2. Einstellungen für den Stil Sonny:
+\ChRuleWidth{1pt}
+\KOMAoptions{chapterprefix}% Es ist ein Präfix-Stil
+\newkomafont{chapternumber}{\fontsize{60}{62}\usefont{OT1}{ptm}{m}{n}\selectfont}
+\RedeclareSectionCommand[%
+  beforeskip=-61pt,% Abstand über der Präfixzeile bzw. der Linie
+  %innerskip=15pt,% Abstand zwischen Präfixzeile und Text
+  innerskip=20pt,% Abstand zwischen Präfixzeile und Text
+  afterskip=40pt,% Abstand unter dem Text
+  font=\normalfont\rmfamily\Huge,% Schrift des Namens
+  prefixfont=\fontsize{14}{16}\usefont{OT1}{phv}{m}{n}\selectfont,% Schrift der Präfixzeile
+]{chapter}
+\usepackage{picture}
+\usepackage{xcolor}
+\renewcommand*{\chapterformat}{%
+  \mbox{%
+    \setlength{\fboxsep}{0pt}\colorbox{white}{%
+      \strut\ChapterNameCase{\chapappifchapterprefix{\enskip}}}%
+    {\usekomafont{chapternumber}{%
+        \colorbox{white}{\strut\thechapter\IfUsePrefixLine{}{\enskip}}}}%
+  }%
+}
+\renewcommand*{\chapterlineswithprefixformat}[3]{% Ebene, Nummer, Text
+  \IfArgIsEmpty{#2}{}{%
+    % Die Prefix-Zeile aus Argument 2 wird nur gesetzt, wenn sie vorhanden
+    % ist.
+    \begin{picture}(0,0)
+      \setlength{\linethickness}{\ChapterRuleWidth}%
+      \usekomafont{chapternumber}{%
+      \put(.5\ChapterRuleWidth,0){%
+        \framebox(\dimexpr\linewidth-\ChapterRuleWidth,.9\ht\strutbox){}}}%
+    \end{picture}%
+    #2%
+  }%
+  \ChapterTitleCase{#3}%
+}
+% --------------------------------------------------------------------------
+
+
+
+%https://ctan.org/pkg/uni-titlepage?lang=en
+
+% need thumb indices!!
+
+% https://github.com/novoid/LaTeX-KOMA-template
+% https://cameronpatrick.com/post/2023/07/quarto-thesis-formatting/#basic-principles
+% fncychap koma https://tex.stackexchange.com/questions/195757/how-to-use-fncychaps-style-for-section
