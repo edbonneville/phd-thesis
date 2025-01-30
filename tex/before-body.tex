@@ -1,25 +1,98 @@
+% -- Easy way to ensure roman numbering for TOC
+$if(has-frontmatter)$
+\frontmatter
+$endif$
+
+
+% -- Minimal titlepage
+\begin{titlepage}
+  % For vertical centering, can remove
+  \hspace{0pt}
+  \vfill
+  \begin{center}
+    \bsf{\huge $title$} \par % par = paragraph
+    \smallskip
+    \textsf{\Large $subtitle$} \par
+    \vfill
+    \bsf{\large $author$}
+  \end{center}
+\end{titlepage}
+
+
+% -- Page for ISCN n copyright
 \clearpage
 \thispagestyle{empty}
+\vspace*{\fill} % Put stuff right at ze bottom
+
+\begingroup
+  \setlength{\parskip}{\baselineskip}
+  \begin{flushleft}
+    Cover design: $author$ \\
+    Printed by: Ridderprint | \href{www.ridderprint.nl}{www.ridderprint.nl} \\
+    ISBN: ...\par
+
+    \textcopyright \ 2025, $author$. \\
+    All rights reserved. No parts of this thesis may be reproduced or transmitted in any form or by any means without prior permission from the author.
+  \end{flushleft}
+\endgroup
+
+
+% -- Formalities page, use .yml to fill
+\clearpage
+\thispagestyle{empty}
+
 \begin{center}
-\Huge\textbf{$title$}\par
-\vspace{\baselineskip}
-\huge\textit{$subtitle$}\par
-\vfill % this space will be whatever is left on the page
-    \Large{Proefschrift}\par
-    \vspace{\baselineskip}
-    \linespread{1.3}
-    \large{ter verkrijging van \\
+  \bsf{\Huge $title$} \par % par = paragraph
+  \smallskip
+  \textsf{\LARGE $subtitle$} \par
+  \vfill
+  \textbf{\Large Proefschrift} \par
+  \vspace{\baselineskip}
+  \Large{
+    ter verkrijging van \\
     de graad van Doctor aan de Universiteit Leiden, \\
     op gezag van Rector Magnificus $proefschrift.rector$, \\
     volgens besluit van het College voor Promoties \\
     te verdedigen op $proefschrift.day$ $proefschrift.date$ \\
-    klokke $proefschrift.time$ uur \\[1.5cm]
-    door} \\[1.5cm]
-    \Large{$author$}\par
-$if(proefschrift.birthplace)$
-    \vspace{\baselineskip}
-    \large{geboren te $proefschrift.birthplace$ \\
-    in $proefschrift.birthyear$}
-$endif$
+    klokke $proefschrift.time$ uur
+  } \par
+  \vspace{\baselineskip}
+  \Large{door} \par
+  \vspace{\baselineskip}
+  \Large{$author$} \\
+  \large{geboren te $proefschrift.birthplace$ in $proefschrift.birthyear$} \par
 \end{center}
+
+
+% -- Promotiecommissie, in .yml
+\clearpage
+\thispagestyle{empty}
+
+% From https://github.com/bbartholdy/pandoc-templates/blob/e1404ad772d86e508be237267505ce1470ef02b0/default.latex
+\noindent\begin{tabular}{p{14em} l}
+    \large\bsf{Promotor:} & \large Hein Putter \\
+    \rule{0pt}{4ex}\large\bsf{Co-promotor:} & \large Liesbeth C. de Wreede \\
+    \large
+    \rule{0pt}{8ex}\bsf{Leden promotiecommissie:}
+    $for(committee)$ &
+      \rule{0pt}{4ex}\large $committee.name$
+      $for(committee.affiliation)$ \\[0.2mm] &
+        \indent\textit{$committee.affiliation$}
+      $endfor$ \\
+    $endfor$
+\end{tabular}
+
+% -- cleardoublepage before dedication?
+\clearpage
+
+\begingroup
+  \hspace{0pt}
+  \vfill
+  \flushright \textit{En memoria de mis abuelos,\\Ramiro y Pierre}
+  \vfill
+  \hspace{0pt}
+\endgroup
+
+
+% https://github.com/bbartholdy/pandoc-templates/blob/e1404ad772d86e508be237267505ce1470ef02b0/default.latex
 

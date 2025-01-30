@@ -2,8 +2,9 @@ project:
   type: book
 
 book:
-  title: "Statistical modelling of competing risks with incomplete data, with applications to allogeneic stem cell transplantation"
-  author: "Édouard F. Bonneville"
+  title: "Statistical modelling of competing risks with incomplete data"
+  subtitle: "With applications to allogeneic stem cell transplantation"
+  author: "Edouard Francis Bonneville"
   chapters:
     - index.qmd
     - chapters/haema-review.qmd
@@ -24,17 +25,22 @@ format:
     theme: cosmo
     fig-height: 10
   pdf:
-    documentclass: scrbook #scrreprt or book
-    papersize: a4
+    documentclass: scrbook
+    classoption:
+      - paper=portrait
+      - paper=24cm:17cm
+      - twoside=true
+      - open=right
+      - fontsize=10pt
+      - pagesize={{< meta print >}}
     mathspec: true # Important for boldsymbols
     link-citations: true
-    #citeproc: false # Only if you have the filter on to have bib per chapter
     toc-depth: 2
-    lot: true
-    lof: true
+    lot: false # (!) Remove both of these to save printing costs?
+    lof: false
     latex-auto-install: true
     include-in-header:
-      - tex/preamble-global.tex # make similar globals for markdown?
+      - tex/preamble-global.tex # make similar globals for html?
     template-partials:
       - tex/before-body.tex
     keep-tex: true
@@ -45,9 +51,25 @@ number-depth: 2
 
 # Other mini tings
 proefschrift:
-  time: "xxx"
-  birthplace: "Madrid"
+  day: "[weekday] [dag] [maand] 2025"
+  time: "xx:xx"
+  birthplace: "Madrid, Spanje"
   birthyear: "1995"
+  rector: "prof. dr. Iemand"
+
+committee:
+  - name: Prof. dr. Jacco Wallinga
+    affiliation:
+      - Leiden University Medical Center, NL
+      - RIVM, NL
+  - name: Prof. dr. Jan Beyersmann
+    affiliation: University of Ulm, DE
+  - name: Prof. dr. Stef van Buuren
+    affiliation: University of Utrecht, NL
+  - name: Dr. Simona Iacobelli
+    affiliation: Sapienza University of Rome, IT
+
+print: false
 
 # quarto check in command line checks a bunch of locations
 # tinytex::tinytex_root()
