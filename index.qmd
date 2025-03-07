@@ -1,5 +1,8 @@
 ---
 number-depth: 3
+knitr:
+  opts_chunk:
+    fig.path: "figures/"
 ---
 
 # General introduction
@@ -48,7 +51,7 @@ and further visualised in @fig-intro-haz. Therefore, by modelling the all-cause 
 
 ```{r}
 #| label: fig-intro-haz
-#| fig-cap: "Example (all-cause) hazard and survival functions for two subgroups from a given population. The hazard summarises is based on two aspects of the survival function at a particular timepoint: its value (i.e. the proportion of individuals still alive), and its slope (i.e. how rapidly the curve is decreasing, expressed as a rate per unit time). Mathematically, $h(t) = \\{-\\diff S(t)/\\diff t\\} \\times S(t)^{-1}$."
+#| fig-cap: "Example (all-cause) hazard and survival functions for two subgroups from a given population. The hazard is based on two aspects of the survival function at a particular timepoint: its value (i.e. the proportion of individuals still alive), and its slope (i.e. how rapidly the curve is decreasing, expressed as a rate per unit time). Mathematically, $h(t) = \\{-\\diff S(t)/\\diff t\\} \\times S(t)^{-1}$."
 #| echo: false
 #| out-width: "85%"
 
@@ -61,9 +64,9 @@ $$
 $${#eq-kaplan}
 where $d_j$ and $n_j$ respectively denote the number of events (of any type) and number of individuals at-risk at time $t_j$ [@putterTutorialBiostatisticsCompeting2007].
 
-In order to investigate the properties of specific events occurring in a competing risks setting, we can make use of the *cause-specific hazards*, defined for the $k^{\text{th}}$ event as  
+In order to investigate the properties of specific events occurring in a competing risks setting, we can make use of the *cause-specific hazards*, defined for the $k^{\text{th}}$ event as
 $$
-	h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
+h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
 $$
 These are the instantaneous rates of moving from an event-free state to a state representing failure from the $k^{\text{th}}$ specific event, after which one can no longer fail of other causes. Furthermore, the cause-specific hazards sum up to the all-cause hazard function, and therefore fully define the EFS function defined earlier,
 $$
@@ -129,19 +132,16 @@ where $h_{k0}(t)$ is the cause-specific baseline hazard, $\mathbf{Z}$ is a $p$-d
 <!-- Use time-dependent notation or not in Cox notation? -->
 
 It is important to note that a covariate which increases the cause-specific hazard of a particular event will not necessarily also increase the cumulative incidence of that same event, because the cumulative incidence function depends on the cause-specific hazards of *all* events. Depending on the direction and magnitude of the covariate effect on competing cause-specific hazards, the same covariate may even have opposing effects on the cause-specific hazard and cumulative incidence function of a particular event. As a result, regression models have been proposed that model the cumulative incidence function(s) *directly*, often through the so-called *subdistribution hazard*, given for a cause $k$ by 
-
 $$
 \begin{aligned}
 	\lambda_k(t) &= \lim_{\Delta t \downarrow 0} \frac{P\{t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t \cup (\tilde{T} \leq t \cap \tilde{D} \neq k)\}}{\Delta t}, \\
 	&= \frac{\diff F_k(t)}{\diff t} \times \{1 - F_k(t)\}^{-1}.
 \end{aligned}
 $$
-
 The most prominent example of a model for the subdistribution hazard is the Fine--Gray model [@fineProportionalHazardsModel1999], given for a cause $k$ by
 $$
 \lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\gamma}_k^\intercal \mathbf{Z}),
 $$
-
 where $\lambda_{k0}(t)$ is the subdistribution baseline hazard, and $\boldsymbol{\gamma_k}$ is the vector of log subdistribution hazard ratios. It can also be expressed as a transformation model for the cumulative incidence function, as
 $$
 F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\gamma}_k^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{k0}(u)\diff u \Biggr\},

@@ -15,24 +15,29 @@ book:
     - chapters/joint-models-DLI.qmd
     - chapters/general-discussion.qmd
     - chapters/references.qmd
+    - chapters/samenvatting.qmd
     - chapters/summary.qmd
     - chapters/publications.qmd
     - chapters/dankwoord.qmd
     - chapters/vitae.qmd
 
 format:
-  html:
-    theme: cosmo
-    fig-height: 10
   pdf:
     documentclass: scrbook
+    latex-clean: false # Keep the index.log file to check for issues
+    keep-tex: true
     classoption:
       - paper=portrait
-      - paper=24cm:17cm
+      - paper=240mm:170mm
       - twoside=true
       - open=right
       - fontsize=10pt
-      - pagesize={{< meta print >}}
+      - pagesize=false # auto if not sending to printers
+      - BCOR=15mm # 9mm Binding correction (Ridderpr. need min 20mm for binding)
+      - DIV=14 # calc gives 10 # Makes text area bigger (DIV=calc is default)
+      - headinclude=true # true or else upper margin too small
+      - footinclude=false # false or else bottom margin too large
+      - headsepline=on # Line in headers
     mathspec: true # Important for boldsymbols
     link-citations: true
     toc-depth: 2
@@ -40,37 +45,32 @@ format:
     lof: false
     latex-auto-install: true
     include-in-header:
-      - tex/preamble-global.tex # make similar globals for html?
+      - tex/preamble-global.tex # (make similar globals for html later)
     template-partials:
       - tex/before-body.tex
-    keep-tex: true
+  html:
+    theme: cosmo
+    fig-height: 10
 
 bibliography: thesis-refs-all.bib
 csl: journal-of-the-royal-statistical-society.csl
 number-depth: 2
 
-# Other mini tings
+# Defense setting to populate first few pages
 proefschrift:
   day: "[weekday] [dag] [maand] 2025"
   time: "xx:xx"
   birthplace: "Madrid, Spanje"
   birthyear: "1995"
-  rector: "prof. dr. Iemand"
-
+  rector: "Prof. Dr. ir. Hester Bijl"
 committee:
-  - name: Prof. dr. Jacco Wallinga
+  - name: Prof. Dr. Jacco Wallinga
     affiliation:
       - Leiden University Medical Center, NL
       - RIVM, NL
-  - name: Prof. dr. Jan Beyersmann
+  - name: Prof. Dr. Jan Beyersmann
     affiliation: University of Ulm, DE
-  - name: Prof. dr. Stef van Buuren
+  - name: Prof. Dr. Stef van Buuren
     affiliation: University of Utrecht, NL
   - name: Dr. Simona Iacobelli
     affiliation: Sapienza University of Rome, IT
-
-print: false
-
-# quarto check in command line checks a bunch of locations
-# tinytex::tinytex_root()
-# https://ctan.org/tex-archive/info/examples/KOMA-Script-6

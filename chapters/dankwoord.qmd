@@ -1,15 +1,25 @@
 # Acknowledgements {.unnumbered}
 
-As part of the journey of writing this thesis, I had the privilege of collaborating with and being surrounded by a number of fantastic people, who I would like to thank in what follows.
+As part of the journey that was writing this thesis, I had the privilege of collaborating with and being surrounded by a number of fantastic people, to whom I would like to express my gratitude.
 
-First and foremost, I would like to thank my supervisor Hein and Liesbeth for their patience and bla.
+First and foremost, I would like to thank my supervisors Liesbeth de Wreede and Hein Putter, for their unwavering support and mentorship during the past years. Liesbeth, the consistently high scientific standards by which you work have been an absolute inspiration. Hein, I will always admire how you are able to communicate difficult statistical concepts with ease and enthusiasm. I have learned a lot from the both of you, and will always keep a fond memory of our weekly meetings, which rarely felt complete without culturo-linguistic insights and coffee. Hartelijk dank.
 
-Marta Fiocco, Jacco Wallinga
-Ruth/Jonathan/Tim/Jan B/MRR
-Hein/Liesbeth
-Ila Lars
+This thesis would likely not have been about missing data at all had it not been for Matthieu Resche-Rigon. Thank you for motivating me to build on your earlier ideas on multiple imputation in competing risks settings. Relatedly, I would like to thank Jacco Wallinga and Marta Fiocco, for encouraging me during my master's thesis to consider a PhD position in the first place.
 
-Mum/Dad/Charlie
-Shauwah
+Furthermore, I had the pleasure of working with several statistical and clinical collaborators during the PhD trajectory. Thank you Ruth Keogh and Jan Beyersmann for welcoming me in London and Ulm respectively, and for the enjoyable collaboration that ensued also together with Tim Morris and Jonathan Bartlett. On the clinical side, I would like to thank Johannes Schetelig and Nicola Polverelli for their contributions to several articles in this thesis, as well as Constantijn Halkes and Frederik Falkenburg for the stimulating collaboration throughout the joint models project. Special thanks to Eva Koster, for being a joy to work with, and for your patience in repeatedly explaining the basics of allogeneic stem cell transplantation (alloSCT) to me.
+
+The present thesis relies on various datasets of patients who have undergone an alloSCT, registered with the European Society for Bone and Marrow Transplantation (EBMT). I thank both the EBMT for permitting the use of these data, and EBMT data managers  Linda Koster and Laurien Baaij for their help in preparing the datasets. I would also like to express my gratitude to all patients and centres involved in the original studies. Moreover, I would like to acknowledge all the EBMT statisticians that I have had the opportunity of learning from during the past years: Dirk-Jan, Luuk, Jarl, Paddy, Katerina, Simona, Gloria, Giulia, Katya, Richard, Jacques-Emmanuel, Christophe, Ariane, Maud, and Myriam.
+
+Next, I would like to show my appreciation to my colleagues from Medical Statistics (MSTAT) at the Leiden University Medical Center (LUMC): Ningning, Mitra, Irene, Susanne, Alexandros, Xu, Mirko, Junfeng, Jelle, Saskia, Mar, Erik, Bart, Roula, Stefan, Szymon, Ramin, Ghislaine, Lu, Leonie, Lies, Ewout, and Nan. Ewout, thank you for getting me interested in prediction models, and for the many spontaneous conversations in your office. Nan, it was a pleasure to work together on the validation of competing risks predictions models project.
+
+Needless to say, completing this thesis would have been a mere fraction of the fun without being surrounded by such a brilliant group of MSTAT PhD students: Chiara, Yongxi, Anna Kaal; Riccardo, Angela, Anna Vesely, Kaya, Andrea, Mari, Damjan (les visiteurs); Toby, Jasper, Georgy, Frank (the honourable gentlemen from office 42); Marije, Doranne, Lars, and Ilaria (the OGs). Thank you all for being absolute legends. 
+
+To my paranymphs Lars and Ila. Lars, beyond the many times you have made me laugh, I thank you in particular for inspiring me to continue to pursue interests and hobbies outside of work. Ila, aside from the consistent provision of Italian snacks, I thank you for being such a dependable friend.
+
+Outside of MSTAT, several groups of PhD students positively impacted my time at the LUMC. Thank you to the "Hacky Hour" folks for sparking my interest in Open Science early on in my PhD: Kim, Linda, Anna Lohmann, Daniela, Tariq, and Xante. Thank you also to the lovely people of the LUMC Association for PhD Candidates (LAP) for the welcome distraction that was organising events together: Daniele, Merian, Naomi, Alice, and Nienke.
+
+To my parents and brother. Papá, Mamá, les agradezco de todo corazón su apoyo y todos los sacrificios que han hecho por mí. Je vous aime fort. Charlie, eres un crack---gracias por siempre hacerme reír, y por ser una parte tan positiva de mi vida.
+
+Finally, my deepest thanks go to my other half Sarah (with the long name) von Grebmer zu Wolfsthurn. Not least for actually showing me that there was an end in sight to the PhD after you completed yours, but for your boundless patience, love, and support. Thank you being the best part of my life, and for always pushing me to become a better version of myself.
 
 <!-- Formal tone and limited only to 800 words -->

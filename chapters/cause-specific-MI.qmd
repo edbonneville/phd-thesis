@@ -1,6 +1,4 @@
 ---
-abstract: | 
-  In studies analyzing competing time-to-event outcomes, interest often lies in both estimating the effects of baseline covariates on the cause-specific hazards, and predicting cumulative incidence functions. When missing values occur in these baseline covariates, they may be discarded as part of a complete case analysis (CCA) or multiply imputed. In the latter case, the imputations may be performed either compatibly with a substantive model pre-specified as a cause-specific Cox model (SMC-FCS), or approximately so (MICE). In a large simulation study, we assessed the performance of these three different methods in terms of estimating cause-specific regression coefficients and predicting cumulative incidence functions. Concerning regression coefficients, results provide further support for use of SMC-FCS over MICE, particularly when covariate effects are large and the baseline hazards of the competing events are substantially different. CCA also shows adequate performance in settings where missingness is not outcome-dependent. With regard to cumulative incidence prediction, SMC-FCS and MICE performed more similarly, as also evidenced in the illustrative analysis of competing outcomes following a hematopoietic stem cell transplantation. The findings are discussed alongside recommendations for practising statisticians.
 author:
   - name: Edouard F. Bonneville
     orcid: 0000-0001-7542-4498
@@ -48,6 +46,8 @@ editor_options:
   chunk_output_type: console
 ---
 
+\markleft{\thechapter~Multiple imputation for cause-specific Cox models}
+
 # Multiple imputation for cause-specific Cox models: Assessing methods for estimation and prediction {#sec-chap-CS-MI}
 
 <!-- Add DOI badge -->
@@ -68,6 +68,16 @@ $$
 #| echo: false
 extension <- if (knitr::is_html_output()) ".png" else ".pdf"
 ```
+
+\blfootnote{Chapter based on: Bonneville, E. F., Resche-Rigon, M., Schetelig, J., et al. (2022) Multiple imputation for cause-specific Cox models: Assessing methods for estimation and prediction. \textit{Stat Methods Med Res}, 31, 1860–1880. SAGE Publications Ltd STM. DOI: 10.1177/09622802221102623.}
+
+\clearpage
+
+## Abstract {.unnumbered .unlisted}
+
+In studies analyzing competing time-to-event outcomes, interest often lies in both estimating the effects of baseline covariates on the cause-specific hazards, and predicting cumulative incidence functions. When missing values occur in these baseline covariates, they may be discarded as part of a complete case analysis (CCA) or multiply imputed. In the latter case, the imputations may be performed either compatibly with a substantive model pre-specified as a cause-specific Cox model (SMC-FCS), or approximately so (MICE). In a large simulation study, we assessed the performance of these three different methods in terms of estimating cause-specific regression coefficients and predicting cumulative incidence functions. Concerning regression coefficients, results provide further support for use of SMC-FCS over MICE, particularly when covariate effects are large and the baseline hazards of the competing events are substantially different. CCA also shows adequate performance in settings where missingness is not outcome-dependent. With regard to cumulative incidence prediction, SMC-FCS and MICE performed more similarly, as also evidenced in the illustrative analysis of competing outcomes following a hematopoietic stem cell transplantation. The findings are discussed alongside recommendations for practising statisticians.
+
+\clearpage
 
 ## Introduction
 
@@ -99,23 +109,19 @@ The dataset contains 6434 patients transplanted between 2000-2012, and registere
 In a competing risks setting, we assume that individuals can "fail" from only one of $K$ distinct events. We denote that failure time as $\tilde{T}$, and the competing event indicator as $\tilde{D} \in \{1,...,K\}$. In practice, individuals are subject to some right-censoring time $C$, which is assumed to be independent of $\tilde{T}$ and $\tilde{D}$, possibly given covariates. We thus only observe realisations $(t_i, d_i)$ of $T = \min(C,\tilde{T})$ and $D = I(\tilde{T} \leq C)\tilde{D}$, where $D = 0$ indicates a right-censored observation.
 
 If we view competing risks as a multi-state process, with a single (event-free) initial state and $K$ absorbing states, interest often lies in the cause-specific hazard, defined for a single event $k$ as
-
 \begin{equation*}
 	h_k(t) = \lim_{\Delta t \downarrow 0} \frac{P(t \leq \tilde{T} < t + \Delta t, \tilde{D} = k \given \tilde{T} \geq t)}{\Delta t}.
 \end{equation*}
 This hazard function can be interpreted as the instantaneous force of transition, or intensity, of moving between the initial state and state $k$ [@putterTutorialBiostatisticsCompeting2007;@beyersmannCompetingRisksMultistate2012]. A model can then be specified, conditional on a covariate vector $\mathbf{Z}$. A Cox model is the common choice, defined for a failure cause $k$ as
-
 \begin{equation*}
 	h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
 \end{equation*}
 where $h_{k0}(t)$ is the cause-specific baseline hazard, and $\boldsymbol{\beta}_k$ represents the effects of covariates $\mathbf{Z}$ on the cause-specific hazard. We note that in what follows, we use `effect' to refer to the impact of a covariate in a multivariable model where there may be non-negligible additional confounding, and this should hence not be interpreted as a fully causal quantity. Furthermore, the $K$ hazard functions define the failure-free survival probability:
-
 \begin{equation*}
 	S(t \given \mathbf{Z}) = \exp \left( - \sum_{k = 1}^{K} \int_{0}^{t} h_k(u \given \mathbf{Z}) \diff u \right)
         = \exp \left( - \sum_{k = 1}^{K} H_k(t \given \mathbf{Z}) \right),
 \end{equation*} 
 where $H_k(t \given \mathbf{Z}) = \int_{0}^{t} h_k(u \given \mathbf{Z}) \diff u$ is the cause-specific cumulative hazard for cause $k$. Assuming conditional non-informative censoring, the likelihood contribution of an individual with observations $(t_i, d_i, \mathbf{z}_i)$ is then
-
 \begin{equation}
 	\label{eq:likelihood}
 	p(t_i, d_i \given \mathbf{z}_i) = S(t_i \given \mathbf{z}_i) \prod_{k=1}^{K} \left[ h_k(t_i \given \mathbf{z}_i) \right]^{I(d_i=k)},
@@ -125,7 +131,6 @@ where $I(\cdot)$ is the indicator function. The covariate effects $\boldsymbol{\
 ### Cumulative incidence functions
 
 Beyond assessing covariates, cause-specific hazards can also be used to estimate the so-called cumulative incidence functions, defined as
-
 \begin{align}
 	P(\tilde{T} \leq t, \tilde{D} = k) &= \int_{0}^{t}h_k(u)S(u-) \diff u, \ k=1,...,K,
 \end{align}
@@ -142,7 +147,6 @@ In this section, we provide a framework for using MICE and SMC-FCS for both esti
 We introduce $X$ as a single, partially observed covariate, and $Z$ as a fully observed covariate. We note that $Z$ could also represent a vector of complete covariates. Appropriate use of MICE for cause-specific competing risks analysis requires the specification of an *imputation model* $p(X \given T,D,Z)$, from which a number of imputed datasets are generated. Detailed derivations for $p(X \given T,D,Z)$ are provided in Appendix A, which we summarise in the present subsection.
 
 To begin with, we note that by Bayes' Theorem,
-
 $$
 	\log p(X \given T,D,Z) = \log p(T,D \given X, Z) + \log p(X \given Z) + c,
 $${#eq-cond-dist}
@@ -151,18 +155,18 @@ where $c$ is a constant term that does not depend on $X$. For $p(T,D \given X, Z
 #### Binary X
 
 If $X$ is binary, we could assume $\logit P(X = 1 \given Z) = \zeta_0 + \zeta_1 Z$. If $Z$ is categorical with $J \geq 2$ levels (without loss of generality assuming  that $Z$ takes values in $1, \ldots, J$), we can write
-
 $$
 \begin{aligned}
-	\logit P(X = 1 \given T, D, Z) &= \alpha_0 + \sum^K_{k = 1}\alpha_k I(D=k) + \sum^K_{k = 1} \alpha_{K+k} H_{k0}(T) \nonumber \\
-	&\qquad + \sum^{J-1}_{j=1}\alpha_{2K + j}I(Z = j) + \sum^{J-1}_{j=1} \sum^K_{k = 1} \alpha_{(j+1)K + (J-1) + k}I(Z = j) H_{k0}(T),
+	\logit P(X = 1 \given T, D, Z) &= \alpha_0 + \sum^K_{k = 1}\alpha_k I(D=k) + \sum^K_{k = 1} \alpha_{K+k} H_{k0}(T) \\
+	&\qquad + \sum^{J-1}_{j=1}\alpha_{2K + j}I(Z = j) \\
+	&\qquad + \sum^{J-1}_{j=1} \sum^K_{k = 1} \alpha_{(j+1)K + (J-1) + k}I(Z = j) H_{k0}(T),
 \end{aligned}
 $${#eq-Xbin-Zcat}
 which implies that for categorical $Z$ we can impute missing $X$ values using a logistic regression with $D$ (as a factor variable), the cumulative baseline hazards for all causes of failure, $Z$ (as a factor variable), and the complete interactions between the cumulative baseline hazards and $Z$. For continuous $Z$, results are no longer exact. Using a first-order Taylor approximation for the $\exp(\gamma_k Z)$ term, we can write
 $$
 \begin{aligned}
-	\logit P(X = 1 \given T, D, Z) &\approx \alpha_0  + \sum^K_{k = 1} \alpha_{k} I(D=k) + \sum^K_{k = 1} \alpha_{K + k} H_{k0}(T) + \sum^K_{k = 1} \alpha_{2K + k} H_{k0}(T) Z \nonumber \\
-	&\qquad + \alpha_{3K + 1} Z,
+	\logit P(X = 1 \given T, D, Z) &\approx \alpha_0  + \sum^K_{k = 1} \alpha_{k} I(D=k) + \sum^K_{k = 1} \alpha_{K + k} H_{k0}(T) \\
+	&\qquad + \sum^K_{k = 1} \alpha_{2K + k} H_{k0}(T) Z + \alpha_{3K + 1} Z,
 \end{aligned}
 $${#eq-Xbin-Zcontin}
 which is valid if $\Var(\gamma_k Z)$ is small. This approximate imputation model thus uses $D$, $Z$, all $H_{k0}(T)$ and the interactions between all $H_{k0}(T)$ and $Z$ as predictors in a logistic regression. Note that the $\alpha$ parameters used above and in the next subsections represent the imputation model coefficients, and are themselves functions of other (substantive and missing data model) parameters. Therefore, these will vary depending on the covariate types of $X$ and $Z$, and the parametrization of the substantive model (i.e. whether each cause-specific model has the same predictors, and their functional forms).
@@ -170,11 +174,10 @@ which is valid if $\Var(\gamma_k Z)$ is small. This approximate imputation model
 #### Nominal categorical X
 
 If $X$ is a categorical covariate with $J \geq 2$ levels and $j = \{0,..., J-1\}$, we can specify different imputation models depending on whether $X$ is ordered or not. In the unordered (nominal) case, we can specify a multinomial logistic regression for $p(X \given Z)$, yielding
-
 $$
 \begin{aligned}
-	\log \frac{P(X = j \given T,D,Z)}{P(X = 0\given T,D,Z)} &\approx \alpha_{j,0}  + \sum^K_{k = 1} \alpha_{j,k} I(D=k) + \sum^K_{k = 1} \alpha_{j,K + k} H_{k0}(T) + \sum^K_{k = 1} \alpha_{j,2K + k} H_{k0}(T) Z \nonumber \\
-	&\qquad + \alpha_{j,3K + 1} Z.
+	\log \frac{P(X = j \given T,D,Z)}{P(X = 0\given T,D,Z)} &\approx \alpha_{j,0}  + \sum^K_{k = 1} \alpha_{j,k} I(D=k) + \sum^K_{k = 1} \alpha_{j,K + k} H_{k0}(T) \\
+	&\qquad + \sum^K_{k = 1} \alpha_{j,2K + k} H_{k0}(T) Z  + \alpha_{j,3K + 1} Z.
 \end{aligned}
 $$
 This comes as a result of generalising $\logit P(X=1|Z) = \zeta_0 + \zeta_1 Z$ to $\log \frac{P(X=j|Z)}{P(X=0|Z)} = \zeta_0 + \zeta_j Z$, and holds for continuous $Z$ as in @eq-Xbin-Zcontin. For categorical or no $Z$, where for the former $I(Z = j)$ should be used as in @eq-Xbin-Zcat, the expression for the fully conditional distribution is exact as in the binary case. The predictors to be included in the imputation model are exactly the same as for binary $X$. 
@@ -186,7 +189,6 @@ For ordered categorical $X$, a proportional odds model could be assumed as $\log
 #### Continuous X
 
 If $X$ is a continuous covariate, we could assume it to be normal conditional on $Z$ (possibly after transformation), as $X \given Z \sim \mathcal{N}(\zeta_0 + \zeta_1 Z, \sigma^2)$. The implied expression for $p(X \given T, D, Z)$ is not normal due to the $\exp(\beta_k X + \gamma_k Z)$ term, and so a bivariate Taylor approximation is used around the sample means $\bar{X}$ and $\bar{Z}$. To the first degree, the approximate fully conditional distribution is expressed as
-
 \begin{equation*}
 	X \given T, D, Z \sim \mathcal{N}(\alpha_0 + \alpha_1 Z + \sum^K_{k = 1} \alpha_{k+1} I(D=k) + \sum^K_{k = 1} \alpha_{K + k + 1} H_{k0}(T),\sigma^2).
 \end{equation*}
@@ -197,7 +199,6 @@ We note that the above models, like in the simple time-to-event settings, cannot
 ### Substantive-model-compatible approach {#sec-smcfcs-theory}
 
 We refer the reader to the work of @bartlettMultipleImputationCovariates2015 for a detailed introduction of the SMC-FCS method, and to the work of @bartlettMissingCovariatesCompeting2016 for its specific extension to cause-specific Cox proportional hazards models. Briefly, the SMC-FCS method (in the current setting) is based on application of Bayes' theorem,
-
 $$
   p(X \given T, D, Z) \propto p(T,D \given X, Z)p(X \given Z),
 $${#eq-smcfcs-propdens}
@@ -208,12 +209,10 @@ In contrast to MICE, the SMC-FCS approach does not require any approximations - 
 ### Regression coefficients
 
 Both the MICE and SMC-FCS procedures result in $m = 1,...,M$ imputed datasets. In each of these datasets, the cause-specific Cox model for one or more of the $K$ causes of failure is fitted. Let $\theta$ denote a cause-specific regression coefficient of interest, and let $\hat{\theta}_m$ and $\widehat{\Var}(\hat{\theta}_m)$ respectively denote the estimate and associated variance of this coefficient in the $m^{\text{th}}$ imputed dataset. We can combine these $M$ estimates using Rubin's rules, with estimator
-
 \begin{equation*}
 	\hat{\theta} = \frac{1}{M}\sum_{m=1}^{M}\hat{\theta}_m.
 \end{equation*}
 The associated variance estimator is
-
 \begin{equation*}
 	\widehat{\Var}(\hat{\theta}) = \frac{1}{M}\sum_{m=1}^{M}\widehat{\Var}(\hat{\theta}_m) + \big(1 + \frac{1}{M}\big)\frac{1}{M-1}\sum_{m=1}^{M}(\hat{\theta}_m - \hat{\theta})^2,
 \end{equation*}
@@ -245,7 +244,6 @@ We based our simulation of event times on the motivating alloHCT example describ
 Typically in alloHCT studies, patients are at very high risk of both relapse and NRM in the initial period after alloHCT, with this risk gradually decreasing thereafter as they survive longer. For this reason, generating failure times from a distribution with a decreasing hazard function is appropriate. The Weibull distribution, with probability density function $f(t) = \kappa \lambda t^{\kappa - 1} \exp (-\lambda t^{\kappa})$, with shape $\kappa > 0$ and rate $\lambda > 0$, accommodates decreasing hazards for $\kappa < 1$. This is the parametrisation used in the text by @kleinSurvivalAnalysisTechniques2006.
 
 We thus generated both latent failure times from independent Weibull distributions, assuming cause-specific proportional hazards conditional on $X$ and $Z$. We furthermore generated independent censoring times from an Exponential distribution. In summary:
-
 \begin{align*}
 	\tilde{T}_1 &\sim \text{Weibull}(\kappa_1, \lambda_1 = \lambda_{10}e^{\beta_1 X + \gamma_1 Z}), \\
 	\tilde{T}_2 &\sim \text{Weibull}(\kappa_2, \lambda_2 = \lambda_{20}e^{\beta_2 X + \gamma_2 Z}), \\
@@ -461,7 +459,8 @@ if (knitr::is_html_output()) {
     escape = F,
     digits = 1
   ) |>  
-    kableExtra::pack_rows(index = c("REL" = 3, "NRM" = 3))
+    kableExtra::pack_rows(index = c("REL" = 3, "NRM" = 3)) |> 
+    kableExtra::kable_styling(font_size = 7) 
 }
 ```
 
@@ -480,7 +479,7 @@ There are various limitations to the present work. First, we remark that the exp
 
 Furthermore, a noteworthy difference between the MICE and SMC-FCS approaches in the present context lies in the treatment of cumulative cause-specific baseline hazards functions $H_{k0}(T)$. While the SMC-FCS approach updates $H_{k0}(T)$ at each iteration of the imputation procedure using the Breslow estimate, the MICE approach approximates $H_{k0}(T)$ once using the Nelson-Aalen estimate and keeps them fixed throughout the imputation procedure. Updating $H_{k0}(T)$ iteratively with MICE was investigated in the single event setting by @whiteImputingMissingCovariate2009, with simulations failing to justify its use over inclusion of the Nelson-Aalen estimates in the imputation model. The additional simulation study reported in supplementary material I of the present work appears to show that these earlier results do extend to the competing risk setting. This in turn suggests that the differences in performance between MICE and SMC-FCS could almost entirely be attributed to the functional form of the imputation model, rather than to any error in estimating $H_{k0}(T)$.
 
-For practising statisticians, our work in combination with that of @bartlettMissingCovariatesCompeting2016 shows that SMC-FCS should be the current standard when applying MI in the cause-specific competing risks setting. Although in many controlled situations differences between MICE and SMC-FCS may be small (as in our alloHCT example), the latter seems to be the safest choice given the inherent lack of knowledge regarding the true underlying missingness mechanism. Naturally, SMF-FCS can still be biased, and so the researcher is encouraged to think meticulously about the assumptions underlying their data.  
+For practising statisticians, our work in combination with that of @bartlettMissingCovariatesCompeting2016 shows that SMC-FCS should be the current standard when applying MI in the cause-specific competing risks setting. Although in many controlled situations differences between MICE and SMC-FCS may be small (as in our alloHCT example), the latter seems to be the safest choice given the inherent lack of knowledge regarding the true underlying missingness mechanism. Naturally, SMC-FCS can still be biased, and so the researcher is encouraged to think meticulously about the assumptions underlying their data.  
 We also recommend that a CCA still be a starting point before performing MI, as it will be unbiased when M(C)AR and covariate-dependent MNAR hold. When biases occur, they may not be as extreme as expected, particularly when the proportion of incomplete cases is low. However, in applications where the proportion of incomplete cases is very high and the M(C)AR assumption is deemed plausible, efficiency gains can be substantial when using MI. This was particularly the case in our alloHCT example, where smaller standard errors were observed with the MI methods for both regression coefficients and predicted cumulative incidence.
 
 The present findings add to a broader literature concerning missing covariates in the context of Cox models [@marshallComparisonImputationMethods2010;@shahComparisonRandomForest2014;@keoghMultipleImputationCox2018]. Studies investigating methods for dealing with missing covariates for a substantive Fine--Gray model remain scarce. For the Fine--Gray model, multiple imputation has predominantly been assessed in the context of missing or interval censored outcomes [@delordMultipleImputationCompeting2016;@bakoyannisModellingCompetingRisks2010] We conclude by remarking that likelihood-based and fully Bayesian approaches have also not yet been explored or implemented in the context of competing risks, despite already showing promise in other applications [@erlerDealingMissingCovariates2016].

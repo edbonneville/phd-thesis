@@ -11,30 +11,30 @@
 % einschließlich Link und Copyrightinformation erhalten bleibt.
 
 % 1. Emulation von fncychap mit KOMA-Script-Mitteln:
-\newlength{\ChapterRuleWidth}
-\newcommand*{\ChRuleWidth}[1]{\setlength{\ChapterRuleWidth}{\dimexpr #1}}%
+\newlength{\ChapterRuleWidth}% Needed as minimum
+\newcommand*{\ChRuleWidth}[1]{\setlength{\ChapterRuleWidth}{\dimexpr #1}}%% Needed as minimum
 \newcommand*{\ChNameVar}{\setkomafont{chapterprefix}}%
 \newcommand*{\ChTitleVar}{\setkomafont{chapter}}%
 \newcommand*{\ChNumVar}{\setkomafont{chapternumber}}%
-\newcommand*{\ChapterNameCase}[1]{#1}
+\newcommand*{\ChapterNameCase}[1]{#1} % Needed as minimum
 \newcommand*{\ChNameUpperCase}{\let\ChapterNameCase\MakeUppercase}
 \newcommand*{\ChNameIs}{\renewcommand*\ChapterNameCase[1]{##1}}
 \newcommand*{\ChNameLowerCase}{\let\ChapterNameCase\MakeLowercase}
-\newcommand*{\ChapterTitleCase}[1]{#1}
+\newcommand*{\ChapterTitleCase}[1]{#1} % Needed as minimum
 \newcommand*{\ChTitleUpperCase}{\let\ChapterTitleCase\MakeUppercase}
 \newcommand*{\ChTitleIs}{\renewcommand*\ChapterTitleCase[1]{##1}}
 \newcommand*{\ChTitleLowerCase}{\let\ChapterTitleCase\MakeLowercase}
 
 % 2. Einstellungen für den Stil Sonny:
 \ChRuleWidth{1pt}
-\KOMAoptions{chapterprefix}% Es ist ein Präfix-Stil
+\KOMAoptions{chapterprefix}% Es ist ein Präfix-Stil % FIGURE OUT HERE
 \newkomafont{chapternumber}{\fontsize{60}{62}\usefont{OT1}{ptm}{m}{n}\selectfont}
 \RedeclareSectionCommand[%
   beforeskip=-61pt,% Abstand über der Präfixzeile bzw. der Linie
   innerskip=15pt,% Abstand zwischen Präfixzeile und Text
   afterskip=40pt,% Abstand unter dem Text
-  font=\normalfont\rmfamily\Huge,% Schrift des Namens
-  prefixfont=\fontsize{14}{16}\usefont{OT1}{phv}{m}{n}\selectfont,% Schrift der Präfixzeile
+  %font=\normalfont\rmfamily\Huge,% Schrift des Namens
+  %prefixfont=\fontsize{14}{16}\usefont{OT1}{phv}{m}{n}\selectfont,% Schrift der Präfixzeile
 ]{chapter}
 \usepackage{picture}
 \usepackage{xcolor}
@@ -53,7 +53,7 @@
     \begin{picture}(0,0)
       \setlength{\linethickness}{\ChapterRuleWidth}%
       \usekomafont{chapternumber}{%
-      \put(.5\ChapterRuleWidth,0){%
+      \put(1.25\ChapterRuleWidth,0){% go from .5 -> 1 to remove annoying vertical thing next to text
         \framebox(\dimexpr\linewidth-\ChapterRuleWidth,.9\ht\strutbox){}}}%
     \end{picture}%
     #2%

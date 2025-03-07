@@ -27,7 +27,7 @@ $endif$
 \begingroup
   \setlength{\parskip}{\baselineskip}
   \begin{flushleft}
-    Cover design: $author$ \\
+    Cover design: $author$ \& Ridderprint \\
     Printed by: Ridderprint | \href{www.ridderprint.nl}{www.ridderprint.nl} \\
     ISBN: ...\par
 
@@ -42,13 +42,13 @@ $endif$
 \thispagestyle{empty}
 
 \begin{center}
-  \bsf{\Huge $title$} \par % par = paragraph
+  \bsf{\huge $title$} \par % par = paragraph
   \smallskip
-  \textsf{\LARGE $subtitle$} \par
+  \textsf{\Large $subtitle$} \par
   \vfill
-  \textbf{\Large Proefschrift} \par
-  \vspace{\baselineskip}
-  \Large{
+  \textbf{\large Proefschrift} \par
+  \vspace{2\baselineskip}
+  \large{
     ter verkrijging van \\
     de graad van Doctor aan de Universiteit Leiden, \\
     op gezag van Rector Magnificus $proefschrift.rector$, \\
@@ -56,11 +56,11 @@ $endif$
     te verdedigen op $proefschrift.day$ $proefschrift.date$ \\
     klokke $proefschrift.time$ uur
   } \par
-  \vspace{\baselineskip}
-  \Large{door} \par
-  \vspace{\baselineskip}
-  \Large{$author$} \\
-  \large{geboren te $proefschrift.birthplace$ in $proefschrift.birthyear$} \par
+  \vspace{2\baselineskip}
+  \large{door} \par
+  \vspace{2\baselineskip}
+  \large{$author$} \\
+  \normalsize{geboren te $proefschrift.birthplace$ in $proefschrift.birthyear$} \par
 \end{center}
 
 
@@ -70,12 +70,12 @@ $endif$
 
 % From https://github.com/bbartholdy/pandoc-templates/blob/e1404ad772d86e508be237267505ce1470ef02b0/default.latex
 \noindent\begin{tabular}{p{14em} l}
-    \large\bsf{Promotor:} & \large Hein Putter \\
-    \rule{0pt}{4ex}\large\bsf{Co-promotor:} & \large Liesbeth C. de Wreede \\
-    \large
+    \normalsize\bsf{Promotor:} & \normalsize Prof. Dr. Hein Putter \\
+    \rule{0pt}{4ex}\normalsize\bsf{Co-promotor:} & \normalsize Dr. Liesbeth C. de Wreede \\
+    \normalsize
     \rule{0pt}{8ex}\bsf{Leden promotiecommissie:}
     $for(committee)$ &
-      \rule{0pt}{4ex}\large $committee.name$
+      \rule{0pt}{4ex}\normalsize $committee.name$
       $for(committee.affiliation)$ \\[0.2mm] &
         \indent\textit{$committee.affiliation$}
       $endfor$ \\
@@ -95,4 +95,8 @@ $endif$
 
 
 % https://github.com/bbartholdy/pandoc-templates/blob/e1404ad772d86e508be237267505ce1470ef02b0/default.latex
+
+% https://sourceforge.net/p/koma-script/wiki-en/HowTo_FlushBottom/
+
+
 

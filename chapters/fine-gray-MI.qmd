@@ -1,6 +1,4 @@
 ---
-abstract: |
-  The Fine--Gray model for the subdistribution hazard is commonly used for estimating associations between covariates and competing risks outcomes. When there are missing values in the covariates included in a given model, researchers may wish to multiply impute them. Assuming interest lies in estimating the risk of only one of the competing events, this paper develops a substantive-model-compatible multiple imputation approach that exploits the parallels between the Fine--Gray model and the standard (single-event) Cox model. In the presence of right-censoring, this involves first imputing the potential censoring times for those failing from competing events, and thereafter imputing the missing covariates by leveraging methodology previously developed for the Cox model in the setting without competing risks. In a simulation study, we compared the proposed approach to alternative methods, such as imputing compatibly with cause-specific Cox models. The proposed method performed well (in terms of estimation of both subdistribution log hazard ratios and cumulative incidences) when data were generated assuming proportional subdistribution hazards, and performed satisfactorily when this assumption was not satisfied. The gain in efficiency compared to a complete-case analysis was demonstrated in both the simulation study and in an applied data example on competing outcomes following an allogeneic stem cell transplantation. For individual-specific cumulative incidence estimation, assuming proportionality on the correct scale at the analysis phase appears to be more important than correctly specifying the imputation procedure used to impute the missing covariates.
 editor_options: 
   chunk_output_type: console
 ---
@@ -21,6 +19,16 @@ $$
 #| echo: false
 extension <- if (knitr::is_html_output()) ".png" else ".pdf"
 ```
+
+\blfootnote{Chapter based on: Bonneville, E. F., Beyersmann, J., Keogh, R. H., et al. (2024) Multiple imputation of missing covariates when using the Fine-Gray model. arXiv:2405.16602. arXiv. DOI: 10.48550/arXiv.2405.16602.}
+
+\clearpage
+
+## Abstract {.unnumbered .unlisted}
+
+The Fine--Gray model for the subdistribution hazard is commonly used for estimating associations between covariates and competing risks outcomes. When there are missing values in the covariates included in a given model, researchers may wish to multiply impute them. Assuming interest lies in estimating the risk of only one of the competing events, this paper develops a substantive-model-compatible multiple imputation approach that exploits the parallels between the Fine--Gray model and the standard (single-event) Cox model. In the presence of right-censoring, this involves first imputing the potential censoring times for those failing from competing events, and thereafter imputing the missing covariates by leveraging methodology previously developed for the Cox model in the setting without competing risks. In a simulation study, we compared the proposed approach to alternative methods, such as imputing compatibly with cause-specific Cox models. The proposed method performed well (in terms of estimation of both subdistribution log hazard ratios and cumulative incidences) when data were generated assuming proportional subdistribution hazards, and performed satisfactorily when this assumption was not satisfied. The gain in efficiency compared to a complete-case analysis was demonstrated in both the simulation study and in an applied data example on competing outcomes following an allogeneic stem cell transplantation. For individual-specific cumulative incidence estimation, assuming proportionality on the correct scale at the analysis phase appears to be more important than correctly specifying the imputation procedure used to impute the missing covariates.
+
+\clearpage
 
 ## Introduction
 
@@ -111,10 +119,10 @@ $${#eq-outcome-dens}
 with $f_k(t \given X, Z) = \diff F_k(t \given X, Z) / \diff t$  known as the "subdensity" for cause $k$ [@grayClassKSampleTests1988]. These subdensities, in turn, can be expressed in terms of the subdistribution hazard, as
 $$
 \begin{aligned}
-  f_k(t \given X, Z) &= \lambda_k(t \given X, Z)\{1 - F_k(t \given X, Z)\}, \nonumber \\
+  f_k(t \given X, Z) &= \lambda_k(t \given X, Z)\{1 - F_k(t \given X, Z)\}, \\
 	&=  \lambda_k(t \given X, Z)\exp\{- \Lambda_k(t \given X, Z)\}.
 \end{aligned}
-$${#eq-subdens-to-subdist}
+$${#eq-subdenstosubdist}
 Specifying a Fine--Gray model for cause 1 is an assumption regarding only part of @eq-outcome-dens, namely for any terms involving $f_1(T \given X, Z)$. The practical implication of this is that @eq-imput-dens cannot be used to impute the missing $X_j$ without making assumptions about cause 2. One could for example assume (for imputation purposes) a cause-specific Cox model for cause 2, derive the implied $h_1(t \given X, Z)$ using the relation between the subdistribution hazard and the cause-specific hazards, and then use both cause-specific hazards to evaluate $f(T, D \given X, Z)$ in @eq-imput-dens. 
 
 Given that a Fine--Gray model is assumed for cause 1, some computational difficulties can be encountered while making assumptions for cause 2. For example, specifying a Fine--Gray model also for cause 2 in the imputation procedure could result in the total failure probability at an observed event time $F_1(T \given X, Z) + F_2(T \given X, Z)$ exceeding 1, meaning we would not be able to draw imputed values using @eq-imput-dens for high-risk individuals [@austinFineGraySubdistributionHazard2021]. An additional example concerns the approach described in the previous paragraph, where $h_1(t \given X, Z)$ is derived based on $h_2(t \given X, Z)$ and $\lambda_1(t \given X, Z)$. The numerical integration step generally needed to compute $h_1(t \given X, Z)$ could make the overall imputation procedure rather computationally inefficient. More details on potential issues when specifying a model for cause 2 when a Fine--Gray model is assumed for cause 1 can be found in @bonnevilleWhyYouShould2024. 
@@ -130,7 +138,7 @@ Suppose for now that the potential censoring time $C$ is known for all individua
 Consequently, an intuitive approach to imputing the missing $X_j$ in our setting might therefore be to apply existing SMC-FCS methodology for standard Cox models [see section 6.3 of @bartlettMultipleImputationCovariates2015], but instead using $V$ and $I(D = 1)$ as our outcome variables. We refer to this method as Fine--Gray SMC-FCS (FG-SMC). The substantive-model-compatible imputation density is now
 $$
 f(X_j \given V, D, Z) \propto f(V, D \given X, Z)f(X_j \given X_{-j},Z),
-$${#eq-imput-dens-V}
+$${#eq-imput-densv}
 where the conditional density of the observed outcome given the covariates can be written as
 $$
 \begin{aligned}
@@ -140,7 +148,7 @@ $$
 	&= \lambda_1(V \given X, Z)^{I(D = 1)}\exp\{- \Lambda_1(V \given X, Z)\}, 
 \end{aligned}
 $${#eq-parallel-cox}
-using @eq-subdens-to-subdist and the fact that $f_1(V \given X, Z)^{I(D = 1)} = f_1(T \given X, Z)^{I(D = 1)}$. Note that while @eq-imput-dens-V and @eq-parallel-cox depend only on $I(D = 1)$,  we still use $D$ in the notation to make the contribution of those failing from cause 2 to the density explicit, which is relevant for the upcoming sections. Importantly, this procedure relies on a stronger MAR assumption (compared to the one introduced at the beginning of @sec-methods), namely $P\{R \given V, I(D = 1), X, Z\} = P\{R \given V, I(D = 1), X^{\text{obs}}, Z\}$. In essence, we ignore any terms involving $f_2(T \given X, Z)$ in @eq-imput-dens based on the assumption that missingness in $X$ does not depend on either $I(D = 2)$ or the failure time for those failing from cause 2.
+using @eq-subdenstosubdist and the fact that $f_1(V \given X, Z)^{I(D = 1)} = f_1(T \given X, Z)^{I(D = 1)}$. Note that while @eq-imput-densv and @eq-parallel-cox depend only on $I(D = 1)$,  we still use $D$ in the notation to make the contribution of those failing from cause 2 to the density explicit, which is relevant for the upcoming sections. Importantly, this procedure relies on a stronger MAR assumption (compared to the one introduced at the beginning of @sec-methods), namely $P\{R \given V, I(D = 1), X, Z\} = P\{R \given V, I(D = 1), X^{\text{obs}}, Z\}$. In essence, we ignore any terms involving $f_2(T \given X, Z)$ in @eq-imput-dens based on the assumption that missingness in $X$ does not depend on either $I(D = 2)$ or the failure time for those failing from cause 2.
 
 #### FG-Approx {#sec-fg-approx}
 
@@ -391,6 +399,8 @@ We focus on the results for $\beta_1$, together with its time-averaged analogue 
 #| using the standard normal approximation."
 #| echo: false
 #| out-width: "80%"
+
+#fig-cap-location: top
 
 knitr::include_graphics(here::here(paste0("figures/fine-gray-MI_bias-X", extension)))
 ```

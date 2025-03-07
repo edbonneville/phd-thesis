@@ -1,6 +1,4 @@
 ---
-abstract: | 
-  Missing data are frequently encountered across studies in clinical haematology. Failure to handle these missing values in an appropriate manner can complicate the interpretation of a study’s findings, as estimates presented may be biased and/or imprecise. In the present work, we first provide an overview of current methods for handling missing covariate data, along with their advantages and disadvantages. Furthermore, a systematic review is presented, exploring both contemporary reporting of missing values in major haematological journals, and the methods used for handling them. A principle finding was that the method of handling missing data was explicitly specified in a minority of articles (in 76 out of 195 articles reporting missing values, 39%). Among these, complete case analysis and the missing indicator method were the most common approaches to dealing with missing values, with more complex methods such as multiple imputation being extremely rare (in 7 out of 195 articles). An example analysis (with associated code) is also provided using haematopoietic stem cell transplant data, illustrating the different approaches to handling missing values. We conclude with various recommendations regarding the reporting and handling of missing values for future studies in clinical haematology.
 author:
   - name: Edouard F. Bonneville
     orcid: 0000-0001-7542-4498
@@ -39,13 +37,22 @@ editor_options:
 # Handling missing covariate data in clinical studies in haematology {#sec-chap-haema-review}
 
 <!-- Add DOI badge -->
-
 <!-- This is based on R3 file -->
 
 ```{r}
 #| echo: false
 extension <- if (knitr::is_html_output()) ".png" else ".pdf"
 ```
+
+\blfootnote{Chapter based on: Bonneville, E. F., Schetelig, J., Putter, H., et al. (2023) Handling missing covariate data in clinical studies in haematology. \textit{Best Practice \& Research Clinical Haematology}, 36, 101477. DOI: 10.1016/j.beha.2023.101477}
+
+\clearpage
+
+## Abstract {.unnumbered .unlisted}
+
+Missing data are frequently encountered across studies in clinical haematology. Failure to handle these missing values in an appropriate manner can complicate the interpretation of a study’s findings, as estimates presented may be biased and/or imprecise. In the present work, we first provide an overview of current methods for handling missing covariate data, along with their advantages and disadvantages. Furthermore, a systematic review is presented, exploring both contemporary reporting of missing values in major haematological journals, and the methods used for handling them. A principle finding was that the method of handling missing data was explicitly specified in a minority of articles (in 76 out of 195 articles reporting missing values, 39%). Among these, complete case analysis and the missing indicator method were the most common approaches to dealing with missing values, with more complex methods such as multiple imputation being extremely rare (in 7 out of 195 articles). An example analysis (with associated code) is also provided using haematopoietic stem cell transplant data, illustrating the different approaches to handling missing values. We conclude with various recommendations regarding the reporting and handling of missing values for future studies in clinical haematology.
+
+\clearpage
 
 ## Introduction
 
@@ -141,8 +148,9 @@ if (knitr::is_html_output()) {
     position = "h",
     linesep = "",
     escape = F
-  ) |> 
-    kableExtra::column_spec(2, width = "35em") 
+  ) |>  
+    kableExtra::kable_styling(font_size = 7) |>  
+    kableExtra::column_spec(2, width = "35em")
 }
 ```
 
@@ -230,16 +238,17 @@ if (knitr::is_html_output()) {
   kableExtra::kbl(
     dat_data_dict,
     booktabs = "T", 
-    position = "h",
+    #position = "h",
     linesep = "",
     format = "latex", # important for landscape? Not working..
     escape = F, 
-    digits = 2
+    digits = 2, 
+    longtable = "T"
   ) |>  
-  kableExtra::kable_styling(font_size = 9) |>  
+  kableExtra::kable_styling(font_size = 7) |>  
   kableExtra::column_spec(1, width = "7em") |> 
-  kableExtra::column_spec(2, width = "10em") |> 
-  kableExtra::landscape()
+  kableExtra::column_spec(2, width = "10em") #|> 
+  #kableExtra::landscape()
 }
 ```
 
