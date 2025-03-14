@@ -24,7 +24,7 @@ book:
 format:
   pdf:
     documentclass: scrbook
-    latex-clean: false # Keep the index.log file to check for issues
+    latex-clean: false # Keep the index.log file to check for issues e.g. overfullness
     keep-tex: true
     classoption:
       - paper=portrait
@@ -32,20 +32,20 @@ format:
       - twoside=true
       - open=right
       - fontsize=10pt
-      - pagesize=false # auto if not sending to printers
-      - BCOR=15mm # 9mm Binding correction (Ridderpr. need min 20mm for binding)
-      - DIV=14 # calc gives 10 # Makes text area bigger (DIV=calc is default)
+      - pagesize=false # set to auto if not sending to printers
+      - BCOR=15mm # 9mm Binding correction (Ridderpr. needs min 20mm for binding)
+      - DIV=14 # Makes text area bigger (DIV=calc is default, outputs 10 here)
       - headinclude=true # true or else upper margin too small
       - footinclude=false # false or else bottom margin too large
       - headsepline=on # Line in headers
     mathspec: true # Important for boldsymbols
     link-citations: true
     toc-depth: 2
-    lot: false # (!) Remove both of these to save printing costs?
+    lot: false # Is set to false to save printing costs
     lof: false
     latex-auto-install: true
     include-in-header:
-      - tex/preamble-global.tex # (make similar globals for html later)
+      - tex/preamble-global.tex # (!) make similar globals for html later
     template-partials:
       - tex/before-body.tex
   html:
@@ -58,19 +58,19 @@ number-depth: 2
 
 # Defense setting to populate first few pages
 proefschrift:
-  day: "[weekday] [dag] [maand] 2025"
+  day: "[weekdag] [dag] [maand] 2025"
   time: "xx:xx"
   birthplace: "Madrid, Spanje"
   birthyear: "1995"
-  rector: "Prof. Dr. ir. Hester Bijl"
+  rector: "Prof. dr. ir. Hester Bijl"
 committee:
-  - name: Prof. Dr. Jacco Wallinga
+  - name: Prof. dr. Jacco Wallinga
     affiliation:
       - Leiden University Medical Center, NL
       - RIVM, NL
-  - name: Prof. Dr. Jan Beyersmann
+  - name: Prof. dr. Jan Beyersmann
     affiliation: University of Ulm, DE
-  - name: Prof. Dr. Stef van Buuren
+  - name: Prof. dr. Stef van Buuren
     affiliation: University of Utrecht, NL
   - name: Dr. Simona Iacobelli
     affiliation: Sapienza University of Rome, IT

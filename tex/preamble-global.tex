@@ -1,4 +1,6 @@
 % Only if sending to printers: 3mm bleed
+% -> Replace cross by off for printing
+% https://ctan.math.illinois.edu/macros/latex/contrib/crop/crop.pdf
 \usepackage[cross, center,width=176mm, height=246mm]{crop}
 
 % Unsure if necessary but for bleed/printing with chapterthumbs:
@@ -9,7 +11,7 @@
 
 % \KOMAoptions{}
 
-% For the chapter thumbs (!) Remove the actual label inside the box?
+% For the chapter thumbs
 \usepackage{chapterthumb}
 \usepackage{scrlayer-scrpage}
 \AddLayersToPageStyle{@everystyle@}{chapterthumb}
