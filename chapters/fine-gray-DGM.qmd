@@ -91,15 +91,15 @@ which is the commonly known expression for the subdistribution hazard. It can al
 
 The Fine--Gray model is a semiparametric model that assumes proportionality on the subdistribution hazard scale. Using covariate vector $\mathbf{Z}$, the Fine--Gray model for cause $k$ can be written as 
 \begin{equation*}
-	\lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
+	\lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\beta}_k^\top \mathbf{Z}),
 \end{equation*}
 with $\lambda_{k0}(t)$ being the subdistribution baseline hazard function and $\boldsymbol{\beta}_k$ representing the effects of covariates $\mathbf{Z}$ on the subdistribution hazard. The cumulative incidence function for the $k^{\text{th}}$ event can then be written as
 \begin{equation*}
-	F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{k0}(u)\diff u \Biggr\},
+	F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}_k^\top \mathbf{Z}) \int_{0}^{t} \lambda_{k0}(u)\diff u \Biggr\},
 \end{equation*}
 which corresponds to modelling the cumulative incidence function with a complementary log-log transformation. Furthermore, let $F_{k0}(t) = 1 - \exp(-\int_{0}^{t} \lambda_{k0}(u)\diff u)$ be the baseline cumulative incidence function, i.e. the cumulative incidence when $\mathbf{Z} = 0$. We can then also write the Fine--Gray model as 
 \begin{align*}
-	1 - F_k(t \given \mathbf{Z}) = \{1 - F_{k0}(t)\}^{\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z})},
+	1 - F_k(t \given \mathbf{Z}) = \{1 - F_{k0}(t)\}^{\exp(\boldsymbol{\beta}_k^\top \mathbf{Z})},
 \end{align*} 
 which is a similar relation to that of the survival functions in a Cox model.
 

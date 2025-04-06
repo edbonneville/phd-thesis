@@ -1,28 +1,18 @@
-%\usepackage[sb]{libertine} % or \usepackage[sb]{libertinus}
-%\usepackage[T1]{fontenc}
+\usepackage{libertinus}
+\usepackage{libertinust1math}
+\usepackage{subdepth}
 
-
-%\usepackage{libertinus}
-%\usepackage[varg]{newpxmath}
-%\usepackage{mathspec}
+% Some font settings
+%\usepackage{unicode-math}
+%\setmainfont{Libertinus Serif}
+%\setsansfont{Libertinus Sans}%
+%\setmonofont{Libertinus Mono}
+%\setmathfont[RawFeature={+ss08}]{Libertinus Math} % For slanted integrals
 
 % Only if sending to printers: 3mm bleed
 % -> Replace cross by off for printing
 % https://ctan.math.illinois.edu/macros/latex/contrib/crop/crop.pdf
 \usepackage[cross, center,width=176mm, height=246mm]{crop}
-
-% Fonts!!
-% - https://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/classicthesis/ClassicThesis.pdf
-% - https://tex.stackexchange.com/questions/59702/suggest-a-nice-font-family-for-my-basic-latex-template-text-and-math
-% - https://tex.stackexchange.com/questions/134079/font-setup-for-an-academic-thesis-no-computer-modern-wanted
-% - https://nmfs-opensci.github.io/quarto_titlepages/10-fonts.html
-% - https://www.tug.org/pracjourn/2006-1/hartke/hartke.pdf
-% - https://github.com/quarto-dev/quarto-cli/discussions/6030
-% - https://quarto.org/docs/reference/formats/pdf.html
-
-%\usepackage[garamond]{mathdesign}
-%\usepackage{mathpazo}
-%\usepackage{mathspec}
 
 % Unsure if necessary but for bleed/printing with chapterthumbs:
 % - https://tex.stackexchange.com/questions/198314/bleed-correction-for-chapterthumbs-in-koma
@@ -30,7 +20,7 @@
 % Avoiding overfull boxes in TOC (page numbers from the chapters)
 \DeclareTOCStyleEntry[pagenumberwidth=2em]{chapter}{chapter}
 
-% \KOMAoptions{}
+% \KOMAoptions{...}
 
 % For the chapter thumbs
 \usepackage{chapterthumb}
@@ -50,13 +40,13 @@
 % Bold and sans
 \newcommand{\bsf}[1]{\textbf{\textsf{#1}}}
 
+% Commands to tweak for Libertinus Math
+%\renewcommand{\boldsymbol}[1]{\symbf{#1}}
+%\renewcommand{\mathbf}[1]{\symsfup{#1}}
+
 % Fancy chapter headings
 \input{tex/koma-chapter-headings}
 \renewcommand*{\chaptermarkformat}{\thechapter\autodot\enskip}
-
-
-%https://tex.stackexchange.com/questions/389141/chapter-with-background-images-in-koma-script?noredirect=1&lq=1
-%https://tex.stackexchange.com/questions/513339/how-to-properly-style-only-some-chapter-headings-differently-with-koma
 
 %https://tex.stackexchange.com/questions/30720/footnote-without-a-marker
 \newcommand\blfootnote[1]{%
@@ -66,21 +56,8 @@
   \endgroup
 }
 
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, decorations.pathreplacing}
+
 % To show writing boxes (line above page number is due to this)
 %\usepackage{showframe}
-
-%usepackage[libertine,cmintegrals,cmbraces,vvarbb]{newtxmath}
-%\setmathfont{Libertinus Math}[RawFeature={+ss08}]
-%\usepackage{fontspec}
-%\usepackage[nomath]{libertinus}
-
-\usepackage{libertine}
-\usepackage{libertinust1math}
-\usepackage[T1]{fontenc}
-
-%\usepackage{mathspec}
-%\usepackage{libertinust1math}
-%\usepackage{libertinus}
-%\usepackage[T1]{fontenc}
-%\setmathfont{Libertinus Math}[RawFeature={+ss08}]
-% Patch \intercal from XITS Math (code point U+22BA)

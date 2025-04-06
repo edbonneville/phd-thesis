@@ -116,7 +116,7 @@ If we view competing risks as a multi-state process, with a single (event-free) 
 \end{equation*}
 This hazard function can be interpreted as the instantaneous force of transition, or intensity, of moving between the initial state and state $k$ [@putterTutorialBiostatisticsCompeting2007;@beyersmannCompetingRisksMultistate2012]. A model can then be specified, conditional on a covariate vector $\mathbf{Z}$. A Cox model is the common choice, defined for a failure cause $k$ as
 \begin{equation*}
-	h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
+	h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\top \mathbf{Z}),
 \end{equation*}
 where $h_{k0}(t)$ is the cause-specific baseline hazard, and $\boldsymbol{\beta}_k$ represents the effects of covariates $\mathbf{Z}$ on the cause-specific hazard. We note that in what follows, we use `effect' to refer to the impact of a covariate in a multivariable model where there may be non-negligible additional confounding, and this should hence not be interpreted as a fully causal quantity. Furthermore, the $K$ hazard functions define the failure-free survival probability:
 \begin{equation*}

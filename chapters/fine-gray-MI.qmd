@@ -69,15 +69,15 @@ which can be thought of as the hazard for the improper random variable $\tilde{V
 
 Suppose interest lies in modelling the cumulative incidence of one of the competing events, say $D = 1$, conditional on (time-fixed) covariates $\mathbf{Z}$. The Fine--Gray model for cause 1 can be written as 
 \begin{equation*}
-	\lambda_1(t \given \mathbf{Z}) = \lambda_{0}(t)\exp(\boldsymbol{\beta}^\intercal \mathbf{Z}),
+	\lambda_1(t \given \mathbf{Z}) = \lambda_{0}(t)\exp(\boldsymbol{\beta}^\top \mathbf{Z}),
 \end{equation*}
 with $\lambda_{0}(t)$ being the subdistribution baseline hazard function and $\boldsymbol{\beta}$ representing the effects of covariates $\mathbf{Z}$ on the subdistribution hazard. The cumulative incidence function for cause 1 can then be written as
 \begin{equation*}
-	F_1(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{0}(u)\diff u \Biggr\},
+	F_1(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}^\top \mathbf{Z}) \int_{0}^{t} \lambda_{0}(u)\diff u \Biggr\},
 \end{equation*}
 where $\int_{0}^{t} \lambda_{0}(u)\diff u = \Lambda_0(t)$ is the cumulative baseline subdistribution hazard. If we define a baseline cumulative incidence function $F_{0}(t) = 1 - \exp\{-\Lambda_0(t)\}$ (i.e. the cumulative incidence when $\mathbf{Z} = 0$), the model can also be written as
 $$
-F_1(t \given \mathbf{Z}) = 1 - \{1 - F_{0}(t)\}^{\exp(\boldsymbol{\beta}^\intercal \mathbf{Z})}.
+F_1(t \given \mathbf{Z}) = 1 - \{1 - F_{0}(t)\}^{\exp(\boldsymbol{\beta}^\top \mathbf{Z})}.
 $${#eq-cuminc-comp}
 In the presence of random right censoring, the Fine--Gray model is usually fitted by maximising a partial likelihood that uses time-dependent inverse probability of censoring weights (IPCW) [@fineProportionalHazardsModel1999].
 

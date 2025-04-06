@@ -78,12 +78,27 @@ $$
 $${#eq-cuminc-intro}
 where $S(u-)$ is the event-free survival probability just prior to $u$. As depicted in @fig-diag-geskus, the cumulative incidence summarises two key aspects of the competing risks process: surviving event-free until just prior to $t$, and then experiencing the $k^{\text{th}}$ specific event in the next instant.
 
-```{r, engine='tikz'}
+```{r, echo=FALSE}
+# Based on https://www.andrewheiss.com/blog/2021/08/27/tikz-knitr-html-svg-fun/
+# Other option is divs, but harder to set width
+options(tinytex.engine = "xelatex")
+font_opts <- list(extra.preamble = c("\\usepackage{fontspec}",
+                                     "\\setmainfont{Libertinus Serif}",
+                                     "\\usepackage{unicode-math}",
+                                     "\\setmathfont{Libertinus Math}"))
+# Other engine tings https://yihui.org/knitr/options/
+#https://stackoverflow.com/questions/79514436/tikz-in-quarto-using-the-filter-diagram
+#https://github.com/pandoc-ext/diagram
+# https://github.com/benkeks/generalized-equivalence-checking/blob/0f3a347a2b917c071dbfc8b88a51aa5049cad6a7/_quarto.yml
+#https://quarto.org/docs/authoring/article-layout.html
+```
+
+```{r, engine='tikz',engine.opts=font_opts}
 #| echo: false
 #| label: fig-diag-geskus
 #| out-width: 75%
 #| fig-align: center
-#| fig-cap: "Summary of the competing risks process, adapted from Figure 1 in @geskusCompetingRisksConcepts2024"
+#| fig-cap: "Summary of the competing risks process, adapted from Figure 1 in @geskusCompetingRisksConcepts2024."
 
 \usetikzlibrary{arrows.meta, positioning, decorations.pathreplacing}
 
@@ -125,7 +140,7 @@ Two important remarks can be made about the above strategy. The first is that it
 
 For a more complete understanding of the competing risks process as a function of multiple covariates, one will usually need to specify regression models for the cause-specific hazards, which are identifiable and estimable from observed data [@prenticeAnalysisFailureTimes1978]. The most popular approach for modelling the cause-specific hazards is using the semi-parametric Cox proportional hazards model [@coxRegressionModelsLifeTables1972], given for the $k^{\text{th}}$ event by
 $$
-h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\mathsf{T} \mathbf{Z}),
+h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\top \mathbf{Z}),
 $$
 where $h_{k0}(t)$ is the cause-specific baseline hazard, $\mathbf{Z}$ is a $p$-dimensional vector of covariates, and vector $\boldsymbol{\beta}_k$ quantifies the impact of $\mathbf{Z}$ on the cause-specific hazard. Inference on the cause-specific, time-constant *hazard ratios* $\exp(\boldsymbol{\beta}_k)$ is based on maximizing a *partial likelihood* which treats causes other than $k$ as censored. The baseline hazard can be estimated non-parametrically by means of the Breslow estimator [@breslow1972]. 
 
@@ -140,11 +155,11 @@ $$
 $$
 The most prominent example of a model for the subdistribution hazard is the Fine--Gray model [@fineProportionalHazardsModel1999], given for a cause $k$ by
 $$
-\lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\gamma}_k^\intercal \mathbf{Z}),
+\lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\gamma}_k^\top \mathbf{Z}),
 $$
 where $\lambda_{k0}(t)$ is the subdistribution baseline hazard, and $\boldsymbol{\gamma_k}$ is the vector of log subdistribution hazard ratios. It can also be expressed as a transformation model for the cumulative incidence function, as
 $$
-F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\gamma}_k^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{k0}(u)\diff u \Biggr\},
+F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\gamma}_k^\top \mathbf{Z}) \int_{0}^{t} \lambda_{k0}(u)\diff u \Biggr\},
 $$
 using the complementary log-log link function. 
 
@@ -216,13 +231,13 @@ y_{ij} = m_i(t_{ij}) + \epsilon_{ij},
 $$
 where $\epsilon_{ij} \sim \mathcal{N}(0, \sigma^2)$ are independent random error terms, and $m_i(t)$ represents the true underlying (unobserved) value of the marker at time $t$. A mixed-effects structure is usually assumed for the latter, as
 $$
-m_i(t) = \boldsymbol{\beta}^\intercal \mathbf{x}_i(t) + \boldsymbol{b}_i^\intercal \mathbf{z}_i(t),
+m_i(t) = \boldsymbol{\beta}^\top \mathbf{x}_i(t) + \boldsymbol{b}_i^\top \mathbf{z}_i(t),
 $$
 where $\mathbf{x}_i(t)$ and $\mathbf{z}_i(t)$ are respectively (possibly time-dependent) design vectors for fixed effects $\boldsymbol{\beta}$ and random effects $\boldsymbol{b}_i \sim \mathcal{N}(0, D)$. 
 
 The second component is a survival submodel for the time to dropout (or other terminating event, such as death), and is usually assumed to follow a proportional hazards structure, given by 
 $$
-h_i(t \given \mathcal{M}_i(t),\mathbf{w}_i) = h_0(t)\exp\{\boldsymbol{\gamma}^\intercal\mathbf{w}_i + \alpha m_i(t)\},
+h_i(t \given \mathcal{M}_i(t),\mathbf{w}_i) = h_0(t)\exp\{\boldsymbol{\gamma}^\top\mathbf{w}_i + \alpha m_i(t)\},
 $${#eq-current-value}
 where $\mathcal{M}_i(t) = \{m_i(s), \ 0 \leq s < t\}$ represents the history of the true marker value up to time $t$, and $\mathbf{w}_i$ is a vector of baseline covariates. The association between the true "current value" of the longitudinal marker and the terminating event is quantified by $\alpha$, and the baseline hazard $h_0(t)$ is often assumed to follow a flexible parametric form (e.g. using a B-spline basis).
 

@@ -26,7 +26,7 @@
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-\usepackage[]{libertinus}
+\usepackage{lmodern}
 \ifPDFTeX\else  
     % xetex/luatex font selection
 \fi
@@ -134,31 +134,21 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
-%\usepackage[sb]{libertine} % or \usepackage[sb]{libertinus}
-%\usepackage[T1]{fontenc}
+\usepackage{libertinus}
+\usepackage{libertinust1math}
+\usepackage{subdepth}
 
-
-%\usepackage{libertinus}
-%\usepackage[varg]{newpxmath}
-%\usepackage{mathspec}
+% Some font settings
+%\usepackage{unicode-math}
+%\setmainfont{Libertinus Serif}
+%\setsansfont{Libertinus Sans}%
+%\setmonofont{Libertinus Mono}
+%\setmathfont[RawFeature={+ss08}]{Libertinus Math} % For slanted integrals
 
 % Only if sending to printers: 3mm bleed
 % -> Replace cross by off for printing
 % https://ctan.math.illinois.edu/macros/latex/contrib/crop/crop.pdf
 \usepackage[cross, center,width=176mm, height=246mm]{crop}
-
-% Fonts!!
-% - https://ftp.snt.utwente.nl/pub/software/tex/macros/latex/contrib/classicthesis/ClassicThesis.pdf
-% - https://tex.stackexchange.com/questions/59702/suggest-a-nice-font-family-for-my-basic-latex-template-text-and-math
-% - https://tex.stackexchange.com/questions/134079/font-setup-for-an-academic-thesis-no-computer-modern-wanted
-% - https://nmfs-opensci.github.io/quarto_titlepages/10-fonts.html
-% - https://www.tug.org/pracjourn/2006-1/hartke/hartke.pdf
-% - https://github.com/quarto-dev/quarto-cli/discussions/6030
-% - https://quarto.org/docs/reference/formats/pdf.html
-
-%\usepackage[garamond]{mathdesign}
-%\usepackage{mathpazo}
-%\usepackage{mathspec}
 
 % Unsure if necessary but for bleed/printing with chapterthumbs:
 % - https://tex.stackexchange.com/questions/198314/bleed-correction-for-chapterthumbs-in-koma
@@ -166,7 +156,7 @@
 % Avoiding overfull boxes in TOC (page numbers from the chapters)
 \DeclareTOCStyleEntry[pagenumberwidth=2em]{chapter}{chapter}
 
-% \KOMAoptions{}
+% \KOMAoptions{...}
 
 % For the chapter thumbs
 \usepackage{chapterthumb}
@@ -186,13 +176,13 @@
 % Bold and sans
 \newcommand{\bsf}[1]{\textbf{\textsf{#1}}}
 
+% Commands to tweak for Libertinus Math
+%\renewcommand{\boldsymbol}[1]{\symbf{#1}}
+%\renewcommand{\mathbf}[1]{\symsfup{#1}}
+
 % Fancy chapter headings
 \input{tex/koma-chapter-headings}
 \renewcommand*{\chaptermarkformat}{\thechapter\autodot\enskip}
-
-
-%https://tex.stackexchange.com/questions/389141/chapter-with-background-images-in-koma-script?noredirect=1&lq=1
-%https://tex.stackexchange.com/questions/513339/how-to-properly-style-only-some-chapter-headings-differently-with-koma
 
 %https://tex.stackexchange.com/questions/30720/footnote-without-a-marker
 \newcommand\blfootnote[1]{%
@@ -202,19 +192,11 @@
   \endgroup
 }
 
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, decorations.pathreplacing}
+
 % To show writing boxes (line above page number is due to this)
 %\usepackage{showframe}
-
-%usepackage[libertine,cmintegrals,cmbraces,vvarbb]{newtxmath}
-%\setmathfont{Libertinus Math}[RawFeature={+ss08}]
-%\usepackage{fontspec}
-%\usepackage[nomath]{libertinus}
-\usepackage{mathspec}
-%\usepackage{libertinust1math}
-%\usepackage{libertinus}
-%\usepackage[T1]{fontenc}
-%\setmathfont{Libertinus Math}[RawFeature={+ss08}]
-% Patch \intercal from XITS Math (code point U+22BA)
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -378,30 +360,32 @@ transplantation} \par
      &
       \rule{0pt}{4ex}\normalsize Prof.~dr. Jacco Wallinga
        \\[0.2mm] &
-        \indent\textit{Leiden University Medical Center, NL}
+        \indent\textit{Leids Universitair Medisch Centrum, NL}
        \\[0.2mm] &
-        \indent\textit{RIVM, NL CHANGE}
+        \indent\textit{Rijksinstituut voor Volksgezondheid en Milieu,
+NL}
        \\
      &
       \rule{0pt}{4ex}\normalsize Prof.~dr. Jan Beyersmann
        \\[0.2mm] &
-        \indent\textit{University of Ulm, DE}
+        \indent\textit{Universität Ulm, DE}
        \\
      &
       \rule{0pt}{4ex}\normalsize Prof.~dr. Stef van Buuren
        \\[0.2mm] &
-        \indent\textit{University of Utrecht, NL}
+        \indent\textit{Universiteit Utrecht, NL}
        \\
      &
       \rule{0pt}{4ex}\normalsize Dr.~Simona Iacobelli
        \\[0.2mm] &
-        \indent\textit{Sapienza University of Rome, IT}
+        \indent\textit{Sapienza Università di Roma, IT}
        \\
     
 \end{tabular}
 
 % -- cleardoublepage before dedication? Or not?
 \clearpage
+\thispagestyle{empty}
 
 \begingroup
   \hspace{0pt}
@@ -648,7 +632,7 @@ experiencing the \(k^{\text{th}}\) specific event in the next instant.
 
 \caption{\label{fig-diag-geskus}Summary of the competing risks process,
 adapted from Figure 1 in Geskus
-(\citeproc{ref-geskusCompetingRisksConcepts2024}{2024})}
+(\citeproc{ref-geskusCompetingRisksConcepts2024}{2024}).}
 
 \end{figure}%
 
@@ -701,7 +685,7 @@ and estimable from observed data
 hazards is using the semi-parametric Cox proportional hazards model
 (\citeproc{ref-coxRegressionModelsLifeTables1972}{Cox, 1972}), given for
 the \(k^{\text{th}}\) event by \[
-h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\mathsf{T} \mathbf{Z}),
+h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\top \mathbf{Z}),
 \] where \(h_{k0}(t)\) is the cause-specific baseline hazard,
 \(\mathbf{Z}\) is a \(p\)-dimensional vector of covariates, and vector
 \(\boldsymbol{\beta}_k\) quantifies the impact of \(\mathbf{Z}\) on the
@@ -731,12 +715,12 @@ function(s) \emph{directly}, often through the so-called
 is the Fine--Gray model
 (\citeproc{ref-fineProportionalHazardsModel1999}{Fine and Gray, 1999}),
 given for a cause \(k\) by \[
-\lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\gamma}_k^\intercal \mathbf{Z}),
+\lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\gamma}_k^\top \mathbf{Z}),
 \] where \(\lambda_{k0}(t)\) is the subdistribution baseline hazard, and
 \(\boldsymbol{\gamma_k}\) is the vector of log subdistribution hazard
 ratios. It can also be expressed as a transformation model for the
 cumulative incidence function, as \[
-F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\gamma}_k^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{k0}(u)\diff u \Biggr\},
+F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\gamma}_k^\top \mathbf{Z}) \int_{0}^{t} \lambda_{k0}(u)\diff u \Biggr\},
 \] using the complementary log-log link function.
 
 Estimation for the Fine--Gray model is based on analogous
@@ -1060,7 +1044,7 @@ y_{ij} = m_i(t_{ij}) + \epsilon_{ij},
 random error terms, and \(m_i(t)\) represents the true underlying
 (unobserved) value of the marker at time \(t\). A mixed-effects
 structure is usually assumed for the latter, as \[
-m_i(t) = \boldsymbol{\beta}^\intercal \mathbf{x}_i(t) + \boldsymbol{b}_i^\intercal \mathbf{z}_i(t),
+m_i(t) = \boldsymbol{\beta}^\top \mathbf{x}_i(t) + \boldsymbol{b}_i^\top \mathbf{z}_i(t),
 \] where \(\mathbf{x}_i(t)\) and \(\mathbf{z}_i(t)\) are respectively
 (possibly time-dependent) design vectors for fixed effects
 \(\boldsymbol{\beta}\) and random effects
@@ -1070,7 +1054,7 @@ The second component is a survival submodel for the time to dropout (or
 other terminating event, such as death), and is usually assumed to
 follow a proportional hazards structure, given by
 \begin{equation}\phantomsection\label{eq-current-value}{
-h_i(t \given \mathcal{M}_i(t),\mathbf{w}_i) = h_0(t)\exp\{\boldsymbol{\gamma}^\intercal\mathbf{w}_i + \alpha m_i(t)\},
+h_i(t \given \mathcal{M}_i(t),\mathbf{w}_i) = h_0(t)\exp\{\boldsymbol{\gamma}^\top\mathbf{w}_i + \alpha m_i(t)\},
 }\end{equation} where \(\mathcal{M}_i(t) = \{m_i(s), \ 0 \leq s < t\}\)
 represents the history of the true marker value up to time \(t\), and
 \(\mathbf{w}_i\) is a vector of baseline covariates. The association
@@ -2328,7 +2312,7 @@ initial state and state \(k\)
 al.}, 2007}). A model can then be specified, conditional on a covariate
 vector \(\mathbf{Z}\). A Cox model is the common choice, defined for a
 failure cause \(k\) as \begin{equation*}
-    h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
+    h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\top \mathbf{Z}),
 \end{equation*} where \(h_{k0}(t)\) is the cause-specific baseline
 hazard, and \(\boldsymbol{\beta}_k\) represents the effects of
 covariates \(\mathbf{Z}\) on the cause-specific hazard. We note that in
@@ -4109,20 +4093,20 @@ Suppose interest lies in modelling the cumulative incidence of one of
 the competing events, say \(D = 1\), conditional on (time-fixed)
 covariates \(\mathbf{Z}\). The Fine--Gray model for cause 1 can be
 written as \begin{equation*}
-    \lambda_1(t \given \mathbf{Z}) = \lambda_{0}(t)\exp(\boldsymbol{\beta}^\intercal \mathbf{Z}),
+    \lambda_1(t \given \mathbf{Z}) = \lambda_{0}(t)\exp(\boldsymbol{\beta}^\top \mathbf{Z}),
 \end{equation*} with \(\lambda_{0}(t)\) being the subdistribution
 baseline hazard function and \(\boldsymbol{\beta}\) representing the
 effects of covariates \(\mathbf{Z}\) on the subdistribution hazard. The
 cumulative incidence function for cause 1 can then be written as
 \begin{equation*}
-    F_1(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{0}(u)\diff u \Biggr\},
+    F_1(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}^\top \mathbf{Z}) \int_{0}^{t} \lambda_{0}(u)\diff u \Biggr\},
 \end{equation*} where
 \(\int_{0}^{t} \lambda_{0}(u)\diff u = \Lambda_0(t)\) is the cumulative
 baseline subdistribution hazard. If we define a baseline cumulative
 incidence function \(F_{0}(t) = 1 - \exp\{-\Lambda_0(t)\}\) (i.e.~the
 cumulative incidence when \(\mathbf{Z} = 0\)), the model can also be
 written as \begin{equation}\phantomsection\label{eq-cuminc-comp}{
-F_1(t \given \mathbf{Z}) = 1 - \{1 - F_{0}(t)\}^{\exp(\boldsymbol{\beta}^\intercal \mathbf{Z})}.
+F_1(t \given \mathbf{Z}) = 1 - \{1 - F_{0}(t)\}^{\exp(\boldsymbol{\beta}^\top \mathbf{Z})}.
 }\end{equation} In the presence of random right censoring, the
 Fine--Gray model is usually fitted by maximising a partial likelihood
 that uses time-dependent inverse probability of censoring weights (IPCW)
@@ -5607,20 +5591,20 @@ The Fine--Gray model is a semiparametric model that assumes
 proportionality on the subdistribution hazard scale. Using covariate
 vector \(\mathbf{Z}\), the Fine--Gray model for cause \(k\) can be
 written as \begin{equation*}
-    \lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
+    \lambda_k(t \given \mathbf{Z}) = \lambda_{k0}(t)\exp(\boldsymbol{\beta}_k^\top \mathbf{Z}),
 \end{equation*} with \(\lambda_{k0}(t)\) being the subdistribution
 baseline hazard function and \(\boldsymbol{\beta}_k\) representing the
 effects of covariates \(\mathbf{Z}\) on the subdistribution hazard. The
 cumulative incidence function for the \(k^{\text{th}}\) event can then
 be written as \begin{equation*}
-    F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}) \int_{0}^{t} \lambda_{k0}(u)\diff u \Biggr\},
+    F_k(t \given \mathbf{Z}) = 1 - \exp \Biggl\{ -\exp(\boldsymbol{\beta}_k^\top \mathbf{Z}) \int_{0}^{t} \lambda_{k0}(u)\diff u \Biggr\},
 \end{equation*} which corresponds to modelling the cumulative incidence
 function with a complementary log-log transformation. Furthermore, let
 \(F_{k0}(t) = 1 - \exp(-\int_{0}^{t} \lambda_{k0}(u)\diff u)\) be the
 baseline cumulative incidence function, i.e.~the cumulative incidence
 when \(\mathbf{Z} = 0\). We can then also write the Fine--Gray model as
 \begin{align*}
-    1 - F_k(t \given \mathbf{Z}) = \{1 - F_{k0}(t)\}^{\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z})},
+    1 - F_k(t \given \mathbf{Z}) = \{1 - F_{k0}(t)\}^{\exp(\boldsymbol{\beta}_k^\top \mathbf{Z})},
 \end{align*} which is a similar relation to that of the survival
 functions in a Cox model.
 
