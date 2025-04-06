@@ -64,6 +64,8 @@ $$
 $$
 :::
 
+
+
 ```{r}
 #| echo: false
 extension <- if (knitr::is_html_output()) ".png" else ".pdf"

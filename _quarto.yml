@@ -38,7 +38,13 @@ format:
       - headinclude=true # true or else upper margin too small
       - footinclude=false # false or else bottom margin too large
       - headsepline=on # Line in headers
-    mathspec: true # Important for boldsymbols
+    #fontfamily: libertinus
+    # ^mathsf{t} or \top
+    #fontfamilyoptions:
+    #  - nomath
+    #mainfont: TeX Gyre Pagella
+    #mathfont:
+    #fontfamilyoptions: sc, osf #fontfamilyoptions:#  - nomath
     link-citations: true
     toc-depth: 2
     lot: false # Is set to false to save printing costs
@@ -48,6 +54,7 @@ format:
       - tex/preamble-global.tex # (!) make similar globals for html later
     template-partials:
       - tex/before-body.tex
+    #mathspec: true # Important for boldsymbols
   html:
     theme: cosmo
     fig-height: 10
@@ -67,7 +74,7 @@ committee:
   - name: Prof. dr. Jacco Wallinga
     affiliation:
       - Leiden University Medical Center, NL
-      - RIVM, NL
+      - RIVM, NL CHANGE
   - name: Prof. dr. Jan Beyersmann
     affiliation: University of Ulm, DE
   - name: Prof. dr. Stef van Buuren

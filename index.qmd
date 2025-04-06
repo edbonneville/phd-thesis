@@ -125,7 +125,7 @@ Two important remarks can be made about the above strategy. The first is that it
 
 For a more complete understanding of the competing risks process as a function of multiple covariates, one will usually need to specify regression models for the cause-specific hazards, which are identifiable and estimable from observed data [@prenticeAnalysisFailureTimes1978]. The most popular approach for modelling the cause-specific hazards is using the semi-parametric Cox proportional hazards model [@coxRegressionModelsLifeTables1972], given for the $k^{\text{th}}$ event by
 $$
-h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\intercal \mathbf{Z}),
+h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\mathsf{T} \mathbf{Z}),
 $$
 where $h_{k0}(t)$ is the cause-specific baseline hazard, $\mathbf{Z}$ is a $p$-dimensional vector of covariates, and vector $\boldsymbol{\beta}_k$ quantifies the impact of $\mathbf{Z}$ on the cause-specific hazard. Inference on the cause-specific, time-constant *hazard ratios* $\exp(\boldsymbol{\beta}_k)$ is based on maximizing a *partial likelihood* which treats causes other than $k$ as censored. The baseline hazard can be estimated non-parametrically by means of the Breslow estimator [@breslow1972]. 
 
