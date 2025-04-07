@@ -42,7 +42,7 @@ $$
 extension <- if (knitr::is_html_output()) ".png" else ".pdf"
 ```
 
-\blfootnote{Chapter based on: Bonneville, E. F., de Wreede, L. C. and Putter, H. (2024) Why you should avoid using multiple Fine–Gray models: insights from (attempts at) simulating proportional subdistribution hazards data. \textit{J R Stat Soc Series A Stat Soc}, , qnae056. DOI: 10.1093/jrsssa/qnae056.}
+\blfootnote{Chapter based on: Bonneville, E. F., de Wreede, L. C. and Putter, H. (2024) Why you should avoid using multiple Fine–Gray models: insights from (attempts at) simulating proportional subdistribution hazards data. \textit{Journal of the Royal Statistical Society Series A: Statistics in Society}, qnae056. DOI: 10.1093/jrsssa/qnae056.}
 
 \clearpage
 
@@ -141,7 +141,7 @@ It then follows that, given choices of $\lambda_1(t \given X)$ and $h_2(t \given
 $$
 h_1(t \given X) = \frac{\lambda_1(t \given X)\exp\{-\Lambda_1(t \given X)\ + H_2(t \given X)\}}{1 -\int_{0}^{t} \lambda_1(u \given X)\exp\{-\Lambda_1(u \given X)\ + H_2(u \given X)\}\diff u}.
 $${#eq-sdh1-csh2}
-The above expression has the advantage of naturally ensuring that $\lambda_1(t \given X) = h_1(t \given X)$ at $t = 0$. However, depending on the choices of $\lambda_1(t \given X)$ and $h_2(t \given X)$, the implied $h_1(t \given X)$ may become negative at certain timepoints. Specifically, this occurs when the integral in the denominator (corresponding to $1 - \exp\{-H_1(t \given X)\}$, the ``net risk'' for cause 1) in @eq-sdh1-csh2 exceeds 1. Another way of looking at these potentially negative hazard values is to express the event-free survival $S(t \given X)$ in terms of $\lambda_1(t \given X)$ and $h_2(t \given X)$, as
+The above expression has the advantage of naturally ensuring that $\lambda_1(t \given X) = h_1(t \given X)$ at $t = 0$. However, depending on the choices of $\lambda_1(t \given X)$ and $h_2(t \given X)$, the implied $h_1(t \given X)$ may become negative at certain timepoints. Specifically, this occurs when the integral in the denominator (corresponding to $1 - \exp\{-H_1(t \given X)\}$, the "net risk" for cause 1) in @eq-sdh1-csh2 exceeds 1. Another way of looking at these potentially negative hazard values is to express the event-free survival $S(t \given X)$ in terms of $\lambda_1(t \given X)$ and $h_2(t \given X)$, as
 $$
 S(t \given X) = \Bigg[1 -\int_{0}^{t} \lambda_1(u \given X)\exp\{-\Lambda_1(u \given X)\ + H_2(u \given X)\}\diff u\Bigg] \times \exp \{-H_2(t \given X)\}.
 $${#eq-efs-reduc}
@@ -163,7 +163,7 @@ Making appropriate use of this approach for simulation purposes means paying att
 #| label: fig-reduc
 #| fig-cap: "True stacked cumulative incidence functions (panel A) and cause-specific hazards (panel B) conditional on $X = 1$, and the subdistribution hazard ratios (panel C) for both causes, under DGM described in @sec-reduct-int. This DGM assumes a Fine--Gray model for cause 1 with Gompertz baseline subdistribution hazard, and cause-specific Cox model for cause 2 with a Weibull baseline hazard."
 #| echo: false
-#| out-width: "80%"
+#| out-width: "90%"
 
 knitr::include_graphics(here::here(paste0("figures/fine-gray-DGM_reduc", extension)))
 ```
@@ -260,7 +260,7 @@ An important point is that both of the above approaches specify a maximum follow
 #| label: fig-twofgs
 #| fig-cap: "Stacked cumulative incidence functions conditional on $X = 0$ (baseline, panel A) and those conditional on $X = 1$ (panel B), for a DGM in which proportional subdistribution hazards can hold for both causes."
 #| echo: false
-#| out-width: "95%"
+#| out-width: "100%"
 
 knitr::include_graphics(here::here(paste0("figures/fine-gray-DGM_twofgs", extension)))
 ```

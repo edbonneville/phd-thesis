@@ -1,18 +1,11 @@
-\usepackage{libertinus}
+\usepackage[sfdefault]{libertinus}
 \usepackage{libertinust1math}
 \usepackage{subdepth}
 
-% Some font settings
-%\usepackage{unicode-math}
-%\setmainfont{Libertinus Serif}
-%\setsansfont{Libertinus Sans}%
-%\setmonofont{Libertinus Mono}
-%\setmathfont[RawFeature={+ss08}]{Libertinus Math} % For slanted integrals
-
 % Only if sending to printers: 3mm bleed
-% -> Replace cross by off for printing
+% -> Remove cross bit for printing
 % https://ctan.math.illinois.edu/macros/latex/contrib/crop/crop.pdf
-\usepackage[cross, center,width=176mm, height=246mm]{crop}
+%\usepackage[cross, center,width=176mm, height=246mm]{crop}
 
 % Unsure if necessary but for bleed/printing with chapterthumbs:
 % - https://tex.stackexchange.com/questions/198314/bleed-correction-for-chapterthumbs-in-koma
@@ -40,10 +33,6 @@
 % Bold and sans
 \newcommand{\bsf}[1]{\textbf{\textsf{#1}}}
 
-% Commands to tweak for Libertinus Math
-%\renewcommand{\boldsymbol}[1]{\symbf{#1}}
-%\renewcommand{\mathbf}[1]{\symsfup{#1}}
-
 % Fancy chapter headings
 \input{tex/koma-chapter-headings}
 \renewcommand*{\chaptermarkformat}{\thechapter\autodot\enskip}
@@ -61,3 +50,6 @@
 
 % To show writing boxes (line above page number is due to this)
 %\usepackage{showframe}
+
+% Better spacing
+\raggedbottom

@@ -426,7 +426,7 @@ knitr::include_graphics(here::here(paste0("figures/fine-gray-MI_perf-X", extensi
 #| label: fig-preds-baseline
 #| fig-cap: "Per scenario (row) for a baseline individual $\\{X, Z\\} = \\{0,0\\}$: true (black line) versus estimated cumulative incidence over time, averaged across the 500 replications per scenario (left column); difference between estimated and true (middle column); root mean square error (RMSE) of these estimates (right column). Results for scenarios with administrative censoring are omitted since they were indistinguishable from those with random censoring."
 #| echo: false
-#| out-width: "75%"
+#| out-width: "85%"
 
 knitr::include_graphics(here::here(paste0("figures/fine-gray-MI_preds-baseline", extension)))
 ```
@@ -435,7 +435,7 @@ knitr::include_graphics(here::here(paste0("figures/fine-gray-MI_preds-baseline",
 #| label: fig-preds-X1Z1
 #| fig-cap: "Per scenario (row) for individual $\\{X,Z\\} = \\{1,1\\}$: estimated versus true (black line) cumulative incidence over time, averaged across the 500 replications per scenario (left column); difference between estimated and true (middle column); root mean square error (RMSE) of these estimates (right column). Results for scenarios with administrative censoring are omitted since they were indistinguishable from those with random censoring."
 #| echo: false
-#| out-width: "75%"
+#| out-width: "85%"
 
 knitr::include_graphics(here::here(paste0("figures/fine-gray-MI_preds-X1Z1", extension)))
 ```
@@ -493,7 +493,7 @@ As described in Section @sec-imp-cens, the subdistribution time $V$ is only part
 #| label: fig-cens-appendix
 #| fig-cap: "Based on a simulated dataset of $n = 2000$ (correctly specified Fine--Gray, $p = 0.65$, random censoring), we show the imputed ($m = 10$ imputations) potential censoring times for a random selection of 20 individuals failing from cause 2 (upper panel); and the estimated marginal cumulative subdistribution hazard function for cause 1 based on true $V$, and based on imputed $V$ (lower panel)."
 #| echo: false
-#| out-width: "90%"
+#| out-width: "100%"
 
 knitr::include_graphics(here::here(paste0("figures/fine-gray-MI_cens-appendix", extension)))
 ```

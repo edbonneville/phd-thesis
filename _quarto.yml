@@ -25,12 +25,13 @@ format:
   pdf:
     documentclass: scrbook
     pdf-engine: pdflatex
-    latex-clean: false # Keep the index.log file to check for issues e.g. overfullness
-    keep-tex: true
+    #latex-clean: false # Keep the index.log file to check for issues e.g. overfullness
+    #keep-tex: true
     classoption:
       - paper=portrait
       - paper=240mm:170mm
       - twoside=true
+      - parskip=half+
       - open=right
       - fontsize=10pt
       - pagesize=false # set to auto if not sending to printers

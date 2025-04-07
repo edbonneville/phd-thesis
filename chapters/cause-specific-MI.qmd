@@ -71,7 +71,7 @@ $$
 extension <- if (knitr::is_html_output()) ".png" else ".pdf"
 ```
 
-\blfootnote{Chapter based on: Bonneville, E. F., Resche-Rigon, M., Schetelig, J., et al. (2022) Multiple imputation for cause-specific Cox models: Assessing methods for estimation and prediction. \textit{Stat Methods Med Res}, 31, 1860–1880. SAGE Publications Ltd STM. DOI: 10.1177/09622802221102623.}
+\blfootnote{Chapter based on: Bonneville, E. F., Resche-Rigon, M., Schetelig, J., et al. (2022) Multiple imputation for cause-specific Cox models: Assessing methods for estimation and prediction. \textit{Statistical Methods in Medical Research}, 31, 1860–1880. DOI: 10.1177/09622802221102623.}
 
 \clearpage
 
@@ -330,7 +330,7 @@ We focus primarily on $\beta_1$ (the regression coefficient for $X$ in the cause
 #| label: fig-beta1-MAR
 #| fig-cap: "Bias in $\\beta_1$ for MAR mechanism with continuous $X$. Each cluster of points corresponds to a scenario defined by the step functions at the bottom of the plot. Each step represents a level of a factor being varied, and is read from left-to-right (e.g. for Hazard shapes, first step is 'similar' while the second is 'different'). Monte-Carlo standard errors of bias for all scenarios were below 0.008. Mech. = missingness mechanism."
 #| echo: false
-#| out-width: "85%"
+#| out-width: "95%"
 
 knitr::include_graphics(here::here(paste0("figures/cause-specific-MI_MAR-B1-NLP", extension)))
 ```
@@ -348,7 +348,7 @@ For contrast, we also present the results for $\beta_1$ with a MAR-T mechanism i
 #| read this type of plot. Mech.: missingness mechanism; MAR-T:
 #| outcome-dependent missing at random."
 #| echo: false
-#| out-width: "85%"
+#| out-width: "95%"
 
 knitr::include_graphics(here::here(paste0("figures/cause-specific-MI_MAR-T-B1-NLP", extension)))
 ```
@@ -369,14 +369,14 @@ Concerning predicted probabilities, we focus on the estimation of 5-year REL and
 #| missingness mechanism; RMSE: root mean square error; REL: relapse;
 #| MAR: missing at random; NRM: non-relapse mortality."
 #| echo: false
-#| out-width: "85%"
+#| out-width: "95%"
 
 knitr::include_graphics(here::here(paste0("figures/cause-specific-MI_MAR-pred-NLP", extension)))
 ```
 
 We point the reader to the $y$-axis of the plot, where results are now on the probability scale. The largest RMSE reported in the plot was just under 2.5\%, with most RMSE values for the imputation methods being under 1.5\%, with little to no difference between them. In these scenarios, the imputation methods outperform $CC$, but with the finest of margins. This is part of a general finding across the simulations: the predicted probabilities when using the imputation methods overall had very little bias, and little reduction in variability was observed beyond $m = 25$ imputations. We note that since all methods were similarly biased under M(C)AR (as seen for example in Figure 1.2.1 of supplementary material on predictions), the RMSE for $CC$ is expected to be a factor of $\sqrt{2}$ larger than for the imputation methods when missingness was `high', given that $CC$ used half as much data.
  
-We propose various explanations for this behaviour. First, we note that the prediction results for $\{X,Z\} = \{0, 0\}$ (with $X$ continuous or binary) can be taken as a proxy for how precisely the cause-specific baseline hazards are estimated. For all non-MNAR scenarios, little to no bias was found in the predicted probabilities for these reference patients. This may be additionally linked to the fact that $X$ and $Z$ are centered and normal, which could imply that $H_{k0}(\tilde{T})$ is adequately approximated by the Nelson-Aalen estimator. Second, regarding regression coefficients, bias was primarily observed in $\beta_1$ and $\beta_2$, with the former showing more extreme bias when data-generating $\beta_1 = 1$. Estimates of $\gamma_1$ and $\gamma_2$ however generally only exhibited biases of up to 5\% in the MAR scenarios, and slightly higher for $CC$ in MAR-T scenarios. Well-estimated cause-specific baseline hazards in tandem with close to unbiased estimates of $\gamma_k$ could then  explain the small bias in the predictions, since bias in the linear predictor as a whole ($\beta_k X + \gamma_k Z$) only reached 10\% in the most extreme cases, and was mostly below the 5\% mark otherwise.  
+We propose various explanations for this behaviour. First, we note that the prediction results for $\{X,Z\} = \{0, 0\}$ (with $X$ continuous or binary) can be taken as a proxy for how precisely the cause-specific baseline hazards are estimated. For all non-MNAR scenarios, little to no bias was found in the predicted probabilities for these reference patients. This may be additionally linked to the fact that $X$ and $Z$ are centered and normal, which could imply that $H_{k0}(T)$ is adequately approximated by the Nelson-Aalen estimator. Second, regarding regression coefficients, bias was primarily observed in $\beta_1$ and $\beta_2$, with the former showing more extreme bias when data-generating $\beta_1 = 1$. Estimates of $\gamma_1$ and $\gamma_2$ however generally only exhibited biases of up to 5\% in the MAR scenarios, and slightly higher for $CC$ in MAR-T scenarios. Well-estimated cause-specific baseline hazards in tandem with close to unbiased estimates of $\gamma_k$ could then  explain the small bias in the predictions, since bias in the linear predictor as a whole ($\beta_k X + \gamma_k Z$) only reached 10\% in the most extreme cases, and was mostly below the 5\% mark otherwise.  
 
 #### Additional simulations
 
@@ -404,7 +404,7 @@ To motivate the choice of $m$ for $CH_{12}$ and smcfcs, we used von Hippel's qua
 #| continuous variables, we show the observed counts ($n$) and the
 #| number of relapse events (# Events) in the full data set."
 #| echo: false
-#| out-width: "90%"
+#| out-width: "95%"
 
 knitr::include_graphics(here::here(paste0("figures/cause-specific-MI_forest-rel", extension)))
 ```
@@ -420,7 +420,7 @@ knitr::include_graphics(here::here(paste0("figures/cause-specific-MI_forest-rel"
 #| continuous variables, we show the observed counts ($n$) and the
 #| number of NRM events (# Events) in the full data set."
 #| echo: false
-#| out-width: "90%"
+#| out-width: "95%"
 
 knitr::include_graphics(here::here(paste0("figures/cause-specific-MI_forest-nrm", extension)))
 ```
@@ -508,9 +508,10 @@ Using $\log S(T \given X, Z) = -\sum^K_{k = 1} H_k(T \given X,Z)$, and assuming 
 	\log p(T, D \given X, Z) = \sum^K_{k = 1} \Bigl\{ I(D=k) \bigl[\log h_{k0}(T) + (\beta_k X + \gamma_k Z)\bigr] -  H_{k0}(T)\exp(\beta_k X + \gamma_k Z) \Bigr\}.
 \end{equation*}
 We can then plug-in the above expression into @eq-cond-dist describing the fully conditional density of $X$, yielding
-\begin{equation*}
-	\log p(X \given T,D,Z) = \log p(X \given Z) + \sum^K_{k = 1} I(D=k) (\beta_k X + \gamma_k Z) - \sum^K_{k = 1} H_{k0}(T)\exp(\beta_k X + \gamma_k Z) + c,
-\end{equation*}
+\begin{align*}
+	\log p(X \given T,D,Z) &= \log p(X \given Z) + \sum^K_{k = 1} I(D=k) (\beta_k X + \gamma_k Z)  \\
+	&\qquad - \sum^K_{k = 1} H_{k0}(T)\exp(\beta_k X + \gamma_k Z) + c,
+\end{align*}
 where $c$ may depend on $T$, $D$ or $Z$, but not on $X$. We note that if $Z$ is a categorical variable with more than two levels, $\gamma_k$ represents a vector of coefficients for the dummy codes of $Z$.
 
 #### Binary X {.unnumbered}
@@ -518,7 +519,8 @@ where $c$ may depend on $T$, $D$ or $Z$, but not on $X$. We note that if $Z$ is 
 Suppose $X$ is a binary covariate, depending on $Z$ through a logistic regression model $\logit P(X = 1 \given Z) = \zeta_0 + \zeta_1 Z$. Given this missing data model, the objective now is to derive an expression for $\logit P(X = 1 \given T, D, Z)$. In general we have that
 $$
 \begin{aligned}
-	\logit P(X = 1 \given T, D, Z) &= \log p(T, D \given X = 1, Z) - \log p(T, D \given X = 0, Z) + \logit P(X = 1 \given Z)  \\
+	\logit P(X = 1 \given T, D, Z) &= \log p(T, D \given X = 1, Z) - \log p(T, D \given X = 0, Z) \\
+	&\qquad + \logit P(X = 1 \given Z)  \\
 	&= \zeta_0 + \zeta_1 Z + \sum^K_{k = 1} I(D=k) \beta_k - \sum^K_{k = 1} H_{k0}(T)\exp(\gamma_k Z)(\mathrm{e}^{\beta_k}  - 1). 
 \end{aligned}
 $${#eq-imp-bin}
@@ -531,10 +533,9 @@ which suggests that for categorical $Z$ we can impute missing $X$ values using a
 
 If $Z$ is continuous, there are no exact results due to the $\exp(\gamma_k Z)$ terms. Analogously to @whiteImputingMissingCovariate2009, we use a first order Taylor series around $\bar{Z}$ to approximate it as $\exp(\gamma_k Z) \approx \exp(\gamma_k \bar{Z}) [ 1 + \gamma_k(Z - \bar{Z})  ]$, which is valid if $\Var(\gamma_k Z)$ is small. We can thus write
 \begin{align*}
-	\logit P(X = 1 \given T, D, Z) &\approx \zeta_0 + \zeta_1 Z + \sum^K_{k = 1} I(D=k) \beta_k \nonumber - \sum^K_{k = 1} H_{k0}(T)(\mathrm{e}^{\beta_k}  - 1)\exp(\gamma_k \bar{Z})(1 - \gamma_k \bar{Z}) \nonumber \\
-	&\qquad - \sum^K_{k = 1} H_{k0}(T) Z \gamma_k (\mathrm{e}^{\beta_k}  - 1)\exp(\gamma_k \bar{Z}) \nonumber \\
-	&= \alpha_0  + \sum^K_{k = 1} \alpha_{k} I(D=k) + \sum^K_{k = 1} \alpha_{K + k} H_{k0}(T) + \sum^K_{k = 1} \alpha_{2K + k} H_{k0}(T) Z \nonumber \\
-	&\qquad + \alpha_{3K + 1} Z.
+	&\logit P(X = 1 \given T, D, Z) \approx \zeta_0 + \zeta_1 Z + \sum^K_{k = 1} I(D=k) \beta_k \nonumber \\ 
+	&\qquad - \sum^K_{k = 1} H_{k0}(T)(\mathrm{e}^{\beta_k}  - 1)\exp(\gamma_k \bar{Z})(1 - \gamma_k \bar{Z}) - \sum^K_{k = 1} H_{k0}(T) Z \gamma_k (\mathrm{e}^{\beta_k}  - 1)\exp(\gamma_k \bar{Z}) \nonumber \\
+	&= \alpha_0  + \sum^K_{k = 1} \alpha_{k} I(D=k) + \sum^K_{k = 1} \alpha_{K + k} H_{k0}(T) + \sum^K_{k = 1} \alpha_{2K + k} H_{k0}(T) Z + \alpha_{3K + 1} Z.
 \end{align*}
 This suggests an approximate imputation model for binary $X$ and continuous $Z$ including the following predictors: $Z$, $D$ (as a factor) and all $H_{k0}(T)$. Adding an interaction between all $H_{k0}(T)$ and $Z$ improves the accuracy of this approximation.
 

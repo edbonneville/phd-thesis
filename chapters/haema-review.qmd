@@ -262,7 +262,7 @@ Concerning the imputation methods, SMC-FCS and JointAI were in consistent agreem
 #| label: fig-forest-efs
 #| fig-cap: "Point estimates and associated 95% confidence intervals for the Cox model for relapse-free survival, according to missing data handling method. Variables and their descriptions can be found in @tbl-data-dictionary. Per level of factor and for continuous variables, we show the observed counts (n) and the number of events (# Events, which is the sum of relapse and non-relapse mortality events) in the full dataset."
 #| echo: false
-#| out-width: "85%"
+#| out-width: "95%"
 
 knitr::include_graphics(here::here(paste0("figures/haema-review_forest-EFS", extension)))
 ```

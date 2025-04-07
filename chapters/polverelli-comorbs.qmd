@@ -2,7 +2,7 @@
 
 # Impact of comorbidities and body mass index on the outcomes of allogeneic hematopoietic cell transplantation in myelofibrosis: A study on behalf of the Chronic Malignancies Working Party of EBMT {#sec-chap-polverelli}
 
-\blfootnote{Chapter based on: Polverelli, N., Bonneville, E. F., de Wreede, L. C., et al. (2024) Impact of comorbidities and body mass index on the outcomes of allogeneic hematopoietic cell transplantation in myelofibrosis: A study on behalf of the Chronic Malignancies Working Party of EBMT. \textit{Am J Hematol}, 99, 993—996. DOI: 10.1002/ajh.27262.}
+\blfootnote{Chapter based on: Polverelli, N., Bonneville, E. F., de Wreede, L. C., et al. (2024) Impact of comorbidities and body mass index on the outcomes of allogeneic hematopoietic cell transplantation in myelofibrosis: A study on behalf of the Chronic Malignancies Working Party of EBMT. \textit{American Journal of Hematology}, 99, 993—996. DOI: 10.1002/ajh.27262.}
 
 \clearpage
 
@@ -118,7 +118,7 @@ from a transplant procedure.
 #| label: fig-polv-one
 #| fig-cap: "Non-linear effect of BMI on overall survival (A) and non-relapse mortality (B) as part of multivariable model adjusting for variables known to be associated with both outcomes in patients with MF. Models are based on n = 3982 patients with complete outcome information on OS and NRM, where covariates were multiply imputed using MICE (100 imputed datasets). Displayed are therefore the pooled coefficients. Hazard ratios should be interpreted relative to a reference BMI of 21.75 (mid-point of the “normal” BMI category). The plots also show the (marginal) distribution of observed BMI values."
 #| echo: false
-#| out-width: "100%"
+#| out-width: "95%"
 
 knitr::include_graphics(here::here("figures/polverelli_bmi-hrs.jpg"))
 ```
@@ -175,14 +175,15 @@ Supplementary tables and figures are available online at [https://doi.org/10.100
 
 ## Appendix A: methods {.unnumbered}
 
-Inclusion criteria
+Inclusion criteria:
 
 - All MF patients submitted to allo-HCT in chronic phase from any donor, conditioning regimen and stem cell source
 - Age greater of equal to 18 years
 - First transplant
 - Transplant performed between 2009 and 2019
 
-Exclusion criteria
+Exclusion criteria:
+
 - Accelerated or Blastic phase MF
 - Unavailability of information on comorbidities
 - Unavailability of a minimum transplant information (OS, NRM)

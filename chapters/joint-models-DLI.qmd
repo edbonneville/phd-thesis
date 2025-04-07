@@ -12,7 +12,7 @@ editor_options:
 extension <- if (knitr::is_html_output()) ".png" else ".pdf"
 ```
 
-\blfootnote{Chapter based on: Koster, E. A. S., Bonneville, E. F., Borne, P. A. von dem, et al. (2023) Joint models quantify associations between immune cell kinetics and allo-immunological events after allogeneic stem cell transplantation and subsequent donor lymphocyte infusion. \textit{Front. Immunol.}, 14. Frontiers. DOI: 10.3389/fimmu.2023.1208814.}
+\blfootnote{Chapter based on: Koster, E. A. S., Bonneville, E. F., Borne, P. A. von dem, et al. (2023) Joint models quantify associations between immune cell kinetics and allo-immunological events after allogeneic stem cell transplantation and subsequent donor lymphocyte infusion. \textit{Frontiers in Immunology}, 14. DOI: 10.3389/fimmu.2023.1208814.}
 
 \clearpage
 
@@ -74,7 +74,7 @@ To investigate the effect of early low-dose DLI on the kinetics of the T-cell an
 #| label: fig-DLI-one
 #| fig-cap: "*Structure of the joint models*. Graphical description of the two joint models. Joint model I (A) starts at time of alloSCT, joint model II (B) at time of the early low-dose DLI. Each model consists of a longitudinal and a time-to-event submodel and was run in turn for each T-cell subset, considering either the CD3+, CD4+ or CD8+ T-cell counts, and the NK cell counts. These are the outcome of the longitudinal submodel and a time-dependent covariate in the time-to-event submodel. All other variables in each submodel are baseline covariates. Per endpoint of the time-to-event submodels, the clinical events that occurred during the relevant time period (first 6 months after alloSCT or first 3 months after the early low-dose DLI) are described. The NK cells were only analyzed in model I. See the Statistical Supplement for a detailed description of the model structures."
 #| echo: false
-#| out-width: "85%"
+#| out-width: "90%"
 
 knitr::include_graphics(here::here(paste0("figures/joint-models-DLI_fig-01", extension)))
 ```
@@ -211,7 +211,7 @@ knitr::include_graphics(here::here(paste0("figures/joint-models-DLI_fig-04", ext
 
 To study the association between the T-cell kinetics and the development of GvHD or relapse after TCD alloSCT and DLI, we added disease risk and donor type as time-fixed covariates alongside the time-dependent T-cell counts in the cause-specific submodels (with GvHD, relapse and other failure as competing events) of model I. As shown in @fig-DLI-five, donor type showed no significant association with the risk of GvHD, although in the CD4 model a trend for higher risk in patients with an UD despite the ATG in the conditioning regimen was observed (hazard ratio [HR] 2.7, 95%-CI 1.0-7.4). High risk patients, who were scheduled for early low-dose DLI, had a considerably higher risk of GvHD compared to non-high risk patients with HRs ranging between 6.3 (CD8 model, 95%-CI 2.1-18.8) and 7.3 (CD4 model, 95%-CI 2.4-22.2), indicating an alloimmune effect of the early low-dose DLI in this setting. The current values of the log CD4 and CD3 counts significantly increased the risk of GvHD (HR 2.4 (95%-CI 1.4-4.1) and HR 1.5 (95%-CI 1.0-2.3) for CD4+ T-cells and CD3+ T-cells, respectively), while CD8+ T-cells showed a similar trend (HR 1.3, 95%-CI 0.9-1.8). These HRs represent the relative increase in GvHD risk for an increase of one in the log counts, assuming same disease risk and donor type. These results indicate that the absolute total numbers of circulating CD4+ and CD3+ T-cells after alloSCT and DLI are informative for the development of GvHD.
 
-We hypothesized that not only the current value but also the slope of the T-cell counts would be associated with the development of an alloimmune response. To investigate this, we extended the time-to-event submodel of model I by additionally including the current slope of the T-cell counts as a covariate for all endpoints. However, we observed no association between the slope of any of the T-cell subsets and the development of GvHD (p-values 0.59-0.87). We therefore retained the simpler version of model I with only the current value.\
+We hypothesized that not only the current value but also the slope of the T-cell counts would be associated with the development of an alloimmune response. To investigate this, we extended the time-to-event submodel of model I by additionally including the current slope of the T-cell counts as a covariate for all endpoints. However, we observed no association between the slope of any of the T-cell subsets and the development of GvHD (p-values 0.59-0.87). We therefore retained the simpler version of model I with only the current value.
 
 ```{r}
 #| label: fig-DLI-five

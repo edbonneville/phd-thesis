@@ -53,7 +53,7 @@ and further visualised in @fig-intro-haz. Therefore, by modelling the all-cause 
 #| label: fig-intro-haz
 #| fig-cap: "Example (all-cause) hazard and survival functions for two subgroups from a given population. The hazard is based on two aspects of the survival function at a particular timepoint: its value (i.e. the proportion of individuals still alive), and its slope (i.e. how rapidly the curve is decreasing, expressed as a rate per unit time). Mathematically, $h(t) = \\{-\\diff S(t)/\\diff t\\} \\times S(t)^{-1}$."
 #| echo: false
-#| out-width: "85%"
+#| out-width: "95%"
 
 knitr::include_graphics(here::here("figures/haz_surv_panels.png"))
 ```
@@ -81,11 +81,9 @@ where $S(u-)$ is the event-free survival probability just prior to $u$. As depic
 ```{r, echo=FALSE}
 # Based on https://www.andrewheiss.com/blog/2021/08/27/tikz-knitr-html-svg-fun/
 # Other option is divs, but harder to set width
-options(tinytex.engine = "xelatex")
-font_opts <- list(extra.preamble = c("\\usepackage{fontspec}",
-                                     "\\setmainfont{Libertinus Serif}",
-                                     "\\usepackage{unicode-math}",
-                                     "\\setmathfont{Libertinus Math}"))
+#options(tinytex.engine = "xelatex")
+font_opts <- list(extra.preamble = c("\\usepackage[sfdefault]{libertinus}",
+                                     "\\usepackage{libertinust1math}"))
 # Other engine tings https://yihui.org/knitr/options/
 #https://stackoverflow.com/questions/79514436/tikz-in-quarto-using-the-filter-diagram
 #https://github.com/pandoc-ext/diagram
@@ -259,7 +257,7 @@ The current thesis aims to develop, assess, and apply statistical methodology fo
 
 @sec-chap-CS-MI focuses on the use of multiple imputation when the analysis model of interest is one or more cause-specific Cox proportional hazards models. The first goal of this work is to formally derive approximately compatible imputation models for various types of missing baseline covariates (e.g. continuous, binary, etc.). The second goal is to compare these approximately compatible imputation models to a previously proposed substantive-model-compatible approach [@bartlettMissingCovariatesCompeting2016] as part of large simulation study. A novel aspect of this simulation study is the focus on the impact of missing covariate data on the estimation of individual-specific cumulative incidence functions. Furthermore, the methodology is applied on a dataset with long-term follow-up after an alloSCT for patients with myelodysplastic syndromes or secondary acute myeloid leukaemia [@scheteligLateTreatmentrelatedMortality2019]. This chapter is based on:
 
-> **Bonneville, E. F.**, Resche-Rigon, M., Schetelig, J., Putter, H., de Wreede, L.C. (2022) Multiple imputation for cause-specific Cox models: Assessing methods for estimation and prediction. *Statistical Methods in Medical Research*, 31, 1860–1880. SAGE Publications Ltd STM. DOI: [10.1177/09622802221102623](https://doi.org/10.1177/09622802221102623).
+> **Bonneville, E. F.**, Resche-Rigon, M., Schetelig, J., Putter, H., de Wreede, L.C. (2022) Multiple imputation for cause-specific Cox models: Assessing methods for estimation and prediction. *Statistical Methods in Medical Research*, 31, 1860–1880. DOI: [10.1177/09622802221102623](https://doi.org/10.1177/09622802221102623).
 
 @sec-chap-polverelli represents another application of the methodology in @sec-chap-CS-MI, using a dataset of patients with myelofibrosis who have undergone an alloSCT. The goal of this applied work is primarily is assess the impact of partially observed comorbidities and body mass index (BMI) on the cause-specific hazard of non-relapse mortality. The imputation procedure in this chapter involved careful consideration of several non-standard issues such as the imputation of derived variables, the use of auxiliary variables, and imputation when several substantive models are of interest. This chapter is based on:
 
@@ -278,7 +276,7 @@ https://doi.org/10.48550/arXiv.2405.16602).
 
 In @sec-chap-JM-DLI, the immune cell kinetics of a cohort of patients with acute leukaemia during the 6 months after T-cell depleted alloSCT are analysed using competing risks joint models. Prior to this work, joint models were rarely used in the alloSCT context for modelling T-cell trajectories (to the best of our knowledge, only in @salzmann-manriqueJointModelingImmune2018a), and did not consider competing risks in the time-to-event submodel or post-baseline interventions such as a donor lymphocyte infusion. This chapter is based on:
 
-> Koster, E.A.S.$^\dagger$, **Bonneville, E.F.**$^\dagger$, von dem Borne, P.A., van Balen, P., Marijt, E.W.A., Tjon, J.M.L., Snijders, T.J.F., van Lammeren, D., Veelken, H., Putter, H., Falkenburg, J.H.F., Halkes, C.J.M., de Wreede, L.C. (2023) Joint models quantify associations between immune cell kinetics and allo-immunological events after allogeneic stem cell transplantation and subsequent donor lymphocyte infusion. *Frontiers in Immunology*, 14. Frontiers. DOI: [10.3389/fimmu.2023.1208814](https://doi.org/10.3389/fimmu.2023.1208814).
+> Koster, E.A.S.$^\dagger$, **Bonneville, E.F.**$^\dagger$, von dem Borne, P.A., van Balen, P., Marijt, E.W.A., Tjon, J.M.L., Snijders, T.J.F., van Lammeren, D., Veelken, H., Putter, H., Falkenburg, J.H.F., Halkes, C.J.M., de Wreede, L.C. (2023) Joint models quantify associations between immune cell kinetics and allo-immunological events after allogeneic stem cell transplantation and subsequent donor lymphocyte infusion. *Frontiers in Immunology*, 14. DOI: [10.3389/fimmu.2023.1208814](https://doi.org/10.3389/fimmu.2023.1208814).
 >
 > $^\dagger$These authors contributed equally to this work and share first authorship
 
