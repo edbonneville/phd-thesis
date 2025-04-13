@@ -59,8 +59,8 @@ number-depth: 2
 
 # Defense setting to populate first few pages
 proefschrift:
-  day: "[weekdag] [dag] [maand] 2025"
-  time: "xx:xx"
+  day: "woesndag 2 juli 2025"
+  time: "11:30"
   birthplace: "Madrid, Spanje"
   birthyear: "1995"
   rector: "Prof. dr. ir. Hester Bijl"
