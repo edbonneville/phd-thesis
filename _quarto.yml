@@ -59,19 +59,16 @@ number-depth: 2
 
 # Defense setting to populate first few pages
 proefschrift:
-  day: "woesndag 2 juli 2025"
+  day: "woensdag 2 juli 2025"
   time: "11:30"
   birthplace: "Madrid, Spanje"
   birthyear: "1995"
-  rector: "Prof. dr. ir. Hester Bijl"
+  rector: "prof. dr. ir. H. Bijl"
 committee:
-  - name: Prof. dr. Jacco Wallinga
-    affiliation:
-      - Leids Universitair Medisch Centrum, NL
-      - Rijksinstituut voor Volksgezondheid en Milieu, NL
-  - name: Prof. dr. Jan Beyersmann
+  - name: Prof. dr. J. Wallinga
+  - name: Prof. dr. J. Beyersmann
     affiliation: Universität Ulm, DE
-  - name: Prof. dr. Stef van Buuren
+  - name: Prof. dr. S. van Buuren
     affiliation: Universiteit Utrecht, NL
-  - name: Dr. Simona Iacobelli
+  - name: Dr. S. Iacobelli
     affiliation: Sapienza Università di Roma, IT

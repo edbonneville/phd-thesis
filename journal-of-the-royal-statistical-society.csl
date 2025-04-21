@@ -296,7 +296,6 @@
             <text macro="genre"/>
             <text macro="published-date"/>
           </group>
-          <text macro="publisher"/>
         </group>
       </group>
       <text macro="access" prefix=". "/>
