@@ -32,6 +32,7 @@
 \newcommand*{\chapterthumbboxcolor}{gray} % Edited from black
 \newcommand*{\chapterthumbcolor}{white}
 \newcommand*{\chapterthumbformat}{\@chapapp~\thechapter}
+\newcommand*{\chapterthumbbleed}{4mm} % (!) change here
 \newkomafont{chapterthumb}{\normalfont\Large\sffamily}
 \newcommand*{\chapterthumbbox}{%
   \if@mainmatter
@@ -72,16 +73,20 @@
             \rotatebox[origin=tl]{90}{%
               \setlength{\fboxsep}{0pt}%
               \colorbox{\chapterthumbboxcolor}{%
-                \parbox[c][\chapterthumbheight][c]%
+                %\parbox[c][\chapterthumbheight][c]%
+                \parbox[t][\dimexpr \chapterthumbheight+\chapterthumbbleed\relax][t]%
                 {\chapterthumbwidth}{%
-                  \centering
-                  \color{\chapterthumbcolor}%
-                  \usekomafont{chapterthumb}{%
-                    % Options:
-                    \thechapter % Only Chapter number
-                    %\chapterthumbformat %"Chapter 1"
-                    %\phantom{\thechapter} % Just the gray box
-                  }}}}}%
+
+                  \parbox[c][\chapterthumbheight][c]%
+                  {\chapterthumbwidth}{%
+                    \centering
+                    \color{\chapterthumbcolor}%
+                    \usekomafont{chapterthumb}{%
+                      %\chapterthumbformat
+                      \thechapter
+                  }}}}}
+                \hskip-\chapterthumbbleed%
+                }%
         \endgroup
       \fi
     \fi
@@ -101,3 +106,14 @@
 %%% mode: latex
 %%% TeX-master: "chapterthumbexample"
 %%% End:
+
+
+
+%\centering
+%                  \color{\chapterthumbcolor}%
+%                  \usekomafont{chapterthumb}{%
+                    % Options:
+ %                   \thechapter % Only Chapter number
+                    %\chapterthumbformat %"Chapter 1"
+                    %\phantom{\thechapter} % Just the gray box
+  %                }}}}}%

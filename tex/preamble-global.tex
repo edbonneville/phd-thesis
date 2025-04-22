@@ -10,7 +10,9 @@
 % Unsure if necessary but for bleed/printing with chapterthumbs:
 % - https://tex.stackexchange.com/questions/198314/bleed-correction-for-chapterthumbs-in-koma
 
-% Avoiding overfull boxes in TOC (page numbers from the chapters)
+%\usepackage[center,width=176mm, height=246mm]{crop} % bleed is 6mm
+
+%Avoiding overfull boxes in TOC (page numbers from the chapters)
 \DeclareTOCStyleEntry[pagenumberwidth=2em]{chapter}{chapter}
 
 % \KOMAoptions{...}
@@ -20,6 +22,13 @@
 \usepackage{scrlayer-scrpage}
 \AddLayersToPageStyle{@everystyle@}{chapterthumb}
 \addtokomafont{chapterthumb}{}
+
+
+
+
+
+
+
 
 % Newly define commands common to many chapters
 \DeclareMathOperator{\logit}{logit}
@@ -53,3 +62,5 @@
 
 % Better spacing
 \raggedbottom
+
+\usepackage[cross,center,width=176mm, height=246mm]{crop}
