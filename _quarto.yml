@@ -25,8 +25,8 @@ format:
   pdf:
     documentclass: scrbook
     pdf-engine: pdflatex
-    #latex-clean: false # Keep the index.log file to check for issues e.g. overfullness
-    #keep-tex: true
+    latex-clean: true # Keep the index.log file to check for issues e.g. overfullness
+    keep-tex: false
     classoption:
       - paper=portrait
       - paper=240mm:170mm

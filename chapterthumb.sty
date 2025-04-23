@@ -74,7 +74,7 @@
           }\par
           \hfill
           \makebox[0pt][r]{%
-            \rotatebox[origin=tl]{90}{%
+            \rotatebox[origin=tl]{90}{% Option w/o rotating?
               \setlength{\fboxsep}{0pt}%
               \colorbox{\chapterthumbboxcolor}{%
                 %\parbox[c][\chapterthumbheight][c]%
@@ -87,7 +87,8 @@
                     \color{\chapterthumbcolor}%
                     \usekomafont{chapterthumb}{%
                       %\chapterthumbformat
-                      \thechapter
+                      \rotatebox[origin=c]{-90}{\thechapter}
+                      %\thechapter
                   }}}}}
                 \hskip-\chapterthumbbleed%
                 }%

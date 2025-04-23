@@ -20,7 +20,7 @@ $$
 extension <- if (knitr::is_html_output()) ".png" else ".pdf"
 ```
 
-\blfootnote{Chapter based on: Bonneville, E. F., Beyersmann, J., Keogh, R. H., et al. (2024) Multiple imputation of missing covariates when using the Fine-Gray model. arXiv:2405.16602. arXiv. DOI: 10.48550/arXiv.2405.16602.}
+\blfootnote{Chapter based on: Bonneville, E. F., Beyersmann, J., Keogh, R. H., et al. (2024) Multiple imputation of missing covariates when using the Fine-Gray model. arXiv:2405.16602. arXiv. DOI: \href{https://doi.org/10.48550/arXiv.2405.16602}{10.48550/arXiv.2405.16602}.}
 
 \clearpage
 

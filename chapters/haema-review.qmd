@@ -44,7 +44,7 @@ editor_options:
 extension <- if (knitr::is_html_output()) ".png" else ".pdf"
 ```
 
-\blfootnote{Chapter based on: Bonneville, E. F., Schetelig, J., Putter, H., et al. (2023) Handling missing covariate data in clinical studies in haematology. \textit{Best Practice \& Research Clinical Haematology}, 36, 101477. DOI: 10.1016/j.beha.2023.101477}
+\blfootnote{Chapter based on: Bonneville, E. F., Schetelig, J., Putter, H., et al. (2023) Handling missing covariate data in clinical studies in haematology. \textit{Best Practice \& Research Clinical Haematology}, 36, 101477. DOI: \href{https://doi.org/10.1016/j.beha.2023.101477}{10.1016/j.beha.2023.101477}}
 
 \clearpage
 
