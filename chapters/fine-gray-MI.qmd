@@ -504,27 +504,41 @@ The upper panel in particular gives additional insights regarding the FG-Approx 
 
 The lower panel shows that the estimated $\hat{\Lambda}_1(t)$ varies very little between imputed datasets, with differences only being noticeable later on in follow-up as risk sets become smaller and associated cumulative hazard jumps more pronounced. Note also that while $\hat{\Lambda}_1(t)$ based on the true $V$ appears in this dataset to be a kind of "average" of the functions based on imputed $V$, this will not be the case in general, especially with smaller sample sizes. The $\hat{\Lambda}_1(t)$ based on the weighted estimator [@geskusCauseSpecificCumulativeIncidence2011] will however coincide with the "average" of the functions based on imputed $V$, as will using the negative log of one minus the Aalen-Johansen estimate of the marginal cumulative incidence function.
 
+## Appendix B {.unnumbered}
 
 ```{r}
 #| echo: false
 #| warning: false
-#| eval: false
-#| result: false
 #| message: false
-##| label: tbl-table1-polverelli
-#| tbl-cap: "Test."
+#| label: tbl-data-dict-mf
+#| tbl-cap: "Data dictionary. CMV: cytomegalovirus; HLA: human leukocyte antigen; HCT-CI: Hematopoietic stem cell transplantation-comorbidity index; MF: myelofibrosis."
 
-# This would be the appendix C later...
+# (See the haema review example!)
 
 dat_data_dict <- read.csv(
   file = here::here("tables/MI-FG_data-dictionary.csv"), 
   sep = ";",
   header = TRUE
 )
+colnames(dat_data_dict) <- c("Variable or level", "N = 3982")
 
 library(kableExtra)
 
-colnames(dat_data_dict) <- c("Variable or level", "N = 3982")
+if (knitr::is_html_output()) {
+  #colnames(dat_data_dict)[4] <- "% Missing"
+  #dat_data_dict$`% Missing` <- ifelse(
+  #  is.na(dat_data_dict$`% Missing`), "", dat_data_dict$`% Missing`
+  #)
+  #kbl(dat_data_dict)
+} else {
+  
+  
+  dat_data_dict$`N = 3982` <- ifelse(
+    is.na(dat_data_dict$`N = 3982`),
+    "",
+    dat_data_dict$`N = 3982`
+  )
+  
 contin_vars <- c(
   "White blood cell count (WBC, x$10^9$/L)",
   "Peripheral blood (PB) blasts (%)",
@@ -533,68 +547,68 @@ contin_vars <- c(
   "Hemoglobin (g/dL)",
   "Patient age (years)"
 )
+dat_data_dict$`Variable or level` <- ifelse(
+ (dat_data_dict$`Variable or level` %in% contin_vars) |
+   (dat_data_dict$`N = 3982` == ""),
+ #no = paste0("&nbsp;", dat_data_dict$`Variable or level`),
+ no = paste0("\\quad ", dat_data_dict$`Variable or level`),
+ yes = dat_data_dict$`Variable or level`
+)
+  
+  dat_data_dict$`N = 3982` <- gsub(
+    pattern = "(\\%)",
+    x = dat_data_dict$`N = 3982`, 
+    replacement = "\\\\%"
+  )
+  dat_data_dict$`Variable or level` <- gsub(
+    pattern = "(\\%)",
+    x = dat_data_dict$`Variable or level`, 
+    replacement = "\\\\%"
+  )
+  
+  kableExtra::kbl(
+    dat_data_dict,
+    booktabs = "T", 
+    #position = "h",
+    linesep = "",
+    format = "latex", # important for landscape? Not working..
+    escape = F, 
+    digits = 2, 
+    longtable = "T"
+  ) |> 
+    kableExtra::kable_styling(font_size = 7)
+}
+
+# contin_vars <- c(
+#   "White blood cell count (WBC, x$10^9$/L)",
+#   "Peripheral blood (PB) blasts (%)",
+#   "Interval diagnosis-transplantation (years)",
+#   "Year of transplantation",
+#   "Hemoglobin (g/dL)",
+#   "Patient age (years)"
+# )
 #dat_data_dict$`Variable or level` <- ifelse(
 #  (dat_data_dict$`Variable or level` %in% contin_vars) |
 #    is.na(dat_data_dict$`N = 3982`),
 #  no = paste0("&nbsp;", dat_data_dict$`Variable or level`),
 #  yes = dat_data_dict$`Variable or level`
 #)
-dat_data_dict$`N = 3982` <- ifelse(
-  is.na(dat_data_dict$`N = 3982`),
-  "",
-  dat_data_dict$`N = 3982`
-)
-dat_data_dict$`N = 3982` <- gsub(
-    pattern = "(\\%)",
-    x = dat_data_dict$`N = 3982`, 
-    replacement = "\\\\%"
-  )
-dat_data_dict$`Variable or level` <- gsub(
-    pattern = "(\\%)",
-    x = dat_data_dict$`Variable or level`, 
-    replacement = "\\\\%"
-  )
 
-# dat_data_dict$`Variable or level` <- gsub(
-#     pattern = "(\\geq)",
-#     x = dat_data_dict$`Variable or level`, 
-#     replacement = "\\\\geq"
-#   )
-# 
-# dat_data_dict$`Variable or level` <- gsub(
-#     pattern = "(\\leq)",
-#     x = dat_data_dict$`Variable or level`, 
-#     replacement = "\\\\leq"
-#   )
 
-kableExtra::kbl(
-  dat_data_dict
-) |> 
-  pack_rows(
-      index = c(
-        "Age at alloSCT (years)" = 1,
-        "Disease" = 4
+
+#kableExtra::kbl(
+#  dat_data_dict
+#) |> 
+  #pack_rows(
+   #   index = c(
+  #      "Age at alloSCT (years)" = 1,
+ #       "Disease" = 4
         #"Nonmyeloablative conditioning" = 2,
         #"Donor" = 3,
         #"Graft source" = 2,
       #  "CMV serostatus patient/donor" = 4,
-       # "Main reason for intention for early low-dose DLI" = 12
-      )
-    )
-
-kableExtra::kbl(
-    dat_data_dict,
-    booktabs = "T", 
-    position = "h",
-    linesep = "",
-    format = "latex", # important for landscape? Not working..
-    escape = F, 
-    digits = 2,
-    longtable = TRUE
-  ) 
-
-#if (knitr::is_html_output()) 
-  
-#}
+#      # "Main reason for intention for early low-dose DLI" = 12
+#      )
+#    )
 ```
 
