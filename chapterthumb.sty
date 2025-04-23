@@ -1,10 +1,13 @@
-% See https://komascript.de/komascriptbuch6examples
-% Or https://ctan.org/tex-archive/info/examples/KOMA-Script-6
-% Credit pull request #1 from https://github.com/tubav/Thesis/pulls?q=is%3Apr+is%3Aclosed
-% .. for the bleed correction stuff
-% (original partial fix i think from https://komascript.de/node/1280)
-% Otherwise u need to do manual stuff like https://tex.stackexchange.com/questions/19497/how-do-you-setup-a-tex-document-to-self-publish-a-book-online/19505#19505
-% https://www.ridderprint.nl/wp-content/uploads/2025/01/Ridderprint-Manual-2024_web.pdf
+% Chapterthumb for komascript, with minor edits to account for bleed
+% and also the format (only number in the thumb)
+
+% Some useful links for getting this all to work:
+% - https://komascript.de/komascriptbuch6examples
+% -  https://ctan.org/tex-archive/info/examples/KOMA-Script-6
+% - Credit pull request #1 from https://github.com/tubav/Thesis/pulls?q=is%3Apr+is%3Aclosed
+% for the bleed correction stuff (original partial fix i think from https://komascript.de/node/1280)
+% - Otherwise for the bleed stuff you need to do manual things like:
+% https://tex.stackexchange.com/questions/19497/how-do-you-setup-a-tex-document-to-self-publish-a-book-online/19505#19505
 
 % chapterthumb.sty
 % Copyright 2008 Markus Kohm
@@ -30,13 +33,13 @@
 \RequirePackage{scrlayer}
 \newcommand*{\firstchapterthumbskip}{.05\paperheight}
 \newcommand*{\lastchapterthumbskip}{\firstchapterthumbskip}
-\newcommand*{\chapterthumbheight}{3em} % 2
-\newcommand*{\chapterthumbwidth}{.1\paperheight} % Original is  .2
+\newcommand*{\chapterthumbheight}{3em} % -> Originally 2
+\newcommand*{\chapterthumbwidth}{.1\paperheight} % -> Original is  .2
 \newcommand*{\chapterthumbskip}{.1\paperheight}
-\newcommand*{\chapterthumbboxcolor}{gray} % Edited from black
+\newcommand*{\chapterthumbboxcolor}{gray} % -> Edited from black
 \newcommand*{\chapterthumbcolor}{white}
 \newcommand*{\chapterthumbformat}{\@chapapp~\thechapter}
-\newcommand*{\chapterthumbbleed}{4mm} % (!) Based on ridderprint manual p.15
+\newcommand*{\chapterthumbbleed}{4mm} % -> Based on ridderprint manual p.15
 \newkomafont{chapterthumb}{\normalfont\Large\sffamily}
 \newcommand*{\chapterthumbbox}{%
   \if@mainmatter
@@ -74,10 +77,9 @@
           }\par
           \hfill
           \makebox[0pt][r]{%
-            \rotatebox[origin=tl]{90}{% Option w/o rotating?
+            \rotatebox[origin=tl]{90}{%
               \setlength{\fboxsep}{0pt}%
               \colorbox{\chapterthumbboxcolor}{%
-                %\parbox[c][\chapterthumbheight][c]%
                 \parbox[t][\dimexpr \chapterthumbheight+\chapterthumbbleed\relax][t]%
                 {\chapterthumbwidth}{%
 
@@ -86,9 +88,9 @@
                     \centering
                     \color{\chapterthumbcolor}%
                     \usekomafont{chapterthumb}{%
-                      %\chapterthumbformat
-                      \rotatebox[origin=c]{-90}{\thechapter}
-                      %\thechapter
+                      \rotatebox[origin=c]{-90}{\thechapter} % -> Number now upright
+                      % You could otherwise use \chapterthumbformat here,
+                      % ..see commit history or original chapterthumb code
                   }}}}}
                 \hskip-\chapterthumbbleed%
                 }%
@@ -111,14 +113,3 @@
 %%% mode: latex
 %%% TeX-master: "chapterthumbexample"
 %%% End:
-
-
-
-%\centering
-%                  \color{\chapterthumbcolor}%
-%                  \usekomafont{chapterthumb}{%
-                    % Options:
- %                   \thechapter % Only Chapter number
-                    %\chapterthumbformat %"Chapter 1"
-                    %\phantom{\thechapter} % Just the gray box
-  %                }}}}}%

@@ -25,7 +25,7 @@ format:
   pdf:
     documentclass: scrbook
     pdf-engine: pdflatex
-    latex-clean: true # Keep the index.log file to check for issues e.g. overfullness
+    latex-clean: true # Set to false for index.log file to check for issues
     keep-tex: false
     classoption:
       - paper=portrait
@@ -35,18 +35,18 @@ format:
       - open=right
       - fontsize=10pt
       - pagesize=false # set to auto if not sending to printers
-      - BCOR=15mm # 9mm Binding correction (Ridderpr. needs min 20mm for binding)
+      - BCOR=15mm # Binding correction (Ridderprint needs min 20mm for binding)
       - DIV=14 # Makes text area bigger (DIV=calc is default, outputs 10 here)
       - headinclude=true # true or else upper margin too small
       - footinclude=false # false or else bottom margin too large
       - headsepline=on # Line in headers
     link-citations: true
     toc-depth: 2
-    lot: false # Is set to false to save printing costs
+    lot: false # Both set to false to save printing costs
     lof: false
     latex-auto-install: true
     include-in-header:
-      - tex/preamble-global.tex # (!) make similar globals for html later
+      - tex/preamble-global.tex # (!) Make similar globals for html later
     template-partials:
       - tex/before-body.tex
   html:
@@ -57,7 +57,7 @@ bibliography: thesis-refs-all.bib
 csl: journal-of-the-royal-statistical-society.csl
 number-depth: 2
 
-# Defense setting to populate first few pages
+# Defense settings to populate first few pages
 proefschrift:
   day: "woensdag 2 juli 2025"
   time: "11:30"

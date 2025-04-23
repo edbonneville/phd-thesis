@@ -1,21 +1,10 @@
+% The font set-up (only works with pdf-engine: pdflatex)
 \usepackage[sfdefault]{libertinus}
 \usepackage{libertinust1math}
-\usepackage{subdepth}
+\usepackage{subdepth} % Miracle fix for sub/superscript alignments
 
-% Only if sending to printers: 3mm bleed
-% -> Remove cross bit for printing
-% https://ctan.math.illinois.edu/macros/latex/contrib/crop/crop.pdf
-%\usepackage[cross, center,width=176mm, height=246mm]{crop}
-
-% Unsure if necessary but for bleed/printing with chapterthumbs:
-% - https://tex.stackexchange.com/questions/198314/bleed-correction-for-chapterthumbs-in-koma
-
-%\usepackage[center,width=176mm, height=246mm]{crop} % bleed is 6mm
-
-%Avoiding overfull boxes in TOC (page numbers from the chapters)
+% Avoiding overfull boxes in TOC (page numbers from the chapters)
 \DeclareTOCStyleEntry[pagenumberwidth=2em]{chapter}{chapter}
-
-% \KOMAoptions{...}
 
 % For the chapter thumbs
 \usepackage{chapterthumb}
@@ -23,14 +12,7 @@
 \AddLayersToPageStyle{@everystyle@}{chapterthumb}
 \addtokomafont{chapterthumb}{}
 
-
-
-
-
-
-
-
-% Newly define commands common to many chapters
+% Define commands common to many chapters
 \DeclareMathOperator{\logit}{logit}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\SE}{SE}
@@ -39,14 +21,15 @@
 \newcommand\diff{\mathop{}\!\mathrm{d}}
 \newcommand\Diff[1]{\mathop{}\!\mathrm{d^#1}}
 
-% Bold and sans
+% Shortcut for bold and sans
 \newcommand{\bsf}[1]{\textbf{\textsf{#1}}}
 
-% Fancy chapter headings
+% Fancy chapter titles n headings
 \input{tex/koma-chapter-headings}
 \renewcommand*{\chaptermarkformat}{\thechapter\autodot\enskip}
 
-%https://tex.stackexchange.com/questions/30720/footnote-without-a-marker
+% For the footnotes at the start of the article chapters:
+% https://tex.stackexchange.com/questions/30720/footnote-without-a-marker
 \newcommand\blfootnote[1]{%
   \begingroup
   \renewcommand\thefootnote{}\footnote{#1}%
@@ -54,14 +37,17 @@
   \endgroup
 }
 
+% Not sure if needed, but loading tikz for the introduction
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, positioning, decorations.pathreplacing}
 
-% To show writing boxes (line above page number is due to this)
+% Uncomment show frames for troubleshooting over/underfull boxes
 %\usepackage{showframe}
 
-% Better spacing
+% Better spacing, if commented you have the page alignment at the bottom but
+% ..some of the section spacing may be off - see discussion in the komascript manual
 \raggedbottom
 
+% Comment the below if not sending to printers
 % The bleed (+3 mm on each side = +6mm to paperwidth and paperheight)
 \usepackage[center,width=176mm, height=246mm]{crop}
