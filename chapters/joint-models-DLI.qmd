@@ -12,7 +12,7 @@ editor_options:
 extension <- if (knitr::is_html_output()) ".png" else ".pdf"
 ```
 
-\blfootnote{Chapter based on: Koster, E. A. S., Bonneville, E. F., Borne, P. A. von dem, et al. (2023) Joint models quantify associations between immune cell kinetics and allo-immunological events after allogeneic stem cell transplantation and subsequent donor lymphocyte infusion. \textit{Frontiers in Immunology}, 14. DOI: \href{https://doi.org/10.3389/fimmu.2023.1208814}{10.3389/fimmu.2023.1208814}.}
+\blfootnote{Chapter based on: Koster, E. A. S., \textbf{Bonneville, E. F.}, Borne, P. A. von dem, et al. (2023) Joint models quantify associations between immune cell kinetics and allo-immunological events after allogeneic stem cell transplantation and subsequent donor lymphocyte infusion. \textit{Frontiers in Immunology}, 14. DOI: \href{https://doi.org/10.3389/fimmu.2023.1208814}{10.3389/fimmu.2023.1208814}.}
 
 \clearpage
 

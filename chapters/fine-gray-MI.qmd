@@ -20,7 +20,7 @@ $$
 extension <- if (knitr::is_html_output()) ".png" else ".pdf"
 ```
 
-\blfootnote{Chapter based on: Bonneville, E. F., Beyersmann, J., Keogh, R. H., et al. (2024) Multiple imputation of missing covariates when using the Fine-Gray model. arXiv:2405.16602. arXiv. DOI: \href{https://doi.org/10.48550/arXiv.2405.16602}{10.48550/arXiv.2405.16602}.}
+\blfootnote{Chapter based on: \textbf{Bonneville, E. F.}, Beyersmann, J., Keogh, R. H., et al. (2024) Multiple imputation of missing covariates when using the Fine-Gray model. arXiv:2405.16602. arXiv. DOI: \href{https://doi.org/10.48550/arXiv.2405.16602}{10.48550/arXiv.2405.16602}.}
 
 \clearpage
 
@@ -509,7 +509,7 @@ The lower panel shows that the estimated $\hat{\Lambda}_1(t)$ varies very little
 #| warning: false
 #| message: false
 #| label: tbl-data-dict-mf
-#| tbl-cap: "Data dictionary. The median and interquartilerange are reported for continuous variables, and for categorical variables the counts and proportion per level are reported. CMV: cytomegalovirus; HLA: human leukocyte antigen; HCT-CI: Hematopoietic stem cell transplantation-comorbidity index; MF: myelofibrosis."
+#| tbl-cap: "Data dictionary. The median and interquartilerange are reported for continuous variables, and for categorical variables the counts and proportion per level are reported. The difference between this cohort (n = 3982) and the one reported in @sec-chap-polverelli (n = 4086), is that the present cohort is selected on available outcome data (i.e. no missing relapse times). CMV: cytomegalovirus; HLA: human leukocyte antigen; HCT-CI: Hematopoietic stem cell transplantation-comorbidity index; MF: myelofibrosis."
 
 # (See the haema review example!)
 

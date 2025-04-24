@@ -71,7 +71,7 @@ $$
 extension <- if (knitr::is_html_output()) ".png" else ".pdf"
 ```
 
-\blfootnote{Chapter based on: Bonneville, E. F., Resche-Rigon, M., Schetelig, J., et al. (2022) Multiple imputation for cause-specific Cox models: Assessing methods for estimation and prediction. \textit{Statistical Methods in Medical Research}, 31, 1860–1880. DOI: \href{https://doi.org/10.1177/09622802221102623}{10.1177/09622802221102623}.}
+\blfootnote{Chapter based on: \textbf{Bonneville, E. F.}, Resche-Rigon, M., Schetelig, J., et al. (2022) Multiple imputation for cause-specific Cox models: Assessing methods for estimation and prediction. \textit{Statistical Methods in Medical Research}, 31, 1860–1880. DOI: \href{https://doi.org/10.1177/09622802221102623}{10.1177/09622802221102623}.}
 
 \clearpage
 
