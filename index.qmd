@@ -133,8 +133,6 @@ $$
 $$
 where $S_k(t) = \exp\{-H_k(t)\}$ [@putterTutorialBiostatisticsCompeting2007].
 
-<!-- Use tilde T for true event time throughout the thesis? -->
-
 ### Competing risks regression models
 
 Suppose we are interested in understanding the impact of individual-specific characteristics on the occurrence of one of multiple competing events (the 'primary' event of interest). In the case of a single categorical covariate of interest (e.g. presence or absence of a genetic mutation), a straightforward approach would be to use the Aalen--Johansen estimator in subsets defined by the categorical covariate. In order to assess the 'impact' of this covariate, one may opt to then test the null hypothesis of equality of the resulting strata-specific cumulative incidence functions, usually by means of Gray's test [@grayClassKSampleTests1988].
@@ -146,8 +144,6 @@ $$
 h_k(t \given \mathbf{Z}) = h_{k0}(t)\exp(\boldsymbol{\beta}_k^\top \mathbf{Z}),
 $$
 where $h_{k0}(t)$ is the cause-specific baseline hazard, $\mathbf{Z}$ is a $p$-dimensional vector of covariates, and vector $\boldsymbol{\beta}_k$ quantifies the impact of $\mathbf{Z}$ on the cause-specific hazard. Inference on the cause-specific, time-constant *hazard ratios* $\exp(\boldsymbol{\beta}_k)$ is based on maximizing a *partial likelihood* which treats causes other than $k$ as censored. The baseline hazard can be estimated non-parametrically by means of the Breslow estimator [@breslow1972]. 
-
-<!-- Use time-dependent notation or not in Cox notation? -->
 
 It is important to note that a covariate which increases the cause-specific hazard of a particular event will not necessarily also increase the cumulative incidence of that same event, because the cumulative incidence function depends on the cause-specific hazards of *all* events. Depending on the direction and magnitude of the covariate effect on competing cause-specific hazards, the same covariate may even have opposing effects on the cause-specific hazard and cumulative incidence function of a particular event. As a result, regression models have been proposed that model the cumulative incidence function(s) *directly*, often through the so-called *subdistribution hazard*, given for a cause $k$ by 
 $$
