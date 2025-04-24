@@ -1,5 +1,8 @@
-Quarto book for PhD thesis.
+# PhD thesis: Statistical modelling of competing risks with incomplete data
 
-Some intermediate notes:
+Notes/to-do:
 
-- Can use git latexdiff on the resulting latex file
+- Add a license file for this directory
+- Publish only day after defence, with link to Leiden repository
+- Finish the co-authors bit on the html
+- ISBN add!

@@ -1,8 +1,21 @@
 ---
+author:
+  - name: Edouard F. Bonneville
+    orcid: 0000-0001-7542-4498
+    affiliations: 
+    - ref: lumc
+affiliations:
+  - id: lumc
+    department: Biomedical Data Sciences
+    name: Leiden University Medical Center
+    city: Leiden
+    country: The Netherlands
 number-depth: 3
 knitr:
   opts_chunk:
     fig.path: "figures/"
+editor_options: 
+  chunk_output_type: console
 ---
 
 # General introduction

@@ -1,3 +1,19 @@
+---
+author:
+  - name: Edouard F. Bonneville
+    orcid: 0000-0001-7542-4498
+    affiliations: 
+    - ref: lumc
+affiliations:
+  - id: lumc
+    department: Biomedical Data Sciences
+    name: Leiden University Medical Center
+    city: Leiden
+    country: The Netherlands
+editor_options: 
+  chunk_output_type: console
+---
+
 # Conclusions {#sec-chap-discussion}
 
 In this doctoral dissertation, we developed and assessed statistical methodology for handling missing data in competing risks settings. This was mainly in the context of observational data, where missing values are often both more prevalent and non-random compared to the clinical trials setting. The primary focus was on the use of multiple imputation (MI) for dealing with partially observed baseline covariates for both cause-specific Cox models, and Fine--Gray subdistribution hazard models. Shared-parameter competing risks joint models were also applied, in part to deal with missing values in longitudinal covariates. Three separate datasets of patients undergoing an allogeneic stem cell transplantation (alloSCT) were used to illustrate and test the various methodologies. In what follows, we summarise the key takeaways from the different chapters and potential avenues for further research.

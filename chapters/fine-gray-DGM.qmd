@@ -178,7 +178,7 @@ While a Gompertz baseline hazard could again be specified for $\lambda_1(t \give
 
 An exception to the above is found in the work of @saadatiPredictionAccuracyVariable2018. There, a DGM is presented where $h_2(t \given X)$ is chosen such that proportionality holds on both the subdistribution and cause-specific hazard scale for cause 1. The chosen $h_2(t \given X)$ is based on setting the reduction factor to 1 for all covariate patterns and timepoints, which also implies that the covariate effects on the subdistribution and cause-specific hazard for event 1 need to be equal to each other. 
 
-Similarly to Equation @eq-sdh1-csh2, the implied $h_2(t \given X)$ when specifying $\lambda_1(t \given X)$ and $h_1(t \given X)$ may also become negative. To understand an instance of where this can occur, note that we can write the all-cause cumulative hazard as a function of $\lambda_1(t \given X)$ and $h_1(t \given X)$ using @eq-reduc, as
+Similarly to @eq-sdh1-csh2, the implied $h_2(t \given X)$ when specifying $\lambda_1(t \given X)$ and $h_1(t \given X)$ may also become negative. To understand an instance of where this can occur, note that we can write the all-cause cumulative hazard as a function of $\lambda_1(t \given X)$ and $h_1(t \given X)$ using @eq-reduc, as
 \begin{equation*}
 	-\log\{S(t \given X)\} = \frac{\lambda_1(t \given X) \exp\{-\Lambda_1(t \given X)\}}{h_1(t \given X)}.
 \end{equation*} 

@@ -1,4 +1,24 @@
 ---
+author:
+  - name: Edouard F. Bonneville
+    orcid: 0000-0001-7542-4498
+    affiliations: 
+    - ref: lumc
+  - name: Liesbeth C. de Wreede
+    orcid: 0000-0002-7667-9369
+    affiliations: 
+    - ref: lumc
+    - ref: dkms
+affiliations:
+  - id: lumc
+    department: Biomedical Data Sciences
+    name: Leiden University Medical Center
+    city: Leiden
+    country: The Netherlands
+  - id: dkms
+    name: DKMS Clinical Trials Unit
+    city: Dresden
+    country: Germany
 editor_options: 
   chunk_output_type: console
 ---

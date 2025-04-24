@@ -52,6 +52,10 @@ format:
   html:
     theme: cosmo
     fig-height: 10
+    toc: true
+    toc-depth: 2
+    number-depth: 4
+    mainfont: Roboto #Fira Sans
 
 bibliography: thesis-refs-all.bib
 csl: journal-of-the-royal-statistical-society.csl

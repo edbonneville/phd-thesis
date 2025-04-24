@@ -1,4 +1,28 @@
 ---
+author:
+  - name: Edouard F. Bonneville
+    orcid: 0000-0001-7542-4498
+    affiliations: 
+    - ref: lumc
+  - name: Liesbeth C. de Wreede
+    orcid: 0000-0002-7667-9369
+    affiliations: 
+    - ref: lumc
+    - ref: dkms
+  - name: Hein Putter
+    orcid: 0000-0001-5395-1422
+    affiliations: 
+    - ref: lumc
+affiliations:
+  - id: lumc
+    department: Biomedical Data Sciences
+    name: Leiden University Medical Center
+    city: Leiden
+    country: The Netherlands
+  - id: dkms
+    name: DKMS Clinical Trials Unit
+    city: Dresden
+    country: Germany
 editor_options: 
   chunk_output_type: console
 ---
@@ -520,18 +544,7 @@ dat_data_dict <- read.csv(
 )
 colnames(dat_data_dict) <- c("Variable or level", "N = 3982")
 
-library(kableExtra)
-
-if (knitr::is_html_output()) {
-  #colnames(dat_data_dict)[4] <- "% Missing"
-  #dat_data_dict$`% Missing` <- ifelse(
-  #  is.na(dat_data_dict$`% Missing`), "", dat_data_dict$`% Missing`
-  #)
-  #kbl(dat_data_dict)
-} else {
-  
-  
-  dat_data_dict$`N = 3982` <- ifelse(
+dat_data_dict$`N = 3982` <- ifelse(
     is.na(dat_data_dict$`N = 3982`),
     "",
     dat_data_dict$`N = 3982`
@@ -545,13 +558,41 @@ contin_vars <- c(
   "Hemoglobin (g/dL)",
   "Patient age (years)"
 )
-dat_data_dict$`Variable or level` <- ifelse(
- (dat_data_dict$`Variable or level` %in% contin_vars) |
-   (dat_data_dict$`N = 3982` == ""),
- #no = paste0("&nbsp;", dat_data_dict$`Variable or level`),
- no = paste0("\\quad ", dat_data_dict$`Variable or level`),
- yes = dat_data_dict$`Variable or level`
-)
+
+library(kableExtra)
+
+if (knitr::is_html_output()) {
+  dat_data_dict$`Variable or level` <- ifelse(
+   (dat_data_dict$`Variable or level` %in% contin_vars) |
+     (dat_data_dict$`N = 3982` == ""),
+   no = paste0("&nbsp;&nbsp;&nbsp;&nbsp;", dat_data_dict$`Variable or level`),
+   yes = dat_data_dict$`Variable or level`
+  )
+  dat_data_dict$`Variable or level` <- gsub(
+    pattern = "(\\$\\\\geq)",
+    x = dat_data_dict$`Variable or level`, 
+    replacement = "&ge; "
+  )
+  dat_data_dict$`Variable or level` <- gsub(
+    pattern = "(\\$\\\\leq)",
+    x = dat_data_dict$`Variable or level`, 
+    replacement = "&le; "
+  )
+  dat_data_dict$`Variable or level` <- gsub(
+    pattern = "(\\$)",
+    x = dat_data_dict$`Variable or level`, 
+    replacement = ""
+  )
+  kbl(dat_data_dict, escape = FALSE)
+} else {
+  
+  dat_data_dict$`Variable or level` <- ifelse(
+   (dat_data_dict$`Variable or level` %in% contin_vars) |
+     (dat_data_dict$`N = 3982` == ""),
+   #no = paste0("&nbsp;", dat_data_dict$`Variable or level`),
+   no = paste0("\\quad ", dat_data_dict$`Variable or level`),
+   yes = dat_data_dict$`Variable or level`
+  )
   
   dat_data_dict$`N = 3982` <- gsub(
     pattern = "(\\%)",
@@ -576,13 +617,6 @@ dat_data_dict$`Variable or level` <- ifelse(
   ) |> 
     kableExtra::kable_styling(font_size = 7)
 }
-
-#dat_data_dict$`Variable or level` <- ifelse(
-#  (dat_data_dict$`Variable or level` %in% contin_vars) |
-#    is.na(dat_data_dict$`N = 3982`),
-#  no = paste0("&nbsp;", dat_data_dict$`Variable or level`),
-#  yes = dat_data_dict$`Variable or level`
-#)
 
 #kableExtra::kbl(
 #  dat_data_dict
