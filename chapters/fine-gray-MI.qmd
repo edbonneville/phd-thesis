@@ -483,9 +483,7 @@ Supplementary materials for this work are available at [https://arxiv.org/abs/24
 
 All R code (needed to reproduce simulation study, applied data example, and manuscript figures) is available at [https://github.com/survival-lumc/FineGrayCovarMI](https://github.com/survival-lumc/FineGrayCovarMI). In addition to the minimal R code provided in the supplementary materials, a wrapper function for the proposed SMC-FCS Fine--Gray method is available inside the \{smcfcs\} R package.
 
-## Appendix A {.unnumbered}
-
-### Imputed censoring times, and resulting cumulative subdistribution hazards {.unnumbered}
+## Appendix A: Imputed censoring times, and resulting cumulative subdistribution hazards {.unnumbered}
 
 As described in Section @sec-imp-cens, the subdistribution time $V$ is only partially observed in the presence of random right-censoring. Thus, the potential censoring times for those failing from cause 2 should first be multiply imputed, before imputing any missing covariates. This imputation of partially observed $V$ is visualised more closely in Figure @fig-cens-appendix, using a simulated dataset of 2000 individuals following the parametrisation used in the simulation study scenario with correctly specified Fine--Gray, $p = 0.65$, and random exponential censoring. In this example, the potential censoring times for those failing from cause 2 were imputed $m = 10$ times.
 
@@ -504,14 +502,14 @@ The upper panel in particular gives additional insights regarding the FG-Approx 
 
 The lower panel shows that the estimated $\hat{\Lambda}_1(t)$ varies very little between imputed datasets, with differences only being noticeable later on in follow-up as risk sets become smaller and associated cumulative hazard jumps more pronounced. Note also that while $\hat{\Lambda}_1(t)$ based on the true $V$ appears in this dataset to be a kind of "average" of the functions based on imputed $V$, this will not be the case in general, especially with smaller sample sizes. The $\hat{\Lambda}_1(t)$ based on the weighted estimator [@geskusCauseSpecificCumulativeIncidence2011] will however coincide with the "average" of the functions based on imputed $V$, as will using the negative log of one minus the Aalen-Johansen estimate of the marginal cumulative incidence function.
 
-## Appendix B {.unnumbered}
+## Appendix B: Data dictionary {.unnumbered}
 
 ```{r}
 #| echo: false
 #| warning: false
 #| message: false
 #| label: tbl-data-dict-mf
-#| tbl-cap: "Data dictionary. CMV: cytomegalovirus; HLA: human leukocyte antigen; HCT-CI: Hematopoietic stem cell transplantation-comorbidity index; MF: myelofibrosis."
+#| tbl-cap: "Data dictionary. The median and interquartilerange are reported for continuous variables, and for categorical variables the counts and proportion per level are reported. CMV: cytomegalovirus; HLA: human leukocyte antigen; HCT-CI: Hematopoietic stem cell transplantation-comorbidity index; MF: myelofibrosis."
 
 # (See the haema review example!)
 

@@ -9,6 +9,8 @@
 % For the chapter thumbs
 \usepackage{chapterthumb}
 \usepackage{scrlayer-scrpage}
+% The below will be 'undone' in chapters/references.qmd so that the thumbs
+% are only used from intro to discussion
 \AddLayersToPageStyle{@everystyle@}{chapterthumb}
 \addtokomafont{chapterthumb}{}
 
@@ -24,8 +26,11 @@
 % Shortcut for bold and sans
 \newcommand{\bsf}[1]{\textbf{\textsf{#1}}}
 
-% Fancy chapter titles n headings
+% Fancy chapter titles
 \input{tex/koma-chapter-titles}
+
+% Default headings format (see documentation https://ctan.org/pkg/koma-script?lang=en)
+% (thought sometimes changed in a chapter itself using \markleft{...})
 \renewcommand*{\chaptermarkformat}{\thechapter\autodot\enskip}
 
 % For the footnotes at the start of the article chapters:
@@ -36,10 +41,6 @@
   \addtocounter{footnote}{-1}%
   \endgroup
 }
-
-% Not sure if needed, but loading tikz for the introduction
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta, positioning, decorations.pathreplacing}
 
 % Uncomment show frames for troubleshooting over/underfull boxes
 %\usepackage{showframe}

@@ -1,5 +1,9 @@
 % Code for chapter titles, with small adjustments/commments added
 
+% Other notes:
+% - The "Needed as minimum" tags were added when trying to make a minimal version
+% of the below, but never continued in the end
+
 % --------------------------------------------------------------------------
 % --------------------------------------------------------------------------
 % Originalcode von: <http://www.komascript.de/fncychap-Lenny>
@@ -13,16 +17,16 @@
 % einschließlich Link und Copyrightinformation erhalten bleibt.
 
 % 1. Emulation von fncychap mit KOMA-Script-Mitteln:
-\newlength{\ChapterRuleWidth}% Needed as minimum
-\newcommand*{\ChRuleWidth}[1]{\setlength{\ChapterRuleWidth}{\dimexpr #1}}% Needed as minimum
+\newlength{\ChapterRuleWidth}% -> Needed as minimum
+\newcommand*{\ChRuleWidth}[1]{\setlength{\ChapterRuleWidth}{\dimexpr #1}}% -> Needed as minimum
 \newcommand*{\ChNameVar}{\setkomafont{chapterprefix}}%
 \newcommand*{\ChTitleVar}{\setkomafont{chapter}}%
 \newcommand*{\ChNumVar}{\setkomafont{chapternumber}}%
-\newcommand*{\ChapterNameCase}[1]{#1} % Needed as minimum
+\newcommand*{\ChapterNameCase}[1]{#1}% -> Needed as minimum
 \newcommand*{\ChNameUpperCase}{\let\ChapterNameCase\MakeUppercase}
 \newcommand*{\ChNameIs}{\renewcommand*\ChapterNameCase[1]{##1}}
 \newcommand*{\ChNameLowerCase}{\let\ChapterNameCase\MakeLowercase}
-\newcommand*{\ChapterTitleCase}[1]{#1} % Needed as minimum
+\newcommand*{\ChapterTitleCase}[1]{#1}% -> Needed as minimum
 \newcommand*{\ChTitleUpperCase}{\let\ChapterTitleCase\MakeUppercase}
 \newcommand*{\ChTitleIs}{\renewcommand*\ChapterTitleCase[1]{##1}}
 \newcommand*{\ChTitleLowerCase}{\let\ChapterTitleCase\MakeLowercase}
@@ -35,7 +39,7 @@
   beforeskip=-61pt,% Abstand über der Präfixzeile bzw. der Linie
   innerskip=15pt,% Abstand zwischen Präfixzeile und Text
   afterskip=40pt,% Abstand unter dem Text
-  % Uncommenting below 2 lines inherits the font of the document:
+  % -> Below 2 lines commented to inherit the font of the document:
   %font=\normalfont\rmfamily\Huge % Font for Chapter text (not the number)
   %prefixfont=\fontsize{14}{16}\usefont{OT1}{phv}{m}{n}\selectfont,% Schrift der Präfixzeile
 ]{chapter}
@@ -56,7 +60,7 @@
     \begin{picture}(0,0)
       \setlength{\linethickness}{\ChapterRuleWidth}%
       \usekomafont{chapternumber}{%
-      \put(1.25\ChapterRuleWidth,0){% go from .5 -> 1.25 to remove annoying vertical thing on left of text
+      \put(1.25\ChapterRuleWidth,0){% -> go from .5 -> 1.25 to remove annoying vertical thing on left of text
         \framebox(\dimexpr\linewidth-\ChapterRuleWidth,.9\ht\strutbox){}}}%
     \end{picture}%
     #2%

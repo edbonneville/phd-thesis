@@ -17,6 +17,11 @@ $$
 $$
 :::
 
+```{r}
+#| echo: false
+extension <- if (knitr::is_html_output()) ".png" else ".pdf"
+```
+
 A variety of biomedical applications involve studying the time between a relevant starting point and the occurrence of a particular event. For instance, time until death is regularly of interest to researchers, be it from birth, diagnosis of a given disease, or the start of a treatment for that disease [@vanhouwelingenDynamicPredictionClinical2012]. One context in which time to death is particularly relevant is that of allogeneic haematopoietic stem cell transplantation (alloSCT), which is a type of treatment primarily given to patients with haematological malignancies such as acute myeloid leukaemia (AML) [@horowitzGraftversusleukemiaReactionsBone1990]. Specifically, we may be interested in both how long patients diagnosed with AML survive on average after an alloSCT, and how individual patient characteristics, such as age at alloSCT or the presence of particular genetic mutations, influence the rate of death over time. The latter question in particular can be sharpened in order to investigate the rate of death due to different causes (e.g. mortality related to treatment or due to an infection post-alloSCT), assuming these can be properly ascertained. Additionally, we may be interested in the rate of different clinical events occurring prior to death, such as disease relapse. 
 
 In order to research these types of questions, clinical data needs to be collected from patients receiving an alloSCT. This is typically done via clinical registries, which coordinate the collection of both baseline (i.e. patient- and treatment-related characteristics at time of alloSCT) and 'follow-up' information (e.g. the occurrence and timing of relevant clinical events post-alloSCT) for individual patients in transplantation centres, possibly across different countries and over extended periods of time [@horowitzRoleRegistriesFacilitating2008]. The complexities intrinsic to the collection of such data, such as changes in data collection forms over time and across centres, mean that *missing* or *incomplete* data are an unavoidable feature of registry data.
@@ -55,7 +60,7 @@ and further visualised in @fig-intro-haz. Therefore, by modelling the all-cause 
 #| echo: false
 #| out-width: "95%"
 
-knitr::include_graphics(here::here("figures/haz_surv_panels.png"))
+knitr::include_graphics(here::here(paste0("figures/haz_surv_panels", extension)))
 ```
 
 The most well-known estimator of the EFS function is the *Kaplan--Meier* or *product-limit* estimator [@kaplanNonparametricEstimationIncomplete1958]. For a set of $N$ ordered event times $0 < t_1 < t_2 < \dots < t_N$, the estimator is given by

@@ -272,9 +272,7 @@ In summary, joint modelling allowed us to capture the associations between DLI, 
 
 Supplementary tables and figures are available online at [https://doi.org/10.3389/fimmu.2023.1208814](https://doi.org/10.3389/fimmu.2023.1208814).
 
-<!-- Statistical supplement here? -->
-
-## Appendix A: statistical supplement {.unnumbered}
+## Appendix A: Statistical supplement {.unnumbered}
 
 Joint models only consider measurements taken prior to the occurrence of the clinical events of interest. Occasionally, the measurement time and event time coincide: for example, T-cell counts may be recorded on the same day as the start of therapeutic systemic immunosuppression for Graft-versus-Host-Disease (GvHD). In order to retain the information of the measurements taken at event times, we set the time of these measurements to one day earlier, which assumes that the measurement at the event time was representative of the T-cell counts the day before the event. However, we excluded measurements at time of relapse, since the presence of blasts in the peripheral blood could lead to incorrect counts of the normal T-cells. We also excluded measurements at time of autologous recovery, as donor-derived T-cells were no longer present, and therefore also no potentially alloreactive T-cells capable of inducing GvHD or Graft-versus-leukemia (GvL) effect. 
 
@@ -298,8 +296,6 @@ $\text{Risk}_i$, $\text{Donor}_i$ and $\text{CMV}_i$ respectively represent the 
 Time since allogeneic stem cell transplantation (alloSCT) was modelled flexibly assuming restricted (natural) cubic splines with two internal knots placed at the 33.3% and 66.7% percentiles of the measurement times. This is represented above by $B_q(t)$, corresponding to the $q^{\text{th}}$ basis function of the spline. The fixed effects part of the model posits a three-way interaction between time, donor type and baseline disease risk, as well as a main effect of patient/donor CMV status. The three-way interaction was constructed to a) capture the slower expected average trajectory of patients with an unrelated donor, due to the use of anti-thymocyte globulin (ATG) in this group; and b) to test for a difference in average trajectories between baseline disease risk groups.
 
 In terms of random effects, this models assumes random slopes $b_{iq}$ (one for each basis function), and a fixed intercept. This fixed intercept was justified given that this cohort underwent T-cell depleted (TCD) alloSCT, and all patients were therefore expected to start follow-up with immune cell counts close to zero. The random slopes were assumed to be normally distributed with mean zero, with unstructured covariance matrix $D$.
-
-<!-- Code here with long format and nlme code? -->
 
 The time-to-event submodel was composed of multiple cause-specific
 proportional hazards models as \begin{align*}
