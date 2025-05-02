@@ -204,7 +204,7 @@ If however $C \indep X \given Z$, we could use a sequential approach, where we f
 	f(X^{\text{mis}}, V^{\text{mis}} \given X^{\text{obs}},Z,V^{\text{obs}},D) &= f(X^{\text{mis}} \given X^{\text{obs}},Z,V,D)f(V^{\text{mis}} \given X^{\text{obs}},Z,V^{\text{obs}},D), \\
 	&= f(X^{\text{mis}} \given X^{\text{obs}},Z,V,D)f(V^{\text{mis}} \given Z,V^{\text{obs}},D).
 \end{align*} 
-Practically speaking, this involves imputing the potential censoring times (possibly in strata of $Z$) in a first step, and then imputing the missing $X$ in a second step. This can be implemented easily using existing software packages in R: {kmi} for the imputation of censoring times [@allignolSoftwareFittingNonstandard2010], and {smcfcs} for the imputation of the missing covariates [@bartlettSmcfcsMultipleImputation2022] - see @fig-workflow for an illustration of the workflow.
+Practically speaking, this involves imputing the potential censoring times (possibly in strata of $Z$) in a first step, and then imputing the missing $X$ in a second step. This can be implemented easily using existing software packages in R: {kmi} for the imputation of censoring times [@allignolSoftwareFittingNonstandard2010], and {smcfcs} for the imputation of the missing covariates [@bartlettSmcfcsMultipleImputation2022]---see @fig-workflow for an illustration of the workflow.
 
 ```{r}
 #| label: fig-workflow
@@ -342,7 +342,7 @@ knitr::include_graphics(here::here(paste0("figures/fine-gray-MI_scenarios-vis", 
 
 #### Censoring
 
-The DGMs outlined above assume no loss to follow-up. As additional scenarios, we consider independent (i.e.~not conditional on any covariates) right censoring where the censoring times are simulated from an exponential distribution with rate $\lambda_C = 0.49$, resulting in approximately 30\% of censored observations. These censoring times will be considered as either: a) known (administrative censoring); or b) unknown (random censoring).
+The DGMs outlined above assume no loss to follow-up. As additional scenarios, we consider independent (i.e. not conditional on any covariates) right censoring where the censoring times are simulated from an exponential distribution with rate $\lambda_C = 0.49$, resulting in approximately 30\% of censored observations. These censoring times will be considered as either: a) known (administrative censoring); or b) unknown (random censoring).
 
 #### Covariate missingness
 
@@ -509,7 +509,7 @@ All R code (needed to reproduce simulation study, applied data example, and manu
 
 ## Appendix A: Imputed censoring times, and resulting cumulative subdistribution hazards {.unnumbered}
 
-As described in Section @sec-imp-cens, the subdistribution time $V$ is only partially observed in the presence of random right-censoring. Thus, the potential censoring times for those failing from cause 2 should first be multiply imputed, before imputing any missing covariates. This imputation of partially observed $V$ is visualised more closely in Figure @fig-cens-appendix, using a simulated dataset of 2000 individuals following the parametrisation used in the simulation study scenario with correctly specified Fine--Gray, $p = 0.65$, and random exponential censoring. In this example, the potential censoring times for those failing from cause 2 were imputed $m = 10$ times.
+As described in Section @sec-imp-cens, the subdistribution time $V$ is only partially observed in the presence of random right-censoring. Thus, the potential censoring times for those failing from cause 2 should first be multiply imputed, before imputing any missing covariates. This imputation of partially observed $V$ is visualised more closely in @fig-cens-appendix, using a simulated dataset of 2000 individuals following the parametrisation used in the simulation study scenario with correctly specified Fine--Gray, $p = 0.65$, and random exponential censoring. In this example, the potential censoring times for those failing from cause 2 were imputed $m = 10$ times.
 
 ```{r}
 #| label: fig-cens-appendix
