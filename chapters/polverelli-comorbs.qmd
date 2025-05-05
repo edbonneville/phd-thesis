@@ -75,6 +75,8 @@ In conclusion, this study, for the first time in a robust fashion, highlights th
 
 Supplementary tables and figures are available online at [https://doi.org/10.1002/ajh.27262](https://doi.org/10.1002/ajh.27262).
 
+\clearpage
+
 ## Appendix A: Methods {.unnumbered}
 
 Inclusion criteria:
