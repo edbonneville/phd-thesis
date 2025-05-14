@@ -1,6 +1,6 @@
 # PhD thesis: Statistical modelling of competing risks with incomplete data
 
-<img src="figures/thesis-cover.png" width="90%">
+<img src="figures/thesis-cover.png" width="90%" align="center">
 
 Notes/to-do:
 
