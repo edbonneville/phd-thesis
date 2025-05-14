@@ -491,7 +491,7 @@ Since around 45% of patients were either event-free or censored within the first
 
 ```{r}
 #| label: fig-applied-base-cuminc
-#| fig-cap: "Pooled baseline cumulative incidence functions for relapse in the applied data example (left panel), and width of corresponding confidence intervals (right panel). These are the estimates for a patient aged 60, transplanted in 2019 immediately after diagnosis, with 10g/dL hemoglobin, 15 x10$^9$/L white blood cells, no peripheral blood blasts, and with reference levels for all categorical predictors (see supplementary Table 1)."
+#| fig-cap: "Pooled baseline cumulative incidence functions for relapse in the applied data example (left panel), and width of corresponding confidence intervals (right panel). These are the estimates for a patient aged 60, transplanted in 2019 immediately after diagnosis, with 10g/dL hemoglobin, 15 x10$^9$/L white blood cells, no peripheral blood blasts, and with reference levels for all categorical predictors (see @tbl-data-dict-mf)."
 #| echo: false
 #| out-width: "100%"
 
