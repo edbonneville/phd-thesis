@@ -30,7 +30,7 @@ quarto::quarto_render(output_format = "pdf")
 Most of the heavy lifting for the formatting is done in [_quarto.yml](_quarto.yml), but the following non-standard stuff might be useful:
 
 - [chapterthumb.sty](chapterthumb.sty) are the koma-script-based thumb indices for the chapters, with minor formatting edits also allowing for bleed correction when sending to the printers.
-- [tex/preamble.tex](tex/preamble.tex) is the overall preamble, with some font settings + headings set-up.
+- [tex/preamble-global.tex](tex/preamble-global.tex) is the overall preamble, with some font settings + headings set-up.
 - [tex/koma-chapter-titles.tex](tex/koma-chapter-titles.tex) is the koma-script-based emulation of the 'Lenny' chapter title style from fncychap, again with some minor edits.
 - [tex/before-body.tex](tex/before-body.tex) is my set-up for the 'non-scientific' part of the thesis required by Leiden University, and used some pandoc variables.
 
