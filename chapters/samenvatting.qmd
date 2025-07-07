@@ -1,5 +1,7 @@
 # Nederlandse samenvatting {.unnumbered}
 
+<!-- Or lang is dutch in linux maybe -->
+
 ::: {lang=nl}
 Vroeg of laat zullen ontbrekende data een uitdaging voor elke observationele medische studie vormen. Dit is vooral het geval bij het bestuderen van de tijd tot een bepaalde gebeurtenis, vanaf een klinisch relevant beginpunt. We kunnen bijvoorbeeld geïnteresseerd zijn in de tijd tot een infectie na een allogene hematopoietische stamceltransplantatie (alloSCT), een behandeling die voornamelijk wordt gegeven aan mensen met bloedkanker. Een studie moet uiteindelijk beëindigd worden, en op dat moment zullen sommige patiënten waarschijnlijk nog geen infectie hebben gehad. Omdat we niet weten of en wanneer ze geïnfecteerd zouden zijn als de onderzoeksperiode langer was geweest, is hun tijd tot infectie onbekend en worden ze aan het einde van de studie aangeduid als *rechtgecensureerd*. De tijd tot infectie zou ook onbekend zijn als een patiënt tijdens het onderzoek overlijdt voordat hij wordt geïnfecteerd. Overlijden wordt hier beschouwd als een *concurrerend risico*, omdat het een toekomstige infectie uitsluit.
 

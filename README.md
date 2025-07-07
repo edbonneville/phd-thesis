@@ -19,10 +19,29 @@ If you want to directly access the individual chapters (all were/are going to be
 
 ## Usage 
 
-Add here basics + license
+The thesis was rendered using
+
+```r
+quarto::quarto_render(output_format = "pdf")
+```
+
+..but most likely that will not work for you from the off as I have unfortunately done a fairly lackluster job of documenting the various R/LaTex/system dependencies here (oopsies).
+
+Most of the heavy lifting for the formatting is done in [_quarto.yml](_quarto.yml), but the following non-standard stuff might be useful:
+
+- [chapterthumb.sty](chapterthumb.sty) are the koma-script-based thumb indices for the chapters, with minor formatting edits also allowing for bleed correction when sending to the printers.
+- [tex/preamble.tex](tex/preamble.tex) is the overall preamble, with some font settings + headings set-up.
+- [tex/koma-chapter-titles.tex](tex/koma-chapter-titles.tex) is the koma-script-based emulation of the 'Lenny' chapter title style from fncychap, again with some minor edits.
+- [tex/before-body.tex](tex/before-body.tex) is my set-up for the 'non-scientific' part of the thesis required by Leiden University, and used some pandoc variables.
 
 ## Credits
 
-- Different blogs and github repos here..
+Credit to the following repositories and blog posts helping me put this thesis together:
+
+- [https://cameronpatrick.com/post/2023/07/quarto-thesis-formatting/](https://cameronpatrick.com/post/2023/07/quarto-thesis-formatting/)
+- [https://github.com/rekkasa/phd_thesis](https://github.com/rekkasa/phd_thesis)
+- [https://github.com/bbartholdy/endgame](https://github.com/bbartholdy/endgame)
+- [https://github.com/nmfs-opensci/quarto-thesis](https://github.com/nmfs-opensci/quarto-thesis)
+- [https://github.com/alberto-guzman/quarto-dissertation](https://github.com/alberto-guzman/quarto-dissertation)
 
 <!-- Finialise html with co-author yamls -->

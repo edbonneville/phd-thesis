@@ -56,7 +56,7 @@ format:
     toc: true
     toc-depth: 2
     number-depth: 4
-    mainfont: Roboto #or Fira Sans, or default
+    #mainfont: Roboto #or Fira Sans, or default
 
 bibliography: thesis-refs-all.bib
 csl: journal-of-the-royal-statistical-society.csl
