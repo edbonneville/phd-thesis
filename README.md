@@ -19,13 +19,19 @@ If you want to directly access the individual chapters (all were/are going to be
 
 ## Usage 
 
-The thesis was rendered using
+After cloning this repository using 
+
+```
+git clone https://github.com/edbonneville/phd-thesis.git
+```
+
+..the thesis can be rendered with
 
 ```r
 quarto::quarto_render(output_format = "pdf")
 ```
 
-..but most likely that will not work for you from the off as I have unfortunately done a fairly lackluster job of documenting the various R/LaTex/system dependencies here (oopsies).
+..but most likely that will not work for you from the off as I have unfortunately done a fairly lackluster job of documenting the various R/LaTex/system dependencies here (oopsies). In any case, you need all of [R](https://cran.r-project.org/), [Quarto](https://quarto.org/docs/get-started/), and [Git](https://git-scm.com/downloads) installed. The suggested [TinyTex](https://quarto.org/docs/output-formats/pdf-engine.html) workflow suggested by Quarto worked nicely for me, including auto-installing LaTex packages on the fly. 
 
 Most of the heavy lifting for the formatting is done in [_quarto.yml](_quarto.yml), but the following non-standard stuff might be useful:
 
@@ -40,7 +46,7 @@ Credit to the following repositories and blog posts helping me put this thesis t
 
 - [https://cameronpatrick.com/post/2023/07/quarto-thesis-formatting/](https://cameronpatrick.com/post/2023/07/quarto-thesis-formatting/)
 - [https://github.com/rekkasa/phd_thesis](https://github.com/rekkasa/phd_thesis)
-- [https://github.com/bbartholdy/endgame](https://github.com/bbartholdy/endgame)
+- [https://github.com/bbartholdy/endgame](https://github.com/bbartholdy/endgame) (way better dependencies documentation!)
 - [https://github.com/nmfs-opensci/quarto-thesis](https://github.com/nmfs-opensci/quarto-thesis)
 - [https://github.com/alberto-guzman/quarto-dissertation](https://github.com/alberto-guzman/quarto-dissertation)
 
